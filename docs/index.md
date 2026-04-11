@@ -1,6 +1,6 @@
 # My Notes Web
 
-Welcome to a focused collection of study notes, reference material, and exam-ready summaries. This site is designed to make revision faster, learning clearer, and important ideas easier to revisit when it matters most.
+Welcome to a focused collection of study notes, reference material, and exam-ready summaries. This site is designed to make revision faster, legit remote add origin https://github.com/adarsha121/webnote.gitarning clearer, and important ideas easier to revisit when it matters most.
 
 ## Start Here
 
