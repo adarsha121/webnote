@@ -1,0 +1,26 @@
+# Virtual environment
+venv/
+env/
+.venv/
+
+# MkDocs build output
+site/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Dependencies lock files (optional - uncomment if needed)
+# pip-freeze.txt

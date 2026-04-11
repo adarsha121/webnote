@@ -2,7 +2,7 @@ The Malla period (c. 1258–1826 B.S.) is considered the Golden Age of Newari ar
 
 ## 1. Early Malla Period (United Kingdom)
 
-Before the valley was divided, several powerful monarchs ruled from a single center (primarily Bhaktapur). \[1]
+Before the valley was divided, several powerful monarchs ruled from a single center (primarily Bhaktapur). 
 
 * Ari Malla (c. 1258–1273 B.S.): The first king to adopt the title "Malla." Legend says he was wrestling (_Malla-yuddha_) when he heard of his son's birth and chose the title to signify strength.
 
@@ -17,11 +17,11 @@ Before the valley was divided, several powerful monarchs ruled from a single cen
 * Yaksha Malla (c. 1485–1539 B.S.): The last king of the united Kathmandu Valley.
 
   * Works: Built the Dattatreya Temple and the Pashupati Temple in Bhaktapur.
-  * Legacy: After his death in 1539 B.S., the kingdom was divided among his sons, leading to the creation of the three independent city-states of Kantipur, Patan, and Bhaktapur. \[2, 3, 4, 5, 6]
+  * Legacy: After his death in 1539 B.S., the kingdom was divided among his sons, leading to the creation of the three independent city-states of Kantipur, Patan, and Bhaktapur. 
 
 ***
 
-## 2. Divided Malla Kingdoms (Late Malla Period) \[7]
+## 2. Divided Malla Kingdoms (Late Malla Period) 
 
 After the division, each city-state competed to build the most magnificent temples and palaces.
 
@@ -38,7 +38,7 @@ After the division, each city-state competed to build the most magnificent templ
 
 * Jaya Prakash Malla (c. 1792–1825 B.S.): The last king of Kathmandu.
 
-  * Works: Started the Kumari Jatra and Indra Jatra chariot festivals. \[2, 3, 6, 8, 9]
+  * Works: Started the Kumari Jatra and Indra Jatra chariot festivals. 
 
 ## B. Lalitpur (Patan) \[10]
 
@@ -57,7 +57,7 @@ Shree Niwas Malla (c. 1717–1741 B.S.): Reconstructed the _[Bhimsen Temple](htt
 ***
 
 
-  [__](https://www.google.com/search?q=yoga+narendra+malla\&kgmid=/g/11fl9ztqrw#sv=CBwSugQK-gMS9wMKtwNBTW4zLXlSblVUTzdXYXltVVBKQ0tjYV9DUkxPWml5eHRrVXp3Zm5BejNHcVJVSE1hRFhHZEU5VWNZeWdUa05YejAzd1R1aVdKQmNubWVpRDVOb3huMTZnaHVPb244TXhSNm1MVllPUHRmMUR3bDFtSGV1TFk2RVJGNlo0bmo1amtRUEQ2SkVZTHNHRnAwM0w1WFpIWHh0SHJXOG9yOThXQy1KRTBiRTNNc1NMMTZvNDFtLTV4VFdDLS0zYUwzWERPZlIzdm5GR3lleWZ4VnBreWJ4TTBQekpHVkY1U3U4S2ZRb1pzNC0xQUVmMGNnMmFtYWZXQWtsM0JNZkF2SElWbkFOUW40TkdWVVdiZW5COHplSEVPb1R2WUFRbFF4bmdMNGllbXlocVBvSVZNZmsxUDBGdmNxWTE2VHY3WHpnNi1GVm1YS1B2eUJUaHpKX0E3bFFldTJGMEhFUEJHMzNWSHZPRWhCR3VPRTBKa1paMDdjSlpad21BMGxranZVWHZ5cmFpdDZSbTlMMXdwMTlJY1pUZDBySER0UU5ocFhvUkV3NE1NOXVQNlZmbG9LTXA1N1BZNW9zEhdGQWJRYVpldk1JZnNnOFVQNVBibXlRMBoiQUpLTEZtTFFsdjQ0ZUxuam5PSjQ3NFRWRUJWRWR1ZjAzURIENzg1NBoBMyIYCgFxEhN5b2dhIG5hcmVuZHJhIG1hbGxhIhYKBWtnbWlkEg0vZy8xMWZsOXp0cXJ3KAAYRSDYm5S6Dw)_[Yoga Narendra Malla](https://www.google.com/search?q=yoga+narendra+malla\&kgmid=/g/11fl9ztqrw#sv=CBwSpQQK5QMS4gMKogNBTW4zLXlRSGJKNkprVHcyMmlnRjdvampUMUc3SkoxMHNEbmxKOVFmRUNMQVFHbzBRa2xMTEt5ZGhuMTNiaDdMN0tjX21CN2F4SEdRNFFMT1ZyanJFRVVJSE5JbUgtU0FfMzd5Y1E2VDIydkFTbXFPVE1NdDM4QUJpc3oxaV9QWUVvZmE3LXhPb29tRnpRQ0ZVeFlKU0Zydm9jVng0Y2Y0ZDdaRzVieEl2dzhaN3JLOHpzVWZlZnVlMU1OS0RwVHRLdURvMmNGTmRjZm1IOWVsQkJxVUZlQU9rVkJpbDg1RkdmWmVZMFNaaXZ1alU1dWU0dzRyT0s5aWotX2lzRTNfQno4RXVpRXdoYmltcmgyd0JCMHFXLVNrZG1WX2l5MGFreHluWXlFWWVsUEtvQTRQZTloVFI3eTd3TE1LejVBYUdnd2hmRmlCdlZpWDhFcldFWEh2RC1FSkpMMGRrSVUwVmQxS2hBMm5EVWNjQ3hUOEl4UFEyTmxNOXJ5eFVHM3JyUEZOMFFuRDZlaHB6MlNRNWJoNFJNaGtuRjJvTGZWaFd3EhdGQWJRYVpldk1JZnNnOFVQNVBibXlRMBoiQUpLTEZtSjV5RzlSMzJvUlI1RG05amN3T1d2XzVESmRQQRIENzg1NBoBMyIYCgFxEhN5b2dhIG5hcmVuZHJhIG1hbGxhIhYKBWtnbWlkEg0vZy8xMWZsOXp0cXJ3KAAYRSCy5ej5Dg)_ (c. 1741–1762 B.S.): Known for the legend of the golden bird on his statue. He started the Bhimsen Jatra in Patan. \[2]
+  [__](https://www.google.com/search?q=yoga+narendra+malla\&kgmid=/g/11fl9ztqrw#sv=CBwSugQK-gMS9wMKtwNBTW4zLXlSblVUTzdXYXltVVBKQ0tjYV9DUkxPWml5eHRrVXp3Zm5BejNHcVJVSE1hRFhHZEU5VWNZeWdUa05YejAzd1R1aVdKQmNubWVpRDVOb3huMTZnaHVPb244TXhSNm1MVllPUHRmMUR3bDFtSGV1TFk2RVJGNlo0bmo1amtRUEQ2SkVZTHNHRnAwM0w1WFpIWHh0SHJXOG9yOThXQy1KRTBiRTNNc1NMMTZvNDFtLTV4VFdDLS0zYUwzWERPZlIzdm5GR3lleWZ4VnBreWJ4TTBQekpHVkY1U3U4S2ZRb1pzNC0xQUVmMGNnMmFtYWZXQWtsM0JNZkF2SElWbkFOUW40TkdWVVdiZW5COHplSEVPb1R2WUFRbFF4bmdMNGllbXlocVBvSVZNZmsxUDBGdmNxWTE2VHY3WHpnNi1GVm1YS1B2eUJUaHpKX0E3bFFldTJGMEhFUEJHMzNWSHZPRWhCR3VPRTBKa1paMDdjSlpad21BMGxranZVWHZ5cmFpdDZSbTlMMXdwMTlJY1pUZDBySER0UU5ocFhvUkV3NE1NOXVQNlZmbG9LTXA1N1BZNW9zEhdGQWJRYVpldk1JZnNnOFVQNVBibXlRMBoiQUpLTEZtTFFsdjQ0ZUxuam5PSjQ3NFRWRUJWRWR1ZjAzURIENzg1NBoBMyIYCgFxEhN5b2dhIG5hcmVuZHJhIG1hbGxhIhYKBWtnbWlkEg0vZy8xMWZsOXp0cXJ3KAAYRSDYm5S6Dw)_[Yoga Narendra Malla](https://www.google.com/search?q=yoga+narendra+malla\&kgmid=/g/11fl9ztqrw#sv=CBwSpQQK5QMS4gMKogNBTW4zLXlRSGJKNkprVHcyMmlnRjdvampUMUc3SkoxMHNEbmxKOVFmRUNMQVFHbzBRa2xMTEt5ZGhuMTNiaDdMN0tjX21CN2F4SEdRNFFMT1ZyanJFRVVJSE5JbUgtU0FfMzd5Y1E2VDIydkFTbXFPVE1NdDM4QUJpc3oxaV9QWUVvZmE3LXhPb29tRnpRQ0ZVeFlKU0Zydm9jVng0Y2Y0ZDdaRzVieEl2dzhaN3JLOHpzVWZlZnVlMU1OS0RwVHRLdURvMmNGTmRjZm1IOWVsQkJxVUZlQU9rVkJpbDg1RkdmWmVZMFNaaXZ1alU1dWU0dzRyT0s5aWotX2lzRTNfQno4RXVpRXdoYmltcmgyd0JCMHFXLVNrZG1WX2l5MGFreHluWXlFWWVsUEtvQTRQZTloVFI3eTd3TE1LejVBYUdnd2hmRmlCdlZpWDhFcldFWEh2RC1FSkpMMGRrSVUwVmQxS2hBMm5EVWNjQ3hUOEl4UFEyTmxNOXJ5eFVHM3JyUEZOMFFuRDZlaHB6MlNRNWJoNFJNaGtuRjJvTGZWaFd3EhdGQWJRYVpldk1JZnNnOFVQNVBibXlRMBoiQUpLTEZtSjV5RzlSMzJvUlI1RG05amN3T1d2XzVESmRQQRIENzg1NBoBMyIYCgFxEhN5b2dhIG5hcmVuZHJhIG1hbGxhIhYKBWtnbWlkEg0vZy8xMWZsOXp0cXJ3KAAYRSCy5ej5Dg)_ (c. 1741–1762 B.S.): Known for the legend of the golden bird on his statue. He started the Bhimsen Jatra in Patan. 
 
 ## C. Bhaktapur (Bhadgaon)
 
@@ -69,17 +69,17 @@ Shree Niwas Malla (c. 1717–1741 B.S.): Reconstructed the _[Bhimsen Temple](htt
 
   * Works: Built the five-story _[Nyatapola Temple](https://www.google.com/search?kgmid=/m/07kj101)_ and the _[55-Window Palace](https://www.google.com/search?kgmid=/g/11c1t5d7nh)_.
 
-* _[Ranajit Malla](https://www.google.com/search?q=ranajit+malla\&kgmid=/m/09g76k3#sv=CBwShgQKzwMSzAMKjANBTW4zLXlUaE00TFFUeWUxWXFRWTFVTXRCdWtySnQ4OHVrLW1hUFFHa3lKV19BVndyZW8wVjJzRjJ5X2Y5c3p2ejRGZkxfZU1Ja0ZsRUZVdFZlWmJUQ2NjbE91dFAzWmpFWFVhbTFwc1A1TVpENVZXZ0xXWnlkX3VSdFkwN1NfYnowdk1aMDdycjA2N0M4dzR6ZXlwZXpaNTJOQndqVHlyMHhTQzJWc05vZGNhVzN6YU0zR0pjYnlidUV1ckc0V3FnNVNiQlItcG8taDU1UkVlaVRhQU81REVaX0VDRy1VTXJrMkRzRVJ5azRTVld5X3R1Z1ZDWWZMSHQtQXN0RFlpdkc2VlJyRk1UdEpkRGJtRWIxXzNrazZDTVJ3TFJIU25UdEY3ZldFb3pCaVM5bzQ0eC1Gb0Vha21nYzBVSHNLLTBXU2NoV2VsYzR0X1B2ckJXMVlCeWxMMXhwYTVPc3I1c0hTZUJWRWNwR1JHR1lSM2tEc05FbkF0b19ONi1sVkhwLXR0aGF2cXU1VFkSF0ZBYlFhWmV2TUlmc2c4VVA1UGJteVEwGiJBSktMRm1MUngzSFAwb0QzNE9yVTY1UDM4RGtIWnQ0TjlREgQ3ODU0GgEzIhIKAXESDXJhbmFqaXQgbWFsbGEiEwoFa2dtaWQSCi9tLzA5Zzc2azMoABhFIOqMh-0G)_ (c. 1779–1826 B.S.): The last Malla king of Bhaktapur. He completed the _[Golden Gate](https://www.google.com/search?kgmid=/g/1tffxxq7)_ (_Lu Dhowka_). \[2, 4, 11, 12, 13]
+* _[Ranajit Malla](https://www.google.com/search?q=ranajit+malla\&kgmid=/m/09g76k3#sv=CBwShgQKzwMSzAMKjANBTW4zLXlUaE00TFFUeWUxWXFRWTFVTXRCdWtySnQ4OHVrLW1hUFFHa3lKV19BVndyZW8wVjJzRjJ5X2Y5c3p2ejRGZkxfZU1Ja0ZsRUZVdFZlWmJUQ2NjbE91dFAzWmpFWFVhbTFwc1A1TVpENVZXZ0xXWnlkX3VSdFkwN1NfYnowdk1aMDdycjA2N0M4dzR6ZXlwZXpaNTJOQndqVHlyMHhTQzJWc05vZGNhVzN6YU0zR0pjYnlidUV1ckc0V3FnNVNiQlItcG8taDU1UkVlaVRhQU81REVaX0VDRy1VTXJrMkRzRVJ5azRTVld5X3R1Z1ZDWWZMSHQtQXN0RFlpdkc2VlJyRk1UdEpkRGJtRWIxXzNrazZDTVJ3TFJIU25UdEY3ZldFb3pCaVM5bzQ0eC1Gb0Vha21nYzBVSHNLLTBXU2NoV2VsYzR0X1B2ckJXMVlCeWxMMXhwYTVPc3I1c0hTZUJWRWNwR1JHR1lSM2tEc05FbkF0b19ONi1sVkhwLXR0aGF2cXU1VFkSF0ZBYlFhWmV2TUlmc2c4VVA1UGJteVEwGiJBSktMRm1MUngzSFAwb0QzNE9yVTY1UDM4RGtIWnQ0TjlREgQ3ODU0GgEzIhIKAXESDXJhbmFqaXQgbWFsbGEiEwoFa2dtaWQSCi9tLzA5Zzc2azMoABhFIOqMh-0G)_ (c. 1779–1826 B.S.): The last Malla king of Bhaktapur. He completed the _[Golden Gate](https://www.google.com/search?kgmid=/g/1tffxxq7)_ (_Lu Dhowka_). 
 
 ***
 
 ## 3. End of the Malla Era
 
-The Malla dynasty came to an end during the unification campaign led by _[Prithvi Narayan Shah](https://www.google.com/search?q=prithvi+narayan+shah\&kgmid=/m/01tgg0#sv=CBwSogQK5QMS4gMKogNBTW4zLXlSQzFTYjg5djMwODU2MS1ub3RvcDJsZUpzYkhNb1RVOWdndlYwVl9SUElaNFBhZWlIY2lzb1ZuR2VMZ1BhQl9adndodlN5ZEwwUFdkSjlCSi1NeDdLc0J3RFg2NGNJaFVrdUIyTG5weDNZTjFYVnJmQTV6NUhyd3djdURrVFN0dUt6U0hMQmlvekEzbHZnUkdFLXVpZHVNc1JrcW1pTkp3em4tM1VvSHo5azVoalV0VlpYMDRCX3N5aHliR2JhVHhQUmJJcDhlRm9lZTNDWHZHc2lSM05LWlY0cVJpYTI0LXF3MVJOdWxHSTZyWm13Y0g5N1hEMHFKcEJnLWZJTTRmbnpYQ096NHRFYnIyZWs1c1JkT1lBV2JwTTM1WFdUeVJNeU1IVlI4b05ZVzNnZjA4dDNiZkg1cFpjdW1oS1p1aFIxR3NtSGJOaWRhOGxMRk1OVkJIWnJGSFM5Q0s5YWVzQUF1c3RRamRLYTNGeGZydTdkUUg2STJ3Sks1OHc0RGtQdEtjQ2dRX3FsdjAwbk14LXVxUEFydl9Hc3F3EhdGQWJRYVpldk1JZnNnOFVQNVBibXlRMBoiQUpLTEZtTFFCTVBjTjN5VEpicUNsSms3Njc4a3VwNFZYURIENzg1NBoBMyIZCgFxEhRwcml0aHZpIG5hcmF5YW4gc2hhaCISCgVrZ21pZBIJL20vMDF0Z2cwKAAYRSC20rSVAw)_. \[3]
+The Malla dynasty came to an end during the unification campaign led by _[Prithvi Narayan Shah](https://www.google.com/search?q=prithvi+narayan+shah\&kgmid=/m/01tgg0#sv=CBwSogQK5QMS4gMKogNBTW4zLXlSQzFTYjg5djMwODU2MS1ub3RvcDJsZUpzYkhNb1RVOWdndlYwVl9SUElaNFBhZWlIY2lzb1ZuR2VMZ1BhQl9adndodlN5ZEwwUFdkSjlCSi1NeDdLc0J3RFg2NGNJaFVrdUIyTG5weDNZTjFYVnJmQTV6NUhyd3djdURrVFN0dUt6U0hMQmlvekEzbHZnUkdFLXVpZHVNc1JrcW1pTkp3em4tM1VvSHo5azVoalV0VlpYMDRCX3N5aHliR2JhVHhQUmJJcDhlRm9lZTNDWHZHc2lSM05LWlY0cVJpYTI0LXF3MVJOdWxHSTZyWm13Y0g5N1hEMHFKcEJnLWZJTTRmbnpYQ096NHRFYnIyZWs1c1JkT1lBV2JwTTM1WFdUeVJNeU1IVlI4b05ZVzNnZjA4dDNiZkg1cFpjdW1oS1p1aFIxR3NtSGJOaWRhOGxMRk1OVkJIWnJGSFM5Q0s5YWVzQUF1c3RRamRLYTNGeGZydTdkUUg2STJ3Sks1OHc0RGtQdEtjQ2dRX3FsdjAwbk14LXVxUEFydl9Hc3F3EhdGQWJRYVpldk1JZnNnOFVQNVBibXlRMBoiQUpLTEZtTFFCTVBjTjN5VEpicUNsSms3Njc4a3VwNFZYURIENzg1NBoBMyIZCgFxEhRwcml0aHZpIG5hcmF5YW4gc2hhaCISCgVrZ21pZBIJL20vMDF0Z2cwKAAYRSC20rSVAw)_. 
 
 * 1825 B.S.: Kathmandu fell to Gorkhali forces during the Indra Jatra festival.
 * 1825 B.S.: Patan was conquered shortly after.
-* 1826 B.S.: Bhaktapur was the last to fall, marking the official end of Malla rule in the Kathmandu Valley. \[3, 14]
+* 1826 B.S.: Bhaktapur was the last to fall, marking the official end of Malla rule in the Kathmandu Valley. 
 
 ### The Shah Time
 
@@ -136,10 +136,10 @@ Following Prithvi Narayan Shah, a series of minor kings led to a period of "Rege
 1903 B.S. marks the year Jung Bahadur Rana became the Prime Minister, stripping the Shah kings of their executive powers and making the role of Prime Minister hereditary, beginning 104 years of Rana rule.
 
 ### The Rana Regime Begins
-The Rana regime, established in 1903 B.S. following the Kot Massacre, lasted for 104 years. During this period, the Shah Kings remained as figurehead monarchs while the Rana Prime Ministers held absolute executive power as the Shree 3 Maharaja. [1] 
+The Rana regime, established in 1903 B.S. following the Kot Massacre, lasted for 104 years. During this period, the Shah Kings remained as figurehead monarchs while the Rana Prime Ministers held absolute executive power as the Shree 3 Maharaja. 
 ## Timeline of Rana Prime Ministers and Major Works
 
-| Prime Minister [2, 3, 4, 5, 6, 7] | Period (B.S.) | Major Contributions & Events |
+| Prime Minister | Period (B.S.) | Major Contributions & Events |
 |---|---|---|
 | Jung Bahadur Rana[](https://www.google.com/search?q=jung+bahadur+rana&kgmid=/m/07z73h#sv=CBwSiQQKzwMSzAMKjANBTW4zLXlTZWJkd0lTclNRdkxfT1ctdHBSMndfQzVmb09lUThkc244eHlaMnVobmE4aEhrNmFkQ1VRRUxJdVZGajRnRG1KUGM5a2Qzb2J5V3B6bW9DTFBFaUxhVUhOZC10RTFkdmJxcjdXbGxSRnQzRmlnVU9jSHhXVGRLTkZYc0xSRGVReEtyaWZVVl9BZ2VtMzlaVmh5T2FET1BncmZKZkYtMUR0QlZfOTNSRVRBTEhEZDl5SjVaVzRLZ1pmbGU5Zlp1alFTMDhwbDVsVzlTZGVLYU8tR0pHd2I2TjBRMlNnU3ZuT1ppdGJ4WllBUEJMd09UajZSRUM3UExuQTNVcmIzQXQ5c0lXTmowNmRvS3ljWmJCVmx4RjRueXZRZDRWLVhvOTdScjRsTVN2V1JUc3hUMVdqM3dKN1V6YnV5UEh4enVuVS1TUlFhLTBYUmtJODhrSzN0bUtlTnJyRkQyUVJSZllHOXQ1WHdza05XMC0tMDJZSU1fd05JZmFBRVRSRWQ5bGZyM3NTZVoSF1FRalFhYW41SHY2Um5lc1BxTFBGbVFVGiJBSktMRm1MNUw1Y3gtQkVBV29vV3ZPNGdBcVIwc1dCY1ZBEgQ3ODU0GgEzIhYKAXESEWp1bmcgYmFoYWR1ciByYW5hIhIKBWtnbWlkEgkvbS8wN3o3M2goABhFIICRo6gO) | 1903–1933 | First Rana PM; introduced the first national legal code, Muluki Ain (1910 B.S.); established Durbar High School; visited Europe in 1906 B.S. |
 | Ranodip Singh Rana | 1933–1942 | Published the first official calendar (Patro); established a system for land revenue collection; assassinated by his Shumsher nephews. |
