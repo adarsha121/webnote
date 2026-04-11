@@ -1,0 +1,15 @@
+.md-typeset {
+  max-width: 900px;
+}
+
+.md-typeset h1 {
+  font-weight: 700;
+}
+
+.md-header {
+  backdrop-filter: blur(10px);
+}
+
+.md-content {
+  padding-top: 20px;
+}

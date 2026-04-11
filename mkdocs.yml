@@ -1,0 +1,31 @@
+site_name: My Notes
+site_url: https://yourusername.github.io/mk_notes_web/
+
+theme:
+  name: material
+  palette:
+    - scheme: slate
+      primary: black
+      accent: blue
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.expand
+    - toc.follow
+
+nav:
+  - Home: index.md
+  - Physics:
+      - Mechanics: physics/mechanics.md
+      - Quantum: physics/quantum.md
+  - Math:
+      - Calculus: math/calculus.md
+      - Linear Algebra: math/linear.md
+  - AI:
+      - RAG: ai/rag.md
+  - tsc:
+      - Constitution Education: tsc/constution_edu.md
+
+extra_css:
+  - stylesheets/extra.css
