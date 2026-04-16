@@ -1,5 +1,5 @@
 site_name: My Notes
-site_url: https://yourusername.github.io/mk_notes_web/
+site_url: https://adarsha121.github.io/webnote/
 
 theme:
   name: material
@@ -25,7 +25,22 @@ nav:
   - AI:
       - RAG: ai/rag.md
   - tsc:
+      - शिक्षाकाै परिचय: tsc/intro_ed.md
+      - शैक्षिक सिद्धान्त: tsc/learning_principle.md
+      - साैह्रौं योजना: tsc/16th_plan_about_edu.md
+      - भुगाेल: tsc/bhugool.md
+      - पाठ्यक्रम: tsc/cirriculum_and_books.md
+      - सबि‌धान: tsc/constution_edu.md
+      - शिक्षा एेन: tsc/ed_act_2028.md
+      - सिक्षा नियमावली: tsc/ed_niyamawali.md
+      - शिक्षाक सेवा आयोग नियमावली: tsc/tsc_niyamabali_2057.md
+      - इतिहास: tsc/history_nepal.md
+      - थानीय सरकार सञ्चालन ऐन: tsc/local_govt_ed_related.md
+      - अन्तराष्ट्रिय स‌घसस्था: tsc/intl_orgs.md
       - Constitution Education: tsc/constution_edu.md
 
 extra_css:
   - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/tab-dropdown.js
