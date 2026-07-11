@@ -218,9 +218,36 @@ a:hover {
     display: none !important;
   }
 
+  [data-md-color-scheme="slate"] .md-tabs {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  [data-md-color-scheme="slate"] .md-tabs__list {
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0.15rem;
+    overflow-x: auto;
+    overflow-y: visible;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  [data-md-color-scheme="slate"] .md-tabs__list::-webkit-scrollbar {
+    display: none;
+  }
+
   /* Make tab items position: relative for absolute positioning of dropdown */
   [data-md-color-scheme="slate"] .md-tabs__item {
     position: relative;
+    flex: 0 0 auto;
+  }
+
+  [data-md-color-scheme="slate"] .md-tabs__link {
+    padding-inline: 0.9rem;
+    white-space: nowrap;
   }
 
   /* Dropdown menu styling */
@@ -228,7 +255,8 @@ a:hover {
     position: absolute;
     top: calc(100% + 0.35rem);
     left: 0;
-    min-width: 260px;
+    min-width: 18rem;
+    max-width: min(24rem, 88vw);
     max-height: 60vh;
     overflow: auto;
     background: #000;
