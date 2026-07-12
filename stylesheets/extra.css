@@ -10,16 +10,36 @@
   --md-primary-fg-color: #ffffff;
   --md-accent-fg-color: #00bfff;
 
-  --md-code-bg-color: #0a0a0a;
+  --md-code-bg-color: #020000;
   --md-code-fg-color: #ffffff;
 }
 
 /* Slightly larger default reading text */
 .md-typeset {
-  font-size: 0.95rem;
+  font-size: 1.25rem;
   line-height: 1.75;
 }
 
+/* code block high contrast */
+.md-typeset code {
+  font-size: 1rem;
+  background-color: #020000;
+  border: 1px solid #333;
+  border-radius: 5px;
+}
+
+/* table background high contrast */
+.md-typeset td {
+  background-color: #020000;
+  border: 1px solid #333;
+  border-radius: 5px;
+}
+
+.md-typeset td code{
+  font-size: 1rem;
+  border: 1px solid #333;
+  border-radius: 5px;
+}
 /* Navbar backgrounds */
 .md-header, .md-tabs {
   background-color: #000000 !important;
@@ -88,71 +108,38 @@ a:hover { color: #ffffff !important; }
 /* ==========================================================================
    ----- SIDEBAR TOGGLE MECHANISM -----
    ========================================================================== */
-@media screen and (min-width: 76.25em) {
-  /* 1. Smooth animations for closing/opening */
-  .md-sidebar {
-    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
-                width 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
-                opacity 0.25s !important;
-  }
-
-  /* 2. Toggle Left Sidebar */
-  body.hide-left-sidebar .md-sidebar--primary {
-    transform: translateX(-100%);
-    width: 0 !important;
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  /* 3. Toggle Right Sidebar */
-  body.hide-right-sidebar .md-sidebar--secondary {
-    transform: translateX(100%);
-    width: 0 !important;
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  /* 4. Make Content stretch to fill the empty space smoothly */
-  .md-content {
-    transition: margin 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  }
-  body.hide-left-sidebar .md-content {
-    margin-left: 0 !important;
-  }
-  body.hide-right-sidebar .md-content {
-    margin-right: 0 !important;
-  }
-
-  /* 5. Floating Action Control Buttons on the screen edges */
-  .sidebar-toggle-btn {
-    position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 14px;
-    height: 60px;
-    background: #111;
-    border: 1px solid #333;
-    color: #4da3ff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 100;
-    border-radius: 4px;
-    font-size: 0.7rem;
-    opacity: 0.4;
-    transition: opacity 0.2s, background 0.2s;
-  }
-  .sidebar-toggle-btn:hover {
-    opacity: 1;
-    background: #222;
-    color: #fff;
-  }
-  .toggle-btn-left { left: 5px; }
-  .toggle-btn-right { right: 5px; }
+/* ----- Toggle button & hide/show sidebars ----- */
+/* The toggle button: floating, fixed position */
+.sidebar-toggle {
+  position: fixed;
+  bottom: 1.1rem;
+  left: 10%;
+  transform: translateX(-50%);
+  z-index: 60;
+  background: #000;
+  color: #fff;
+  border: 1px solid #4da3ff;
+  border-radius: 999px;
+  padding: 0.5rem 1.2rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+  transition: background 0.2s;
+  user-select: none;
 }
 
-/* Hide toggle buttons entirely on mobile view */
-@media screen and (max-width: 76.2344em) {
-  .sidebar-toggle-btn { display: none !important; }
+.sidebar-toggle:hover {
+  background: #1a1a1a;
+}
+
+/* When sidebars are hidden, hide them */
+body.sidebars-hidden .md-sidebar--primary,
+body.sidebars-hidden .md-sidebar--secondary {
+  display: none !important;
+}
+
+/* When hidden, expand content to full width */
+body.sidebars-hidden .md-content {
+  margin-left: 0.5rem !important;
+  margin-right: 0.5rem !important;
 }

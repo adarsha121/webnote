@@ -4061,13 +4061,33 @@ And you don't have to remember each commands at all, that is not the way of lear
 <p><strong>Syntax:</strong></p>
 <pre><code class="language-bash">cd &lt;directory&gt;
 </code></pre>
-<p><strong>Special Paths:</strong>
-| Path | Meaning |
-|------|---------|
-| <code>/</code> | Root directory (top level) |
-| <code>~</code> | Home directory |
-| <code>..</code> | One level up (parent directory) |
-| <code>.</code> | Current directory |</p>
+<p><strong>Special Paths:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/</code></td>
+<td>Root directory (top level)</td>
+</tr>
+<tr>
+<td><code>~</code></td>
+<td>Home directory</td>
+</tr>
+<tr>
+<td><code>..</code></td>
+<td>One level up (parent directory)</td>
+</tr>
+<tr>
+<td><code>.</code></td>
+<td>Current directory</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Examples:</strong></p>
 <pre><code class="language-bash">cd /var/log          # Navigate to /var/log
 cd ~                 # Go to home directory
@@ -4081,14 +4101,37 @@ cd ~/Documents       # Go to Documents in home
 <p><strong>Syntax:</strong></p>
 <pre><code class="language-bash">ls [flags] [directory]
 </code></pre>
-<p><strong>Relevant Flags:</strong>
-| Flag | Description |
-|------|-------------|
-| <code>-a</code> | List all files, including hidden files (those starting with <code>.</code>) |
-| <code>-l</code> | Long format — shows permissions, owner, size, modification date |
-| <code>-h</code> | Human-readable sizes (e.g., <code>2.5M</code>, <code>1.2G</code>) — use with <code>-l</code> |
-| <code>-i</code> | Display inode (index node) numbers |
-| <code>-d */</code> | List only subdirectories |</p>
+<p><strong>Relevant Flags:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-a</code></td>
+<td>List all files, including hidden files (those starting with <code>.</code>)</td>
+</tr>
+<tr>
+<td><code>-l</code></td>
+<td>Long format — shows permissions, owner, size, modification date</td>
+</tr>
+<tr>
+<td><code>-h</code></td>
+<td>Human-readable sizes (e.g., <code>2.5M</code>, <code>1.2G</code>) — use with <code>-l</code></td>
+</tr>
+<tr>
+<td><code>-i</code></td>
+<td>Display inode (index node) numbers</td>
+</tr>
+<tr>
+<td><code>-d */</code></td>
+<td>List only subdirectories</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Examples:</strong></p>
 <pre><code class="language-bash">ls
 </code></pre>
@@ -4148,14 +4191,37 @@ drwxr-xr-x 3 root   root   4096 Jul 08 09:00 ..
 <p><strong>Syntax:</strong></p>
 <pre><code class="language-bash">shutdown [options]
 </code></pre>
-<p><strong>Relevant Options:</strong>
-| Option | Description |
-|--------|-------------|
-| <code>-h</code> | Halt (shutdown) after 1 minute (default) |
-| <code>-h now</code> | Shutdown immediately |
-| <code>-h +10</code> | Shutdown after 10 minutes |
-| <code>-c</code> | Cancel a scheduled shutdown |
-| <code>-r now</code> | Reboot immediately |</p>
+<p><strong>Relevant Options:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-h</code></td>
+<td>Halt (shutdown) after 1 minute (default)</td>
+</tr>
+<tr>
+<td><code>-h now</code></td>
+<td>Shutdown immediately</td>
+</tr>
+<tr>
+<td><code>-h +10</code></td>
+<td>Shutdown after 10 minutes</td>
+</tr>
+<tr>
+<td><code>-c</code></td>
+<td>Cancel a scheduled shutdown</td>
+</tr>
+<tr>
+<td><code>-r now</code></td>
+<td>Reboot immediately</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Examples:</strong></p>
 <pre><code class="language-bash">sudo shutdown -h now      # Immediate shutdown
 sudo shutdown -h +10      # Shutdown in 10 minutes
@@ -4201,10 +4267,21 @@ open code             # Open VS Code (if installed)
 <p><strong>Syntax:</strong></p>
 <pre><code class="language-bash">df [flags]
 </code></pre>
-<p><strong>Relevant Flags:</strong>
-| Flag | Description |
-|------|-------------|
-| <code>-h</code> | Human-readable format (e.g., <code>10G</code>, <code>500M</code>) |</p>
+<p><strong>Relevant Flags:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-h</code></td>
+<td>Human-readable format (e.g., <code>10G</code>, <code>500M</code>)</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Example:</strong></p>
 <pre><code class="language-bash">df -h
 </code></pre>
@@ -4219,12 +4296,29 @@ tmpfs           3.9G  1.2M  3.9G   1% /run
 <p><strong>Syntax:</strong></p>
 <pre><code class="language-bash">du [flags] &lt;path&gt;
 </code></pre>
-<p><strong>Relevant Flags:</strong>
-| Flag | Description |
-|------|-------------|
-| <code>-h</code> | Human-readable sizes |
-| <code>-s</code> | Summary (total only, not individual files) |
-| <code>--max-depth=N</code> | Show directories up to N levels deep |</p>
+<p><strong>Relevant Flags:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-h</code></td>
+<td>Human-readable sizes</td>
+</tr>
+<tr>
+<td><code>-s</code></td>
+<td>Summary (total only, not individual files)</td>
+</tr>
+<tr>
+<td><code>--max-depth=N</code></td>
+<td>Show directories up to N levels deep</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Examples:</strong></p>
 <pre><code class="language-bash">du -sh /var/log
 </code></pre>
@@ -4300,14 +4394,37 @@ chmod 600 private.key     # rw------- (owner only)
 <p><strong>Syntax:</strong></p>
 <pre><code class="language-bash">shred [flags] &lt;file&gt;
 </code></pre>
-<p><strong>Relevant Flags:</strong>
-| Flag | Description |
-|------|-------------|
-| <code>-n N</code> | Overwrite N times (default: 3) |
-| <code>-z</code> | Add final overwrite with zeros to hide shredding |
-| <code>-u</code> | Truncate and remove file after overwriting |
-| <code>-v</code> | Verbose mode (show progress) |
-| <code>-f</code> | Force permissions change if needed |</p>
+<p><strong>Relevant Flags:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-n N</code></td>
+<td>Overwrite N times (default: 3)</td>
+</tr>
+<tr>
+<td><code>-z</code></td>
+<td>Add final overwrite with zeros to hide shredding</td>
+</tr>
+<tr>
+<td><code>-u</code></td>
+<td>Truncate and remove file after overwriting</td>
+</tr>
+<tr>
+<td><code>-v</code></td>
+<td>Verbose mode (show progress)</td>
+</tr>
+<tr>
+<td><code>-f</code></td>
+<td>Force permissions change if needed</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Example:</strong></p>
 <pre><code class="language-bash">shred -n 5 -zu -v secret.txt
 </code></pre>
@@ -4365,14 +4482,37 @@ mkdir -p Projects/web/app   # Create nested directories
 <p><strong>Syntax:</strong></p>
 <pre><code class="language-bash">cp [flags] &lt;source&gt; &lt;destination&gt;
 </code></pre>
-<p><strong>Relevant Flags:</strong>
-| Flag | Description |
-|------|-------------|
-| <code>-r</code> | Recursive (copy directories and their contents) |
-| <code>-v</code> | Verbose (show what's being copied) |
-| <code>-u</code> | Copy only if source is newer than destination |
-| <code>-n</code> | Do not overwrite existing files |
-| <code>-p</code> | Preserve timestamps and permissions |</p>
+<p><strong>Relevant Flags:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-r</code></td>
+<td>Recursive (copy directories and their contents)</td>
+</tr>
+<tr>
+<td><code>-v</code></td>
+<td>Verbose (show what's being copied)</td>
+</tr>
+<tr>
+<td><code>-u</code></td>
+<td>Copy only if source is newer than destination</td>
+</tr>
+<tr>
+<td><code>-n</code></td>
+<td>Do not overwrite existing files</td>
+</tr>
+<tr>
+<td><code>-p</code></td>
+<td>Preserve timestamps and permissions</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Examples:</strong></p>
 <pre><code class="language-bash">cp file.txt /backup/
 cp -r my_folder/ /backup/my_folder/
@@ -4395,12 +4535,29 @@ mv folder/ /backup/               # Move directory
 <p><strong>Syntax:</strong></p>
 <pre><code class="language-bash">rm [flags] &lt;file_or_directory&gt;
 </code></pre>
-<p><strong>Relevant Flags:</strong>
-| Flag | Description |
-|------|-------------|
-| <code>-r</code> | Recursive (remove directories and contents) |
-| <code>-f</code> | Force removal without prompting |
-| <code>-i</code> | Interactive (prompt before each removal) |</p>
+<p><strong>Relevant Flags:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-r</code></td>
+<td>Recursive (remove directories and contents)</td>
+</tr>
+<tr>
+<td><code>-f</code></td>
+<td>Force removal without prompting</td>
+</tr>
+<tr>
+<td><code>-i</code></td>
+<td>Interactive (prompt before each removal)</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Examples:</strong></p>
 <pre><code class="language-bash">rm file.txt
 rm -r old_project/
@@ -4415,20 +4572,60 @@ rm -rf temp/          # Force remove directory (use with caution!)
 <p><strong>Syntax:</strong></p>
 <pre><code class="language-bash">find [path] [options] [expression]
 </code></pre>
-<p><strong>Common Paths:</strong>
-| Path | Search Scope |
-|------|-------------|
-| <code>/</code> | Entire filesystem (may need <code>sudo</code>) |
-| <code>~</code> | Home directory |
-| <code>.</code> | Current directory and subdirectories |</p>
-<p><strong>Relevant Options &amp; Expressions:</strong>
-| Flag/Expression | Description |
-|-----------------|-------------|
-| <code>-maxdepth N</code> | Limit search depth to N levels |
-| <code>-type f</code> | Find only regular files |
-| <code>-type d</code> | Find only directories |
-| <code>-name "pattern"</code> | Case-sensitive name match |
-| <code>-iname "pattern"</code> | Case-insensitive name match |</p>
+<p><strong>Common Paths:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Search Scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/</code></td>
+<td>Entire filesystem (may need <code>sudo</code>)</td>
+</tr>
+<tr>
+<td><code>~</code></td>
+<td>Home directory</td>
+</tr>
+<tr>
+<td><code>.</code></td>
+<td>Current directory and subdirectories</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Relevant Options &amp; Expressions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Flag/Expression</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-maxdepth N</code></td>
+<td>Limit search depth to N levels</td>
+</tr>
+<tr>
+<td><code>-type f</code></td>
+<td>Find only regular files</td>
+</tr>
+<tr>
+<td><code>-type d</code></td>
+<td>Find only directories</td>
+</tr>
+<tr>
+<td><code>-name "pattern"</code></td>
+<td>Case-sensitive name match</td>
+</tr>
+<tr>
+<td><code>-iname "pattern"</code></td>
+<td>Case-insensitive name match</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Examples:</strong></p>
 <pre><code class="language-bash">find ~ -type f -name &quot;*.py&quot;
 </code></pre>
@@ -4507,12 +4704,29 @@ Date:   Sat Oct 12 14:22:18 2025
 
     Fixed bug in login module
 </code></pre>
-<p><strong>Relevant Flags:</strong>
-| Flag | Description |
-|------|-------------|
-| <code>--oneline</code> | Compact one-line format per commit |
-| <code>--graph</code> | ASCII graph of branch/merge history |
-| <code>--all</code> | Show all branches |</p>
+<p><strong>Relevant Flags:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--oneline</code></td>
+<td>Compact one-line format per commit</td>
+</tr>
+<tr>
+<td><code>--graph</code></td>
+<td>ASCII graph of branch/merge history</td>
+</tr>
+<tr>
+<td><code>--all</code></td>
+<td>Show all branches</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Example:</strong></p>
 <pre><code class="language-bash">git log --oneline
 </code></pre>
@@ -4705,13 +4919,33 @@ yt-dlp -U                             # Update yt-dlp
 <p><strong>Syntax:</strong></p>
 <pre><code class="language-bash">rsync [flags] &lt;source&gt; &lt;destination&gt;
 </code></pre>
-<p><strong>Relevant Flags:</strong>
-| Flag | Description |
-|------|-------------|
-| <code>-a</code> | Archive mode (preserves permissions, timestamps, symlinks) |
-| <code>-v</code> | Verbose |
-| <code>-z</code> | Compress during transfer |
-| <code>-e ssh</code> | Use SSH for remote transfer |</p>
+<p><strong>Relevant Flags:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-a</code></td>
+<td>Archive mode (preserves permissions, timestamps, symlinks)</td>
+</tr>
+<tr>
+<td><code>-v</code></td>
+<td>Verbose</td>
+</tr>
+<tr>
+<td><code>-z</code></td>
+<td>Compress during transfer</td>
+</tr>
+<tr>
+<td><code>-e ssh</code></td>
+<td>Use SSH for remote transfer</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Examples:</strong></p>
 <pre><code class="language-bash">rsync -av /source/ /backup/
 rsync -avz -e ssh /local/path/ user@remote_host:/remote/path/
@@ -4830,15 +5064,41 @@ ttyd -W -p 8080 -c user:password bash   # With authentication
 <p><strong>Syntax:</strong></p>
 <pre><code class="language-bash">sudo apt [command] [package]
 </code></pre>
-<p><strong>Common Commands:</strong>
-| Command | Description |
-|---------|-------------|
-| <code>update</code> | Refresh package lists |
-| <code>upgrade</code> | Upgrade installed packages |
-| <code>install &lt;pkg&gt;</code> | Install a package |
-| <code>remove &lt;pkg&gt;</code> | Remove a package |
-| <code>search &lt;pkg&gt;</code> | Search for a package |
-| <code>list --installed</code> | List installed packages |</p>
+<p><strong>Common Commands:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>update</code></td>
+<td>Refresh package lists</td>
+</tr>
+<tr>
+<td><code>upgrade</code></td>
+<td>Upgrade installed packages</td>
+</tr>
+<tr>
+<td><code>install &lt;pkg&gt;</code></td>
+<td>Install a package</td>
+</tr>
+<tr>
+<td><code>remove &lt;pkg&gt;</code></td>
+<td>Remove a package</td>
+</tr>
+<tr>
+<td><code>search &lt;pkg&gt;</code></td>
+<td>Search for a package</td>
+</tr>
+<tr>
+<td><code>list --installed</code></td>
+<td>List installed packages</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Examples:</strong></p>
 <pre><code class="language-bash">sudo apt update
 sudo apt upgrade code              # Upgrade VS Code specifically
@@ -5042,14 +5302,37 @@ upower -i &lt;battery_path&gt;          # Get battery details
 <p><strong>Syntax:</strong></p>
 <pre><code class="language-bash">grep [flags] &lt;pattern&gt; &lt;file&gt;
 </code></pre>
-<p><strong>Relevant Flags:</strong>
-| Flag | Description |
-|------|-------------|
-| <code>-r</code> | Recursive search through directories |
-| <code>-i</code> | Case-insensitive search |
-| <code>-c</code> | Count matching lines only |
-| <code>-n</code> | Show line numbers |
-| <code>-E</code> | Extended regex (enables <code>|</code> OR operator) |</p>
+<p><strong>Relevant Flags:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-r</code></td>
+<td>Recursive search through directories</td>
+</tr>
+<tr>
+<td><code>-i</code></td>
+<td>Case-insensitive search</td>
+</tr>
+<tr>
+<td><code>-c</code></td>
+<td>Count matching lines only</td>
+</tr>
+<tr>
+<td><code>-n</code></td>
+<td>Show line numbers</td>
+</tr>
+<tr>
+<td><code>-E</code></td>
+<td>Extended regex (enables <code>|</code> OR operator)</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Examples:</strong></p>
 <pre><code class="language-bash">grep 'error' output.log
 </code></pre>
@@ -5085,11 +5368,25 @@ upower -i &lt;battery_path&gt;          # Get battery details
 <p><strong>Syntax:</strong></p>
 <pre><code class="language-bash">sed [flags] 's&lt;delimiter&gt;&lt;old&gt;&lt;delimiter&gt;&lt;new&gt;&lt;delimiter&gt;[g]' &lt;file&gt;
 </code></pre>
-<p><strong>Relevant Flags:</strong>
-| Flag | Description |
-|------|-------------|
-| <code>-i</code> | Edit in-place (modifies the file directly) |
-| <code>-n</code> | Suppress automatic printing |</p>
+<p><strong>Relevant Flags:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-i</code></td>
+<td>Edit in-place (modifies the file directly)</td>
+</tr>
+<tr>
+<td><code>-n</code></td>
+<td>Suppress automatic printing</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Examples:</strong></p>
 <pre><code class="language-bash">sed 's/pizza/burger/g' food.txt
 </code></pre>
