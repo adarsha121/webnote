@@ -42,5 +42,5 @@ nav:
 extra_css:
   - stylesheets/extra.css
 
-extra_javascript:
-  - javascripts/tab-dropdown.js
+# extra_javascript:
+#   - javascripts/tab-dropdown.js

@@ -28,40 +28,27 @@
       var menu = document.createElement("div");
       menu.className = "tab-submenu";
 
-      // Check if this nav item has nested children
-      var nestedNav = navItem.querySelector(":scope > .md-nav");
-      if (nestedNav) {
-        // Has nested navigation - get all direct links from the nested nav
-        var nestedLinks = nestedNav.querySelectorAll(":scope > .md-nav__list > .md-nav__item > .md-nav__link, :scope > .md-nav__list > .md-nav__item > a.md-nav__link");
-        
-        if (nestedLinks.length > 0) {
-          nestedLinks.forEach(function (link) {
-            var href = link.getAttribute("href");
-            var text = link.textContent.trim();
-            if (!href || !text) return;
+      var nestedNav = Array.from(navItem.children).find(function (child) {
+        return child.matches && child.matches("nav.md-nav") && !child.classList.contains("md-nav--secondary");
+      });
 
-            var item = document.createElement("a");
-            item.href = href;
-            item.textContent = text;
-            menu.appendChild(item);
-          });
-        }
-      } else {
-        // No nested nav - check if the nav item itself has a link
-        var directLink = navItem.querySelector(":scope > a.md-nav__link");
-        if (directLink) {
-          var href = directLink.getAttribute("href");
-          var text = directLink.textContent.trim();
-          if (href && text) {
-            var item = document.createElement("a");
-            item.href = href;
-            item.textContent = text;
-            menu.appendChild(item);
-          }
-        }
-      }
+      if (!nestedNav) return;
 
-      // Only append if menu has items
+      // Has nested navigation - get all direct links from the nested nav.
+      var nestedLinks = nestedNav.querySelectorAll(":scope > .md-nav__list > .md-nav__item > .md-nav__link, :scope > .md-nav__list > .md-nav__item > a.md-nav__link");
+
+      nestedLinks.forEach(function (link) {
+        var href = link.getAttribute("href");
+        var text = link.textContent.trim();
+        if (!href || !text) return;
+
+        var item = document.createElement("a");
+        item.href = href;
+        item.textContent = text;
+        menu.appendChild(item);
+      });
+
+      // Skip empty dropdowns so the desktop tabs stay compact.
       if (menu.childElementCount > 0) {
         tab.appendChild(menu);
       }
