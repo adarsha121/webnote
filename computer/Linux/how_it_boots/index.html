@@ -1,0 +1,3050 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://adarsha121.github.io/webnote/computer/Linux/how_it_boots/">
+      
+      
+        <link rel="prev" href="../linux_filesystem/">
+      
+      
+        <link rel="next" href="../sys_ctl/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>How it Boots - My Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#from-power-button-to-desktop-how-linux-boots-and-how-its-built" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="My Notes" class="md-header__button md-logo" aria-label="My Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            My Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              How it Boots
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="blue"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../physics/mechanics/" class="md-tabs__link">
+          
+  
+  
+  Physics
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../math/calculus.md" class="md-tabs__link">
+          
+  
+  
+  Math
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../ai/rag.md" class="md-tabs__link">
+          
+  
+  
+  AI/ML
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Programming
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../tsc/intro_ed/" class="md-tabs__link">
+          
+  
+  
+  TSC
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="My Notes" class="md-nav__button md-logo" aria-label="My Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    My Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Physics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Physics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../physics/mechanics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mechanics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../physics/quantum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quantum
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Math
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Math
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../math/calculus.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculus
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../math/linear.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear Algebra
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI/ML
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    AI/ML
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ai/rag.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RAG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Programming
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Programming
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linux_commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linux_filesystem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux File System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How it Boots
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How it Boots
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📑 Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-the-big-picture-a-theatre-show" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 🎭 The Big Picture: a theatre show
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-stage-0-electricity-wakes-the-hardware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 🔌 Stage 0: Electricity wakes the hardware
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-stage-1-firmware-bios-or-uefi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 🔦 Stage 1: Firmware (BIOS or UEFI)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 🔦 Stage 1: Firmware (BIOS or UEFI)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bios-the-old-guard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🦖 BIOS (the old guard)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uefi-the-modern-way" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 UEFI (the modern way)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bios-vs-uefi-at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BIOS vs UEFI at a glance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-stage-2-the-bootloader-grub" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 📋 Stage 2: The bootloader (GRUB)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 📋 Stage 2: The bootloader (GRUB)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-grub-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What GRUB does
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-stage-3-the-kernel-takes-over" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 🎬 Stage 3: The kernel takes over
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-stage-4-initramfs-the-tiny-helper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 🧰 Stage 4: initramfs, the tiny helper
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-stage-5-systemd-pid-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 📣 Stage 5: systemd, PID 1
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 📣 Stage 5: systemd, PID 1">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-pid-1-is-a-big-deal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why PID 1 is a big deal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-systemd-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What systemd does
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#targets-boot-destinations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Targets: boot "destinations"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-stage-6-login-screen-to-desktop-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 🎟️ Stage 6: Login screen to desktop window
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 🎟️ Stage 6: Login screen to desktop window">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-the-display-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: The display manager
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-your-session-begins" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Your session begins
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-the-display-server-and-compositor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: The display server and compositor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-the-desktop-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: The desktop environment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-how-linux-is-built-the-layer-cake" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 🍰 How Linux is built: the layer cake
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 🍰 How Linux is built: the layer cake">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-restaurant-analogy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🍽️ The restaurant analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-the-kernel-actually-manages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the kernel actually manages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monolithic-but-modular" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧩 Monolithic... but modular
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-kernel-space-vs-user-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 🛡️ Kernel space vs user space
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-system-calls-how-apps-ask-the-kernel-for-help" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 🛎️ System calls: how apps ask the kernel for help
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-the-shell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 🐚 The shell
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-peek-behind-the-curtain-commands-to-try" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 🔍 Peek behind the curtain: commands to try
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-the-whole-journey-on-one-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. 🗺️ The whole journey on one page
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final-words" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎬 Final Words
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references-further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 References &amp; Further Reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sys_ctl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../misc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Miscellaneous
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Python
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Python/numpy_pandas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Numpy and Pandas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Python/matplotlib/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Matplotlib
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSC
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    TSC
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/intro_ed/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    शिक्षाकाै परिचय
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/learning_principle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    शैक्षिक सिद्धान्त
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/16th_plan_about_edu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    साैह्रौं योजना
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/bhugool/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    भुगाेल
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/cirriculum_and_books/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    पाठ्यक्रम
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/constution_edu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    सबि‌धान
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/ed_act_2028/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    शिक्षा एेन
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/ed_niyamawali/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    सिक्षा नियमावली
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/tsc_niyamabali_2057/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    शिक्षाक सेवा आयोग नियमावली
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/history_nepal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    इतिहास
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/local_govt_ed_related/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    थानीय सरकार सञ्चालन ऐन
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/intl_orgs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    अन्तराष्ट्रिय स‌घसस्था
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/constution_edu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    सबि‌धान
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📑 Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-the-big-picture-a-theatre-show" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 🎭 The Big Picture: a theatre show
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-stage-0-electricity-wakes-the-hardware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 🔌 Stage 0: Electricity wakes the hardware
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-stage-1-firmware-bios-or-uefi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 🔦 Stage 1: Firmware (BIOS or UEFI)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 🔦 Stage 1: Firmware (BIOS or UEFI)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bios-the-old-guard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🦖 BIOS (the old guard)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uefi-the-modern-way" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 UEFI (the modern way)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bios-vs-uefi-at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BIOS vs UEFI at a glance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-stage-2-the-bootloader-grub" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 📋 Stage 2: The bootloader (GRUB)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 📋 Stage 2: The bootloader (GRUB)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-grub-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What GRUB does
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-stage-3-the-kernel-takes-over" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 🎬 Stage 3: The kernel takes over
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-stage-4-initramfs-the-tiny-helper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 🧰 Stage 4: initramfs, the tiny helper
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-stage-5-systemd-pid-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 📣 Stage 5: systemd, PID 1
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 📣 Stage 5: systemd, PID 1">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-pid-1-is-a-big-deal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why PID 1 is a big deal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-systemd-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What systemd does
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#targets-boot-destinations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Targets: boot "destinations"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-stage-6-login-screen-to-desktop-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 🎟️ Stage 6: Login screen to desktop window
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 🎟️ Stage 6: Login screen to desktop window">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-the-display-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: The display manager
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-your-session-begins" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Your session begins
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-the-display-server-and-compositor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: The display server and compositor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-the-desktop-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: The desktop environment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-how-linux-is-built-the-layer-cake" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 🍰 How Linux is built: the layer cake
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 🍰 How Linux is built: the layer cake">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-restaurant-analogy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🍽️ The restaurant analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-the-kernel-actually-manages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the kernel actually manages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monolithic-but-modular" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧩 Monolithic... but modular
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-kernel-space-vs-user-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 🛡️ Kernel space vs user space
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-system-calls-how-apps-ask-the-kernel-for-help" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 🛎️ System calls: how apps ask the kernel for help
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-the-shell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 🐚 The shell
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-peek-behind-the-curtain-commands-to-try" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 🔍 Peek behind the curtain: commands to try
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-the-whole-journey-on-one-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. 🗺️ The whole journey on one page
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final-words" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎬 Final Words
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references-further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 References &amp; Further Reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="from-power-button-to-desktop-how-linux-boots-and-how-its-built">⚡ From Power Button to Desktop: How Linux Boots (and How It's Built)</h1>
+<p>You press a button. A few seconds later, a polished desktop is staring back at you. It feels instant, almost boring.</p>
+<p>But in those few seconds, your computer performs a <strong>relay race</strong> with at least six runners, each one waking up the next, each one smarter than the last. And the very first runner wakes up believing it's <strong>1978</strong>.</p>
+<p>In this page we'll follow the whole journey, from electricity to your desktop window, and then peek inside the machine to see how Linux is actually <em>built</em>. If the <a href="../">history page</a> was <em>where Linux came from</em>, this one is <em>what Linux does the moment you wake it up</em>.</p>
+<p>☕ <em>Grab your coffee again. This one's a short trip, but a fun one.</em></p>
+<hr />
+<h2 id="table-of-contents">📑 Table of Contents</h2>
+<ol>
+<li><a href="#1--the-big-picture-a-theatre-show">The Big Picture: a theatre show</a></li>
+<li><a href="#2--stage-0-electricity-wakes-the-hardware">Stage 0: Electricity wakes the hardware</a></li>
+<li><a href="#3--stage-1-firmware-bios-or-uefi">Stage 1: Firmware (BIOS or UEFI)</a></li>
+<li><a href="#4--stage-2-the-bootloader-grub">Stage 2: The bootloader (GRUB)</a></li>
+<li><a href="#5--stage-3-the-kernel-takes-over">Stage 3: The kernel takes over</a></li>
+<li><a href="#6--stage-4-initramfs-the-tiny-helper">Stage 4: initramfs, the tiny helper</a></li>
+<li><a href="#7--stage-5-systemd-pid-1">Stage 5: systemd, PID 1</a></li>
+<li><a href="#8--stage-6-login-screen-to-desktop-window">Stage 6: Login screen to desktop window</a></li>
+<li><a href="#9--how-linux-is-built-the-layer-cake">How Linux is built: the layer cake</a></li>
+<li><a href="#10--kernel-space-vs-user-space">Kernel space vs user space</a></li>
+<li><a href="#11--system-calls-how-apps-ask-the-kernel-for-help">System calls: how apps ask the kernel for help</a></li>
+<li><a href="#12--the-shell">The shell</a></li>
+<li><a href="#13--peek-behind-the-curtain-commands-to-try">Peek behind the curtain: commands to try</a></li>
+<li><a href="#14--the-whole-journey-on-one-page">The whole journey on one page</a></li>
+<li><a href="#-references--further-reading">References</a></li>
+</ol>
+<hr />
+<h2 id="1-the-big-picture-a-theatre-show">1. 🎭 The Big Picture: a theatre show</h2>
+<p>Think of booting as <strong>putting on a theatre show</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Theatre</th>
+<th>Computer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>⚡ Power to the building</td>
+<td>Power supply feeds the hardware</td>
+</tr>
+<tr>
+<td>🔦 Stage crew switches on lights and checks the stage</td>
+<td><strong>Firmware</strong> (BIOS/UEFI) tests and wakes the hardware</td>
+</tr>
+<tr>
+<td>📋 Stage manager finds the script and the director</td>
+<td><strong>Bootloader</strong> (GRUB) finds and loads the kernel</td>
+</tr>
+<tr>
+<td>🎬 The director takes charge</td>
+<td><strong>Kernel</strong> controls the hardware and memory</td>
+</tr>
+<tr>
+<td>🧰 A box of props for the first scene</td>
+<td><strong>initramfs</strong> gets the real disk ready</td>
+</tr>
+<tr>
+<td>📣 Assistant directors calling the actors</td>
+<td><strong>systemd</strong> starts services</td>
+</tr>
+<tr>
+<td>🎟️ Ticket counter</td>
+<td><strong>Login screen</strong></td>
+</tr>
+<tr>
+<td>🎉 The show</td>
+<td><strong>Your desktop</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Each stage does <em>one job</em>, then <strong>hands the baton</strong> to the next. If any runner trips, the show doesn't start, which is why a broken bootloader gives you a scary black screen while a broken wallpaper app doesn't.</p>
+<hr />
+<h2 id="2-stage-0-electricity-wakes-the-hardware">2. 🔌 Stage 0: Electricity wakes the hardware</h2>
+<p>You press the power button. This isn't software yet. It's pure <strong>electronics</strong>:</p>
+<ol>
+<li>The <strong>power supply</strong> starts up and, once its voltages are stable, sends a "power good" signal to the motherboard.</li>
+<li>Until that signal arrives, the <strong>CPU is held in reset</strong>, like an alarm clock with the snooze pressed.</li>
+<li>Once released, the CPU does something very simple: it jumps to a <strong>fixed, hard-wired memory address</strong> and runs whatever instructions it finds there.</li>
+</ol>
+<p>And what sits at that address? A small chip on your motherboard storing the <strong>firmware</strong>.</p>
+<blockquote>
+<p>🕰️ <strong>Fun fact:</strong> An x86 CPU wakes up in a primitive 16-bit mode, called <em>real mode</em>, which dates back to the 8086 chip of 1978. Even your shiny modern 64-bit processor starts the day pretending to be a 1970s relic, then quickly "grows up" through different modes as software takes over. Every PC essentially goes through a tiny <strong>evolution montage</strong> on every boot.</p>
+</blockquote>
+<hr />
+<h2 id="3-stage-1-firmware-bios-or-uefi">3. 🔦 Stage 1: Firmware (BIOS or UEFI)</h2>
+<p>The firmware is the <strong>first software</strong> that runs. Its jobs:</p>
+<ul>
+<li><strong>POST</strong> (Power-On Self-Test): "Is there RAM? Is the keyboard there? Is the CPU okay?" (That's the single beep some PCs make.)</li>
+<li><strong>Initialise basic hardware</strong>: memory controller, storage controllers, display.</li>
+<li><strong>Find something to boot from</strong>: a disk, USB stick or network.</li>
+<li><strong>Hand over control</strong> to the next stage.</li>
+</ul>
+<p>There are two generations.</p>
+<h3 id="bios-the-old-guard">🦖 BIOS (the old guard)</h3>
+<p><strong>BIOS</strong> stands for <em>Basic Input/Output System</em>. It debuted on the original <strong>IBM PC in 1981</strong>, the same machine from our history page that launched with MS-DOS. (Fun detail: the term "BIOS" first appeared in the <strong>CP/M</strong> operating system, remember the QDOS and CP/M story?)</p>
+<p>How it boots:
+1. Looks at the boot disk's very first <strong>512 bytes</strong>, called the <strong>MBR</strong> (<a href="https://en.wikipedia.org/wiki/Master_boot_record">Master Boot Record</a>).
+2. Those 512 bytes hold a tiny bit of code, a partition table, and a magic signature.
+3. BIOS runs that tiny code and hopes for the best.</p>
+<p>Yes, the entire first handover is <strong>512 bytes</strong>, smaller than this paragraph.</p>
+<h3 id="uefi-the-modern-way">🚀 UEFI (the modern way)</h3>
+<p><strong>UEFI</strong> (Unified Extensible Firmware Interface) replaced BIOS on most computers from around the 2010s. It is smarter, faster, and has a graphical interface.</p>
+<ul>
+<li>Uses a <strong>GPT</strong> partition scheme (no more tiny MBR limits).</li>
+<li>Reads a special small partition called the <strong>EFI System Partition (ESP)</strong>, formatted as FAT32, and runs a <code>.efi</code> program from it. On Ubuntu this is mounted at <code>/boot/efi</code> (a nice callback to the <a href="linux-file-system-explained.md">file system page</a>).</li>
+<li>Supports <strong>Secure Boot</strong>: only digitally signed bootloaders are allowed to run, to block malicious code from sneaking in before the OS wakes up. Ubuntu works with Secure Boot using a small signed helper called <em>shim</em>.</li>
+</ul>
+<h3 id="bios-vs-uefi-at-a-glance">BIOS vs UEFI at a glance</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>BIOS (legacy)</th>
+<th>UEFI (modern)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Born</td>
+<td>1981</td>
+<td>2000s era, standardised later</td>
+</tr>
+<tr>
+<td>Partition style</td>
+<td>MBR</td>
+<td>GPT (and supports MBR)</td>
+</tr>
+<tr>
+<td>Boot file</td>
+<td>First 512 bytes of the disk</td>
+<td><code>.efi</code> file on the ESP</td>
+</tr>
+<tr>
+<td>Interface</td>
+<td>Blue text screens</td>
+<td>Can be graphical, mouse support</td>
+</tr>
+<tr>
+<td>Secure Boot</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>Slower</td>
+<td>Faster</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>🔎 <strong>Check which one you have:</strong> <code>ls /sys/firmware/efi</code>. If that folder exists, you booted with UEFI.</p>
+</blockquote>
+<hr />
+<h2 id="4-stage-2-the-bootloader-grub">4. 📋 Stage 2: The bootloader (GRUB)</h2>
+<p>The firmware knows how to find <em>a</em> program on the disk, but it's far too simple to load an entire operating system. So it loads a <strong>bootloader</strong>.</p>
+<p>On most Linux systems, that's <strong>GRUB</strong> (<strong>GR</strong>and <strong>U</strong>nified <strong>B</strong>ootloader). And here's a fun callback: GRUB is a <strong>GNU project</strong>. Stallman's rebellion from the history page is literally what starts your computer. 🎩</p>
+<h3 id="what-grub-does">What GRUB does</h3>
+<ol>
+<li>Shows the <strong>boot menu</strong> (the one that appears if you hold <code>Shift</code> on BIOS systems or tap <code>Esc</code> on UEFI systems during start-up in Ubuntu). This is how <strong>dual-boot</strong> works: Linux <em>and</em> Windows in one list.</li>
+<li>Loads the <strong>kernel</strong> and the <strong>initramfs</strong> from <code>/boot</code> into memory.</li>
+<li>Passes the kernel a <strong>command line</strong> with options (which disk holds the root filesystem, whether to show the splash screen, etc.).</li>
+<li>Jumps to the kernel and gets out of the way.</li>
+</ol>
+<p>You can see the options GRUB passed:</p>
+<pre><code class="language-bash">cat /proc/cmdline
+</code></pre>
+<p>The files it loaded live in <code>/boot</code>, as described in the file system page:</p>
+<pre><code>/boot
+├── vmlinuz-&lt;version&gt;      ← the compressed Linux kernel
+├── initrd.img-&lt;version&gt;   ← the initial RAM filesystem
+└── grub/grub.cfg          ← GRUB's menu and settings
+</code></pre>
+<blockquote>
+<p>🧠 <strong>Why "vmlinuz"?</strong> "linux" is the name, "vm" originally hinted at <strong>virtual memory</strong>, and the trailing <strong>z</strong> means it's <strong>compressed</strong>. The kernel is a <strong>self-extracting archive</strong>.</p>
+</blockquote>
+<hr />
+<h2 id="5-stage-3-the-kernel-takes-over">5. 🎬 Stage 3: The kernel takes over</h2>
+<p>Now the star arrives: the <strong>Linux kernel</strong>, the very thing Linus started in 1991.</p>
+<p>The kernel immediately:</p>
+<ol>
+<li><strong>Decompresses itself</strong> into memory.</li>
+<li><strong>Sets up memory management</strong> (who gets which chunk of RAM).</li>
+<li><strong>Initialises the CPU features</strong>, interrupts and timers.</li>
+<li><strong>Detects hardware</strong> and loads the right <strong>drivers</strong>.</li>
+<li><strong>Mounts a temporary filesystem</strong> (the initramfs, next stage).</li>
+<li>Finally starts the <strong>first user program</strong>.</li>
+</ol>
+<p>All the messages it prints along the way are recorded, and you can read them any time:</p>
+<pre><code class="language-bash">dmesg | less
+</code></pre>
+<p>That's the kernel's <strong>diary of its own boot</strong>, where it grumbles about hardware, announces what it found and sometimes complains about firmware bugs.</p>
+<blockquote>
+<p>💥 <strong>Meet the kernel panic:</strong> if something goes badly wrong in the kernel and it can't continue safely, it stops everything and prints a <em>kernel panic</em> message. It's Linux's cousin of the Windows blue screen, only more dramatic about the vocabulary.</p>
+</blockquote>
+<hr />
+<h2 id="6-stage-4-initramfs-the-tiny-helper">6. 🧰 Stage 4: initramfs, the tiny helper</h2>
+<p>Here's a classic chicken-and-egg problem.</p>
+<blockquote>
+<p>The kernel needs <strong>drivers</strong> to read your disk. The drivers are <strong>stored on the disk</strong>. 🤯</p>
+</blockquote>
+<p>Solution: the <strong>initramfs</strong> (initial RAM filesystem). It's a <strong>small temporary filesystem</strong> loaded into memory by GRUB alongside the kernel. It contains just enough tools and drivers to:</p>
+<ul>
+<li>Load the right drivers (for your NVMe, RAID, encrypted disk, etc.).</li>
+<li>Ask for your <strong>disk-encryption password</strong>, if you set one up.</li>
+<li>Find and mount the <strong>real root filesystem</strong> (<code>/</code>).</li>
+<li><strong>Switch over</strong> to the real root and start the real init system.</li>
+</ul>
+<p>Think of it as the <strong>starter pack for the first scene</strong>: a small box of props to get the stage ready, thrown away once the real set is in place.</p>
+<hr />
+<h2 id="7-stage-5-systemd-pid-1">7. 📣 Stage 5: systemd, PID 1</h2>
+<p>With the real root filesystem mounted, the kernel launches the <strong>very first process</strong>, the one with <strong>PID 1</strong>. On modern Ubuntu, that's <a href="https://systemd.io"><strong>systemd</strong></a>.</p>
+<pre><code class="language-bash">ps -p 1
+ls -l /sbin/init
+# /sbin/init -&gt; ../lib/systemd/systemd   (or similar)
+</code></pre>
+<p>(Notice the symlinks, which tie back to the <em>usr-merge</em> story in the file system page.)</p>
+<h3 id="why-pid-1-is-a-big-deal">Why PID 1 is a big deal</h3>
+<ul>
+<li>It's the <strong>ancestor of every other process</strong>. Every program on the system descends from it. Run <code>pstree</code> to see the family tree. 🌳</li>
+<li>If a process loses its parent, <strong>PID 1 adopts it</strong>. It's a very patient parent.</li>
+<li>If PID 1 dies, the <strong>system goes down</strong>.</li>
+</ul>
+<h3 id="what-systemd-does">What systemd does</h3>
+<ol>
+<li>Reads configuration from <code>/etc/systemd</code> and unit files from <code>/lib/systemd</code> and friends.</li>
+<li><strong>Mounts disks</strong> listed in <code>/etc/fstab</code>.</li>
+<li>Sets up <code>/run</code>, <code>/dev</code>, <code>/proc</code> and <code>/sys</code> (the virtual filesystems).</li>
+<li>Starts <strong>services</strong> (network, sound, Bluetooth, printing, SSH...) <strong>in parallel</strong>, which is why modern boots are fast.</li>
+<li>Reaches a <strong>target</strong>, a goal state.</li>
+</ol>
+<h3 id="targets-boot-destinations">Targets: boot "destinations"</h3>
+<table>
+<thead>
+<tr>
+<th>Target</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>rescue.target</code></td>
+<td>Minimal single-user repair mode</td>
+</tr>
+<tr>
+<td><code>multi-user.target</code></td>
+<td>Full system, text-only (typical for servers)</td>
+</tr>
+<tr>
+<td><code>graphical.target</code></td>
+<td>Full system <strong>plus</strong> graphical login (typical for desktops)</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-bash">systemctl get-default          # what target do we boot to?
+systemd-analyze                # how long did the boot take?
+systemd-analyze blame          # which services were slowest?
+journalctl -b                  # logs from this boot
+</code></pre>
+<blockquote>
+<p>📜 <strong>A bit of history:</strong> Before systemd, Linux distros used an older init system called <strong>SysV init</strong>, which started services <em>one after another</em> in scripts. Then came Upstart (Ubuntu's own attempt) and finally systemd, which became the standard across most major distros in the mid-2010s. Not everyone loves it, and the debate is a rite of passage for Linux nerds.</p>
+</blockquote>
+<hr />
+<h2 id="8-stage-6-login-screen-to-desktop-window">8. 🎟️ Stage 6: Login screen to desktop window</h2>
+<p>The system is up. Now the part <em>you</em> see.</p>
+<h3 id="step-1-the-display-manager">Step 1: The display manager</h3>
+<p>systemd starts a <strong>display manager</strong>, the graphical login screen. On Ubuntu it's <strong>GDM</strong>. It shows your name, takes your password, and checks it using the system's authentication machinery (the account info lives in <code>/etc/passwd</code> and <code>/etc/shadow</code>, as covered earlier).</p>
+<h3 id="step-2-your-session-begins">Step 2: Your session begins</h3>
+<p>If your password is right, the system:
+- Starts a <strong>session</strong> just for you.
+- Sets your environment, with your files and settings coming from <code>/home/you</code>.
+- Launches your <strong>desktop environment</strong>.</p>
+<h3 id="step-3-the-display-server-and-compositor">Step 3: The display server and compositor</h3>
+<p>Windows need something to <strong>draw them on screen</strong>.</p>
+<ul>
+<li><strong>X11 / Xorg:</strong> the old veteran, born at MIT in the 1980s, around the same time as GNU.</li>
+<li><strong>Wayland:</strong> the modern replacement, simpler and more secure. Recent Ubuntu versions use it by default.</li>
+</ul>
+<p>A <strong>compositor</strong> takes every app's window, stacks them, adds shadows and animations, and sends the final picture to your monitor.</p>
+<h3 id="step-4-the-desktop-environment">Step 4: The desktop environment</h3>
+<p>This is the face of Linux, the panel, the menus, the file manager, the settings app:</p>
+<table>
+<thead>
+<tr>
+<th>Desktop environment</th>
+<th>Vibe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GNOME</strong></td>
+<td>Clean, modern, Ubuntu's default</td>
+</tr>
+<tr>
+<td><strong>KDE Plasma</strong></td>
+<td>Highly customisable, Windows-like feel</td>
+</tr>
+<tr>
+<td><strong>Xfce</strong></td>
+<td>Lightweight, great for older machines</td>
+</tr>
+<tr>
+<td><strong>Cinnamon / MATE</strong></td>
+<td>Traditional, familiar layouts</td>
+</tr>
+</tbody>
+</table>
+<p>You can find out what you're running:</p>
+<pre><code class="language-bash">echo $XDG_SESSION_TYPE      # wayland or x11
+echo $XDG_CURRENT_DESKTOP   # GNOME, KDE, XFCE...
+</code></pre>
+<blockquote>
+<p>💡 <strong>Linux superpower:</strong> the desktop is <strong>just another program</strong>. You can swap GNOME for KDE without reinstalling your system. In Windows, the desktop is glued in. In Linux, it's a replaceable layer.</p>
+</blockquote>
+<p>🎉 <strong>And there it is: your first window opens.</strong> From electricity to pixels.</p>
+<hr />
+<h2 id="9-how-linux-is-built-the-layer-cake">9. 🍰 How Linux is built: the layer cake</h2>
+<p>Now that you've seen the boot, let's zoom out and look at the <strong>whole structure</strong> of a Linux system, as layers:</p>
+<pre><code>┌──────────────────────────────────────────────┐
+│  🖥️  Applications: browser, editor, games    │
+├──────────────────────────────────────────────┤
+│  🪟  Desktop environment / Shell (CLI)        │
+├──────────────────────────────────────────────┤
+│  📚  Libraries (glibc, GTK, Qt...)            │
+├════════════ system call boundary ════════════┤
+│  ⚙️  KERNEL: processes, memory, files,       │
+│      drivers, networking, security           │
+├──────────────────────────────────────────────┤
+│  🔩  Hardware: CPU, RAM, disks, devices       │
+└──────────────────────────────────────────────┘
+        ▲ User space above  ·  Kernel space below ▼
+</code></pre>
+<h3 id="the-restaurant-analogy">🍽️ The restaurant analogy</h3>
+<table>
+<thead>
+<tr>
+<th>Restaurant</th>
+<th>Linux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Customers</td>
+<td><strong>Applications</strong> and <strong>you</strong></td>
+</tr>
+<tr>
+<td>Menu / ordering counter</td>
+<td><strong>Shell</strong> and <strong>desktop</strong></td>
+</tr>
+<tr>
+<td>Waiter</td>
+<td><strong>System calls</strong></td>
+</tr>
+<tr>
+<td>Kitchen (the one that actually cooks)</td>
+<td><strong>Kernel</strong></td>
+</tr>
+<tr>
+<td>Stoves, fridges, ovens</td>
+<td><strong>Hardware</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Customers never walk into the kitchen. They place an order, the waiter carries it, the kitchen does the work. Same idea.</p>
+<h3 id="what-the-kernel-actually-manages">What the kernel actually manages</h3>
+<table>
+<thead>
+<tr>
+<th>Job</th>
+<th>What it means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Process management</strong></td>
+<td>Decides who runs on the CPU and for how long</td>
+</tr>
+<tr>
+<td><strong>Memory management</strong></td>
+<td>Gives each program its own safe slice of RAM</td>
+</tr>
+<tr>
+<td><strong>File systems</strong></td>
+<td>Turns raw disk blocks into files and folders</td>
+</tr>
+<tr>
+<td><strong>Device drivers</strong></td>
+<td>Talks to the hardware (exposed as files in <code>/dev</code>)</td>
+</tr>
+<tr>
+<td><strong>Networking</strong></td>
+<td>Handles packets, sockets and protocols</td>
+</tr>
+<tr>
+<td><strong>Security</strong></td>
+<td>Permissions, users, isolation</td>
+</tr>
+</tbody>
+</table>
+<h3 id="monolithic-but-modular">🧩 Monolithic... but modular</h3>
+<p>Remember the <strong>Tanenbaum–Torvalds debate</strong> from the history page? It was about kernel design. Tanenbaum favoured a <strong>microkernel</strong> (a tiny core with everything else separate). Linux is <strong>monolithic</strong> (the big stuff lives inside the kernel for speed).</p>
+<p>But Linux has a clever trick: <strong>loadable kernel modules</strong>. Drivers can be plugged in and out <em>while the system runs</em>, without rebooting. They live in <code>/lib/modules/&lt;version&gt;/</code>.</p>
+<pre><code class="language-bash">lsmod              # list loaded modules
+uname -r           # kernel version
+</code></pre>
+<hr />
+<h2 id="10-kernel-space-vs-user-space">10. 🛡️ Kernel space vs user space</h2>
+<p>The CPU has privilege levels. Linux uses two:</p>
+<ul>
+<li><strong>Kernel space:</strong> full power. Can touch any memory, any hardware.</li>
+<li><strong>User space:</strong> restricted. Programs get their own <em>private</em> memory and cannot touch hardware directly.</li>
+</ul>
+<blockquote>
+<p>🏠 <strong>Why this matters:</strong> if your browser crashes, only <em>the browser</em> dies. The system keeps running. It's like a kitchen fire inside one <strong>fireproof cubicle</strong> instead of the whole building. Only a bug in the kernel itself can take everything down (hello, kernel panic).</p>
+</blockquote>
+<p>This separation is also why Linux is famously <strong>stable</strong> and <strong>secure</strong>, and why servers can run for months or even years without a reboot.</p>
+<hr />
+<h2 id="11-system-calls-how-apps-ask-the-kernel-for-help">11. 🛎️ System calls: how apps ask the kernel for help</h2>
+<p>Apps can't touch hardware, so how does a program read a file? It makes a <strong>system call</strong> (syscall), a formal request to the kernel.</p>
+<p>Common ones:</p>
+<table>
+<thead>
+<tr>
+<th>Syscall</th>
+<th>What it asks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>open</code></td>
+<td>"Please open this file for me"</td>
+</tr>
+<tr>
+<td><code>read</code> / <code>write</code></td>
+<td>"Give me / save this data"</td>
+</tr>
+<tr>
+<td><code>fork</code> / <code>execve</code></td>
+<td>"Create a new process / run this program"</td>
+</tr>
+<tr>
+<td><code>mmap</code></td>
+<td>"Give me some memory"</td>
+</tr>
+<tr>
+<td><code>socket</code></td>
+<td>"Open a network connection"</td>
+</tr>
+</tbody>
+</table>
+<p>You can actually <strong>watch</strong> them happen. Install the tool with <code>sudo apt install strace</code>, then:</p>
+<pre><code class="language-bash">strace ls 2&gt;&amp;1 | head -20
+</code></pre>
+<p>You'll see the humble <code>ls</code> command making dozens of requests to the kernel just to list a folder. It's <em>eye-opening</em> the first time.</p>
+<blockquote>
+<p>🔁 <strong>Remember "everything is a file"?</strong> This is why it works. The kernel presents disks, devices, even process info (<code>/proc</code>) through the same <code>open</code>/<code>read</code>/<code>write</code> calls. One simple interface for everything.</p>
+</blockquote>
+<hr />
+<h2 id="12-the-shell">12. 🐚 The shell</h2>
+<p>The <strong>shell</strong> is a program that reads what you type, interprets it, and asks the kernel (through other programs) to carry it out. It's the <strong>outer shell</strong> around the kernel's <strong>nut</strong>, hence the name. 🥜</p>
+<ul>
+<li>The most common one is <strong>bash</strong> (the <em>Bourne Again Shell</em>, a pun on an older shell and a <strong>GNU</strong> project, of course).</li>
+<li>Others: <strong>zsh</strong>, <strong>fish</strong>, <strong>dash</strong>.</li>
+</ul>
+<p>When you type <code>ls</code>, the shell searches the folders in <code>$PATH</code>, finds <code>/usr/bin/ls</code>, asks the kernel to run it, and shows you the output.</p>
+<p><strong>Shell ≠ terminal.</strong> The <em>terminal</em> is just the window. The <em>shell</em> is the program running inside it.</p>
+<hr />
+<h2 id="13-peek-behind-the-curtain-commands-to-try">13. 🔍 Peek behind the curtain: commands to try</h2>
+<p>A small tour of your own machine's boot, stage by stage:</p>
+<pre><code class="language-bash"># Firmware: BIOS or UEFI?
+ls /sys/firmware/efi
+
+# Bootloader: what options did GRUB give the kernel?
+cat /proc/cmdline
+
+# Kernel files and version
+ls /boot
+uname -r
+
+# Kernel's boot diary
+dmesg | less
+
+# PID 1 and the process family tree
+ps -p 1
+pstree | head -20
+
+# systemd: boot target, timing, and slow services
+systemctl get-default
+systemd-analyze
+systemd-analyze blame | head
+
+# Logs from this boot
+journalctl -b | less
+
+# Desktop session
+echo $XDG_SESSION_TYPE
+echo $XDG_CURRENT_DESKTOP
+
+# Kernel modules (drivers) loaded
+lsmod | head
+</code></pre>
+<hr />
+<h2 id="14-the-whole-journey-on-one-page">14. 🗺️ The whole journey on one page</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Stage</th>
+<th>Who's in charge</th>
+<th>Where it lives</th>
+<th>Job</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Power on</td>
+<td>Hardware</td>
+<td>Motherboard</td>
+<td>Stabilise power, release the CPU</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Firmware</td>
+<td>BIOS / UEFI</td>
+<td>Flash chip on the motherboard</td>
+<td>Self-test, find a boot device</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Bootloader</td>
+<td>GRUB</td>
+<td><code>/boot/grub</code>, ESP</td>
+<td>Load the kernel and initramfs</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Kernel</td>
+<td>Linux</td>
+<td><code>/boot/vmlinuz-*</code></td>
+<td>Take control of hardware and memory</td>
+</tr>
+<tr>
+<td>4</td>
+<td>initramfs</td>
+<td>Temporary mini-OS</td>
+<td><code>/boot/initrd.img-*</code></td>
+<td>Prepare and mount the real root</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Init system</td>
+<td>systemd (PID 1)</td>
+<td><code>/lib/systemd</code>, <code>/etc/systemd</code></td>
+<td>Start services, reach the target</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Login</td>
+<td>GDM</td>
+<td>Display manager</td>
+<td>Authenticate you</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Desktop</td>
+<td>GNOME (or other)</td>
+<td>Your session</td>
+<td>Draw your windows 🎉</td>
+</tr>
+</tbody>
+</table>
+<p><strong>One-line version:</strong> <em>Power → Firmware → Bootloader → Kernel → initramfs → systemd → Login → Desktop.</em></p>
+<hr />
+<h2 id="final-words">🎬 Final Words</h2>
+<p>Next time your computer boots, spare a thought for that relay race: from a CPU waking up in 1978 mode, through a 512-byte note in a boot sector, a GNU bootloader, Linus's kernel, a tiny disposable helper, and a patient PID 1, all the way to your wallpaper.</p>
+<p>It takes a few seconds. It's been 50 years in the making. 😉</p>
+<p>You don't need to memorise all the stages (unless you're preparing for an exam or a Linux job interview, where this question is a <strong>classic</strong>). This page will always be here when you need it.</p>
+<hr />
+<h2 id="references-further-reading">📚 References &amp; Further Reading</h2>
+<p><strong>Booting and firmware</strong>
+- <a href="https://en.wikipedia.org/wiki/Booting">Booting (Wikipedia)</a>
+- <a href="https://en.wikipedia.org/wiki/BIOS">BIOS</a> · <a href="https://en.wikipedia.org/wiki/UEFI">UEFI</a> · <a href="https://uefi.org">UEFI Forum</a>
+- <a href="https://en.wikipedia.org/wiki/Master_boot_record">Master Boot Record</a> · <a href="https://en.wikipedia.org/wiki/GUID_Partition_Table">GUID Partition Table</a>
+- <a href="https://en.wikipedia.org/wiki/Linux_startup_process">Linux startup process</a></p>
+<p><strong>Bootloader and early boot</strong>
+- <a href="https://en.wikipedia.org/wiki/GNU_GRUB">GNU GRUB (Wikipedia)</a> · <a href="https://www.gnu.org/software/grub/">GRUB official page</a>
+- <a href="https://en.wikipedia.org/wiki/Initial_ramdisk">Initial ramdisk (initrd / initramfs)</a></p>
+<p><strong>Kernel, init and services</strong>
+- <a href="https://en.wikipedia.org/wiki/Linux_kernel">Linux kernel</a> · <a href="https://docs.kernel.org">Kernel documentation</a>
+- <a href="https://en.wikipedia.org/wiki/Kernel_(operating_system)">Kernel (operating system)</a> · <a href="https://en.wikipedia.org/wiki/Monolithic_kernel">Monolithic kernel</a>
+- <a href="https://en.wikipedia.org/wiki/Init">Init</a> · <a href="https://en.wikipedia.org/wiki/Systemd">systemd (Wikipedia)</a> · <a href="https://systemd.io">systemd.io</a>
+- <a href="https://en.wikipedia.org/wiki/Kernel_panic">Kernel panic</a></p>
+<p><strong>Architecture</strong>
+- <a href="https://en.wikipedia.org/wiki/System_call">System call</a>
+- <a href="https://en.wikipedia.org/wiki/User_space_and_kernel_space">User space and kernel space</a>
+- <a href="https://en.wikipedia.org/wiki/Shell_(computing)">Shell (computing)</a> · <a href="https://en.wikipedia.org/wiki/Bash_(Unix_shell)">Bash</a></p>
+<p><strong>Desktop</strong>
+- <a href="https://en.wikipedia.org/wiki/X_Window_System">X Window System</a> · <a href="https://en.wikipedia.org/wiki/Wayland_(protocol)">Wayland</a>
+- <a href="https://en.wikipedia.org/wiki/GNOME">GNOME</a> · <a href="https://en.wikipedia.org/wiki/Desktop_environment">Desktop environment</a></p>
+<p><strong>Related pages on this site</strong>
+- <a href="../">The Story Behind the Penguin (history)</a>
+- <a href="linux-file-system-explained.md">The Linux File System, Explained</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.expand", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../javascripts/tab-dropdown.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,4081 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://adarsha121.github.io/webnote/computer/Linux/sys_ctl/">
+      
+      
+        <link rel="prev" href="../how_it_boots/">
+      
+      
+        <link rel="next" href="../misc/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Linux Process - My Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#systemd-systemctl-journalctl-the-just-paste-it-and-it-works-page" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="My Notes" class="md-header__button md-logo" aria-label="My Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            My Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Linux Process
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="blue"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../physics/mechanics/" class="md-tabs__link">
+          
+  
+  
+  Physics
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../math/calculus.md" class="md-tabs__link">
+          
+  
+  
+  Math
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../ai/rag.md" class="md-tabs__link">
+          
+  
+  
+  AI/ML
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Programming
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../tsc/intro_ed/" class="md-tabs__link">
+          
+  
+  
+  TSC
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="My Notes" class="md-nav__button md-logo" aria-label="My Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    My Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Physics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Physics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../physics/mechanics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mechanics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../physics/quantum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quantum
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Math
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Math
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../math/calculus.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculus
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../math/linear.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear Algebra
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI/ML
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    AI/ML
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ai/rag.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RAG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Programming
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Programming
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linux_commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linux_filesystem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux File System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how_it_boots/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How it Boots
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux Process
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📑 Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-why-do-we-even-need-this-the-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 🤔 Why do we even need this? (the problem)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 🤔 Why do we even need this? (the problem)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-little-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A little history
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-the-mental-model-one-building-one-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 🏢 The mental model: one building, one manager
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-units-the-things-systemd-manages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 🧩 Units: the things systemd manages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-where-unit-files-live" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 📂 Where unit files live
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 📂 Where unit files live">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-rule-that-saves-you" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 The rule that saves you
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-systemctl-your-walkie-talkie-to-the-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 📻 systemctl: your walkie-talkie to the manager
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 📻 systemctl: your walkie-talkie to the manager">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-verbs-youll-use-95-of-the-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The verbs you'll use 95% of the time
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restart-vs-reload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔄 restart vs reload
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#looking-around" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Looking around
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-controls-are-systemctl-too" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Power controls are systemctl too
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-sneaky-one-mask" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔒 The sneaky one: mask
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-start-vs-enable-the-1-confusion-solved" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 💡 start vs enable: the #1 confusion, solved
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 💡 start vs enable: the #1 confusion, solved">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-does-enable-actually-do" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 What does "enable" actually do?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-reading-systemctl-status-like-a-pro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 🩺 Reading systemctl status like a pro
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 🩺 Reading systemctl status like a pro">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-active-states-youll-meet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Active: states you'll meet
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-build-your-own-service-in-5-minutes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 🛠️ Build your own service in 5 minutes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 🛠️ Build your own service in 5 minutes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-the-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: The program
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-the-unit-file-the-job-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: The unit file (the "job description")
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#understanding-every-line" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Understanding every line
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-tell-systemd-and-launch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Tell systemd and launch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-watch-its-output-with-no-log-files-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Watch its output, with no log files needed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-watch-it-self-heal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Watch it self-heal 🩹
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-clean-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: Clean up
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-note-on-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A note on Type=
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-why-daemon-reload-exists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 🔁 Why daemon-reload exists
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-changing-a-service-without-breaking-it-drop-ins" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 🩹 Changing a service without breaking it (drop-ins)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-wants-requires-after-the-guest-list-vs-the-seating-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 🎉 Wants, Requires, After: the guest list vs the seating chart
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-targets-the-buildings-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 🌗 Targets: the building's "modes"
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-journalctl-the-buildings-cctv-and-logbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 📹 journalctl: the building's CCTV and logbook
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. 📹 journalctl: the building&#39;s CCTV and logbook">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-commands-from-the-basics-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The commands, from the basics up
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter-by-service-the-one-youll-use-most" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filter by service ⭐ (the one you'll use most)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter-by-boot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filter by boot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter-by-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filter by time
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter-by-severity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filter by severity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kernel-messages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kernel messages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-famous-xeu-mystery-solved" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The famous -xeu mystery, solved
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#searching-and-combining" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Searching and combining
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#managing-the-journals-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Managing the journal's size
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-timers-crons-modern-cousin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. ⏰ Timers: cron's modern cousin
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-systemd-analyze-why-is-my-boot-slow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. ⏱️ systemd-analyze: why is my boot slow?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-the-rest-of-the-family" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. 👨‍👩‍👧‍👦 The rest of the family
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="16. 👨‍👩‍👧‍👦 The rest of the family">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#user-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        👤 User services
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-old-service-command-still-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The old service command still works
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-when-a-service-fails-the-detective-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17. 🕵️ When a service fails: the detective checklist
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="17. 🕵️ When a service fails: the detective checklist">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#common-culprits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common culprits
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18-cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18. 📋 Cheat Sheet
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="18. 📋 Cheat Sheet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#systemctl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        systemctl
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#journalctl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        journalctl
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-one-line-mental-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The one-line mental model
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final-words" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎬 Final Words
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references-further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 References &amp; Further Reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../misc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Miscellaneous
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Python
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Python/numpy_pandas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Numpy and Pandas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Python/matplotlib/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Matplotlib
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSC
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    TSC
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/intro_ed/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    शिक्षाकाै परिचय
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/learning_principle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    शैक्षिक सिद्धान्त
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/16th_plan_about_edu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    साैह्रौं योजना
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/bhugool/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    भुगाेल
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/cirriculum_and_books/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    पाठ्यक्रम
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/constution_edu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    सबि‌धान
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/ed_act_2028/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    शिक्षा एेन
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/ed_niyamawali/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    सिक्षा नियमावली
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/tsc_niyamabali_2057/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    शिक्षाक सेवा आयोग नियमावली
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/history_nepal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    इतिहास
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/local_govt_ed_related/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    थानीय सरकार सञ्चालन ऐन
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/intl_orgs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    अन्तराष्ट्रिय स‌घसस्था
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/constution_edu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    सबि‌धान
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📑 Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-why-do-we-even-need-this-the-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 🤔 Why do we even need this? (the problem)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 🤔 Why do we even need this? (the problem)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-little-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A little history
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-the-mental-model-one-building-one-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 🏢 The mental model: one building, one manager
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-units-the-things-systemd-manages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 🧩 Units: the things systemd manages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-where-unit-files-live" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 📂 Where unit files live
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 📂 Where unit files live">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-rule-that-saves-you" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 The rule that saves you
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-systemctl-your-walkie-talkie-to-the-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 📻 systemctl: your walkie-talkie to the manager
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 📻 systemctl: your walkie-talkie to the manager">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-verbs-youll-use-95-of-the-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The verbs you'll use 95% of the time
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restart-vs-reload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔄 restart vs reload
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#looking-around" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Looking around
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-controls-are-systemctl-too" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Power controls are systemctl too
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-sneaky-one-mask" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔒 The sneaky one: mask
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-start-vs-enable-the-1-confusion-solved" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 💡 start vs enable: the #1 confusion, solved
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 💡 start vs enable: the #1 confusion, solved">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-does-enable-actually-do" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 What does "enable" actually do?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-reading-systemctl-status-like-a-pro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 🩺 Reading systemctl status like a pro
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 🩺 Reading systemctl status like a pro">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-active-states-youll-meet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Active: states you'll meet
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-build-your-own-service-in-5-minutes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 🛠️ Build your own service in 5 minutes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 🛠️ Build your own service in 5 minutes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-the-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: The program
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-the-unit-file-the-job-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: The unit file (the "job description")
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#understanding-every-line" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Understanding every line
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-tell-systemd-and-launch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Tell systemd and launch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-watch-its-output-with-no-log-files-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Watch its output, with no log files needed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-watch-it-self-heal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Watch it self-heal 🩹
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-clean-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: Clean up
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-note-on-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A note on Type=
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-why-daemon-reload-exists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 🔁 Why daemon-reload exists
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-changing-a-service-without-breaking-it-drop-ins" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 🩹 Changing a service without breaking it (drop-ins)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-wants-requires-after-the-guest-list-vs-the-seating-chart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 🎉 Wants, Requires, After: the guest list vs the seating chart
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-targets-the-buildings-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 🌗 Targets: the building's "modes"
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-journalctl-the-buildings-cctv-and-logbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 📹 journalctl: the building's CCTV and logbook
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. 📹 journalctl: the building&#39;s CCTV and logbook">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-commands-from-the-basics-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The commands, from the basics up
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter-by-service-the-one-youll-use-most" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filter by service ⭐ (the one you'll use most)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter-by-boot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filter by boot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter-by-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filter by time
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter-by-severity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filter by severity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kernel-messages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kernel messages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-famous-xeu-mystery-solved" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The famous -xeu mystery, solved
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#searching-and-combining" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Searching and combining
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#managing-the-journals-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Managing the journal's size
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-timers-crons-modern-cousin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. ⏰ Timers: cron's modern cousin
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-systemd-analyze-why-is-my-boot-slow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. ⏱️ systemd-analyze: why is my boot slow?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-the-rest-of-the-family" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. 👨‍👩‍👧‍👦 The rest of the family
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="16. 👨‍👩‍👧‍👦 The rest of the family">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#user-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        👤 User services
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-old-service-command-still-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The old service command still works
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-when-a-service-fails-the-detective-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17. 🕵️ When a service fails: the detective checklist
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="17. 🕵️ When a service fails: the detective checklist">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#common-culprits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common culprits
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18-cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18. 📋 Cheat Sheet
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="18. 📋 Cheat Sheet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#systemctl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        systemctl
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#journalctl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        journalctl
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-one-line-mental-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The one-line mental model
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final-words" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎬 Final Words
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references-further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 References &amp; Further Reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="systemd-systemctl-journalctl-the-just-paste-it-and-it-works-page">🎛️ systemd, systemctl &amp; journalctl: The "Just Paste It and It Works" Page</h1>
+<p>Be honest. You've done this:</p>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+sudo systemctl enable --now something
+sudo systemctl restart something
+journalctl -xeu something
+</code></pre>
+<p>...copied from a blog or a forum, and it <strong>worked</strong>. You moved on. You have <em>no idea</em> what <code>daemon-reload</code> reloads, why <code>enable</code> and <code>start</code> are two different things, or what those <code>-xeu</code> letters mean.</p>
+<p>That's completely normal, and it's exactly what this page is for. We're not going to memorise commands. We're going to build <strong>one mental model</strong>, and after that every command will feel <em>obvious</em>, like you could have invented it yourself.</p>
+<p>☕ <em>Coffee again. This is the one where things click.</em></p>
+<hr />
+<h2 id="table-of-contents">📑 Table of Contents</h2>
+<ol>
+<li><a href="#1--why-do-we-even-need-this-the-problem">Why do we even need this? (the problem)</a></li>
+<li><a href="#2--the-mental-model-one-building-one-manager">The mental model: one building, one manager</a></li>
+<li><a href="#3--units-the-things-systemd-manages">Units: the things systemd manages</a></li>
+<li><a href="#4--where-unit-files-live">Where unit files live</a></li>
+<li><a href="#5--systemctl-your-walkie-talkie-to-the-manager">systemctl: your walkie-talkie to the manager</a></li>
+<li><a href="#6--start-vs-enable-the-1-confusion-solved">start vs enable: the #1 confusion, solved</a></li>
+<li><a href="#7--reading-systemctl-status-like-a-pro">Reading <code>systemctl status</code> like a pro</a></li>
+<li><a href="#8--build-your-own-service-in-5-minutes">Build your own service in 5 minutes</a></li>
+<li><a href="#9--why-daemon-reload-exists">Why daemon-reload exists</a></li>
+<li><a href="#10--changing-a-service-without-breaking-it-drop-ins">Changing a service without breaking it (drop-ins)</a></li>
+<li><a href="#11--wants-requires-after-the-guest-list-vs-the-seating-chart">Wants, Requires, After: the guest list vs the seating chart</a></li>
+<li><a href="#12--targets-the-buildings-modes">Targets: the building's "modes"</a></li>
+<li><a href="#13--journalctl-the-buildings-cctv-and-logbook">journalctl: the building's CCTV and logbook</a></li>
+<li><a href="#14--timers-crons-modern-cousin">Timers: cron's modern cousin</a></li>
+<li><a href="#15--systemd-analyze-why-is-my-boot-slow">systemd-analyze: why is my boot slow?</a></li>
+<li><a href="#16--the-rest-of-the-family">The rest of the family</a></li>
+<li><a href="#17--when-a-service-fails-the-detective-checklist">When a service fails: the detective checklist</a></li>
+<li><a href="#18--cheat-sheet">Cheat sheet</a></li>
+<li><a href="#-references--further-reading">References</a></li>
+</ol>
+<hr />
+<h2 id="1-why-do-we-even-need-this-the-problem">1. 🤔 Why do we even need this? (the problem)</h2>
+<p>Your computer runs lots of programs <strong>in the background</strong>, without any window: the web server, SSH, the network manager, Bluetooth, printing, the clock-sync service, and so on.</p>
+<p>These background programs are called <strong>services</strong> or <strong><a href="https://medium.com/@manjunath.kvmc/linux-services-and-daemons-the-under-the-hood-guide-to-background-processes-a5b9e1076730">daemons</a></strong>.</p>
+<blockquote>
+<p>😈 <strong>Fun fact:</strong> The word <em>daemon</em> was coined at MIT in the 1960s, named after <strong>Maxwell's demon</strong>, a thought-experiment creature that quietly sorts things behind the scenes. That's why daemons often end in <strong>d</strong>: <code>sshd</code>, <code>httpd</code>, <code>systemd</code>, <code>cupsd</code>. (The BSD operating systems even have a little red devil as their mascot, a pun on the same word.)</p>
+</blockquote>
+<p>Now somebody has to manage them:</p>
+<ul>
+<li><strong>Start</strong> them at boot, in the right order.</li>
+<li><strong>Restart</strong> them if they crash.</li>
+<li><strong>Stop</strong> them cleanly at shutdown.</li>
+<li><strong>Keep their logs</strong> somewhere sensible.</li>
+</ul>
+<p>Without a manager, you'd be the manager, manually launching programs every time you start your computer. 😩</p>
+<p>That manager is <strong>systemd</strong>. It's the first process started by the kernel (<strong>PID 1</strong>, as we saw on the <a href="linux-boot-process-explained.md">boot page</a>), and it becomes the parent of everything else.</p>
+<h3 id="a-little-history">A little history</h3>
+<p>Before systemd, services were started by <strong>shell scripts</strong> in <code>/etc/init.d/</code>, one after another, like a queue at a ticket counter. It worked, but it was slow and each script was written differently. systemd (started by Lennart Poettering and Kay Sievers around 2010) replaced scripts with <strong>simple declarative config files</strong> and starts things <strong>in parallel</strong>. Ubuntu adopted it in 2015.</p>
+<blockquote>
+<p>🗣️ It's also famously controversial: some people feel it does <em>too much</em> for a Unix tool, which goes against the "do one thing well" philosophy from the <a href="../">history page</a>. Whatever your opinion, nearly every major distro uses it, so you need to know it.</p>
+</blockquote>
+<hr />
+<h2 id="2-the-mental-model-one-building-one-manager">2. 🏢 The mental model: one building, one manager</h2>
+<p>Hold on to this picture. Every command on this page maps onto it.</p>
+<table>
+<thead>
+<tr>
+<th>In the building</th>
+<th>In Linux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🧑‍💼 The <strong>building manager</strong></td>
+<td><strong>systemd</strong> (PID 1)</td>
+</tr>
+<tr>
+<td>📄 A <strong>job description</strong> for each staff member</td>
+<td>A <strong>unit file</strong> (<code>nginx.service</code>)</td>
+</tr>
+<tr>
+<td>👷 A <strong>staff member</strong> actually working</td>
+<td>A <strong>running service</strong></td>
+</tr>
+<tr>
+<td>📻 Your <strong>walkie-talkie</strong> to the manager</td>
+<td><strong><code>systemctl</code></strong></td>
+</tr>
+<tr>
+<td>📹 The <strong>CCTV and incident logbook</strong></td>
+<td><strong><code>journalctl</code></strong> (reads logs collected by <code>systemd-journald</code>)</td>
+</tr>
+<tr>
+<td>🌗 The building's <strong>modes</strong> ("night mode", "business hours")</td>
+<td><strong>Targets</strong> (<code>multi-user.target</code>, <code>graphical.target</code>)</td>
+</tr>
+<tr>
+<td>⏰ The manager's <strong>scheduled tasks</strong></td>
+<td><strong>Timers</strong></td>
+</tr>
+<tr>
+<td>⏱️ A <strong>stopwatch</strong> on opening morning</td>
+<td><strong><code>systemd-analyze</code></strong></td>
+</tr>
+</tbody>
+</table>
+<p>So when you type:</p>
+<pre><code class="language-bash">sudo systemctl restart nginx
+</code></pre>
+<p>...you're saying into the walkie-talkie: <em>"Manager, please restart the nginx worker."</em> That's it. That's the entire thing.</p>
+<hr />
+<h2 id="3-units-the-things-systemd-manages">3. 🧩 Units: the things systemd manages</h2>
+<p>systemd doesn't just manage "services". It manages <strong>units</strong>, and a service is only one kind. The type is shown by the file extension:</p>
+<table>
+<thead>
+<tr>
+<th>Unit type</th>
+<th>Extension</th>
+<th>What it represents</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Service</strong></td>
+<td><code>.service</code></td>
+<td>A background program</td>
+<td><code>ssh.service</code>, <code>nginx.service</code></td>
+</tr>
+<tr>
+<td><strong>Target</strong></td>
+<td><code>.target</code></td>
+<td>A group of units / a system state</td>
+<td><code>graphical.target</code></td>
+</tr>
+<tr>
+<td><strong>Timer</strong></td>
+<td><code>.timer</code></td>
+<td>A schedule that triggers a unit</td>
+<td><code>apt-daily.timer</code></td>
+</tr>
+<tr>
+<td><strong>Socket</strong></td>
+<td><code>.socket</code></td>
+<td>A network/IPC socket that can start a service on demand</td>
+<td><code>docker.socket</code></td>
+</tr>
+<tr>
+<td><strong>Mount</strong></td>
+<td><code>.mount</code></td>
+<td>A mounted filesystem</td>
+<td><code>home.mount</code></td>
+</tr>
+<tr>
+<td><strong>Path</strong></td>
+<td><code>.path</code></td>
+<td>Watches a file or folder and triggers something</td>
+<td><code>my-watch.path</code></td>
+</tr>
+<tr>
+<td><strong>Device</strong></td>
+<td><code>.device</code></td>
+<td>A hardware device known to the kernel</td>
+<td><code>dev-sda1.device</code></td>
+</tr>
+<tr>
+<td><strong>Slice / Scope</strong></td>
+<td><code>.slice</code>, <code>.scope</code></td>
+<td>Resource-control groups</td>
+<td><code>user.slice</code></td>
+</tr>
+</tbody>
+</table>
+<p>If you leave the extension off, <code>systemctl</code> assumes <code>.service</code>. So <code>systemctl status nginx</code> means <code>systemctl status nginx.service</code>.</p>
+<blockquote>
+<p>💡 <strong>Ubuntu gotcha:</strong> the SSH service is called <strong><code>ssh</code></strong>, not <code>sshd</code>. (Many other distros use <code>sshd</code>. On Ubuntu <code>sshd</code> usually works too, as an alias.)</p>
+</blockquote>
+<hr />
+<h2 id="4-where-unit-files-live">4. 📂 Where unit files live</h2>
+<p>A unit file is just a <strong>small text file</strong>. They live in a few places, and <strong>the order matters</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Location</th>
+<th>Who puts files here</th>
+<th>Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/etc/systemd/system/</code></td>
+<td><strong>You</strong> (the admin)</td>
+<td>🥇 Highest. Wins every time</td>
+</tr>
+<tr>
+<td><code>/run/systemd/system/</code></td>
+<td>Runtime-generated, gone after reboot</td>
+<td>🥈 Middle</td>
+</tr>
+<tr>
+<td><code>/usr/lib/systemd/system/</code></td>
+<td><strong>Packages</strong> (apt, snap...)</td>
+<td>🥉 Lowest</td>
+</tr>
+</tbody>
+</table>
+<p>(<code>/lib/systemd/system/</code> points to the same place as <code>/usr/lib/systemd/system/</code>, thanks to the <em>usr-merge</em> story from the <a href="linux-file-system-explained.md">file system page</a>.)</p>
+<h3 id="the-rule-that-saves-you">🧠 The rule that saves you</h3>
+<blockquote>
+<p><strong>Never edit files in <code>/usr/lib/systemd/system/</code>.</strong> A package update will overwrite your changes. Put your own files or overrides in <code>/etc/systemd/system/</code>. It's like writing notes in your own notebook rather than in the library's reference book.</p>
+</blockquote>
+<p>Want to see which file a service actually uses?</p>
+<pre><code class="language-bash">systemctl cat nginx
+</code></pre>
+<p>This prints the unit file <em>and</em> any overrides, in order. A great habit.</p>
+<hr />
+<h2 id="5-systemctl-your-walkie-talkie-to-the-manager">5. 📻 systemctl: your walkie-talkie to the manager</h2>
+<p>Every <code>systemctl</code> command follows <strong>one pattern</strong>:</p>
+<pre><code>systemctl  &lt;VERB&gt;  &lt;UNIT&gt;
+              │       └── which staff member? (nginx, ssh, cron...)
+              └────────── what should happen?
+</code></pre>
+<p>Once you see the pattern, you can read any command.</p>
+<h3 id="the-verbs-youll-use-95-of-the-time">The verbs you'll use 95% of the time</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Plain-English meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>systemctl status nginx</code></td>
+<td>"How's nginx doing?" (no <code>sudo</code> needed)</td>
+</tr>
+<tr>
+<td><code>sudo systemctl start nginx</code></td>
+<td>"Start nginx <strong>now</strong>."</td>
+</tr>
+<tr>
+<td><code>sudo systemctl stop nginx</code></td>
+<td>"Stop nginx <strong>now</strong>."</td>
+</tr>
+<tr>
+<td><code>sudo systemctl restart nginx</code></td>
+<td>"Stop it, then start it again."</td>
+</tr>
+<tr>
+<td><code>sudo systemctl reload nginx</code></td>
+<td>"Re-read your config <strong>without</strong> dropping connections" (if the service supports it)</td>
+</tr>
+<tr>
+<td><code>sudo systemctl enable nginx</code></td>
+<td>"Start it <strong>automatically at every boot</strong>."</td>
+</tr>
+<tr>
+<td><code>sudo systemctl disable nginx</code></td>
+<td>"Stop starting it automatically at boot."</td>
+</tr>
+<tr>
+<td><code>systemctl is-active nginx</code></td>
+<td>Prints <code>active</code> or <code>inactive</code> (great in scripts)</td>
+</tr>
+<tr>
+<td><code>systemctl is-enabled nginx</code></td>
+<td>Prints <code>enabled</code> or <code>disabled</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="restart-vs-reload">🔄 restart vs reload</h3>
+<ul>
+<li><strong><code>restart</code></strong> = switch it off and on. Active connections are dropped. Always works.</li>
+<li><strong><code>reload</code></strong> = "re-read your config file" while it keeps running. Gentler, but only works if the service knows how to do that.</li>
+<li><strong><code>reload-or-restart</code></strong> = try the gentle one, fall back to the blunt one.</li>
+</ul>
+<h3 id="looking-around">Looking around</h3>
+<pre><code class="language-bash">systemctl list-units --type=service          # what's loaded and running right now
+systemctl list-units --failed                # what's broken?  (a handy first check!)
+systemctl list-unit-files --type=service     # every service installed, and its enabled/disabled state
+systemctl list-dependencies nginx            # what does nginx depend on?
+</code></pre>
+<h3 id="power-controls-are-systemctl-too">Power controls are systemctl too</h3>
+<pre><code class="language-bash">systemctl reboot
+systemctl poweroff
+systemctl suspend
+</code></pre>
+<h3 id="the-sneaky-one-mask">🔒 The sneaky one: <code>mask</code></h3>
+<pre><code class="language-bash">sudo systemctl mask bluetooth      # can't be started, even manually or by another service
+sudo systemctl unmask bluetooth
+</code></pre>
+<p><code>disable</code> says <em>"don't start at boot."</em> <code>mask</code> says <em>"never start. Not by anyone, not by anything."</em> It works by pointing the unit at <code>/dev/null</code>, so it's a <strong>"DO NOT DISTURB" sign taped over the door</strong>.</p>
+<hr />
+<h2 id="6-start-vs-enable-the-1-confusion-solved">6. 💡 start vs enable: the #1 confusion, solved</h2>
+<p>This is the thing almost everyone is confused about, and it's actually very simple.</p>
+<blockquote>
+<p>🔦 <strong><code>start</code> = flip the light switch ON <em>right now</em>.</strong>
+🌅 <strong><code>enable</code> = set the light to switch on automatically <em>every evening</em> (every boot).</strong></p>
+</blockquote>
+<p>These are <strong>two independent things</strong>:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Not enabled</strong> (won't start at boot)</th>
+<th><strong>Enabled</strong> (starts at boot)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Not running now</strong></td>
+<td>Off today, off tomorrow</td>
+<td>Off right now, <strong>will</strong> start at next boot</td>
+</tr>
+<tr>
+<td><strong>Running now</strong></td>
+<td>On today, <strong>gone after reboot</strong></td>
+<td>On today and on every boot</td>
+</tr>
+</tbody>
+</table>
+<p>So:</p>
+<ul>
+<li><code>start</code> only: works <strong>today</strong>, forgotten after reboot. 😬</li>
+<li><code>enable</code> only: <strong>does nothing right now</strong>, but runs from the next boot onwards.</li>
+<li>You usually want <strong>both</strong>, and systemd gives you a shortcut:</li>
+</ul>
+<pre><code class="language-bash">sudo systemctl enable --now nginx      # enable + start
+sudo systemctl disable --now nginx     # disable + stop
+</code></pre>
+<h3 id="what-does-enable-actually-do">🎯 What does "enable" actually do?</h3>
+<p>Here's the part that makes it <em>click</em>. <code>enable</code> doesn't do anything magical. It just creates a <strong>symlink</strong> (shortcut):</p>
+<pre><code class="language-bash">sudo systemctl enable nginx
+# Created symlink /etc/systemd/system/multi-user.target.wants/nginx.service
+#   → /usr/lib/systemd/system/nginx.service
+</code></pre>
+<p>At boot, when systemd reaches <code>multi-user.target</code>, it looks in the folder <code>multi-user.target.wants/</code>, sees <code>nginx.service</code> in there, and says, <em>"Oh, that needs to start."</em></p>
+<p>So:
+- <strong>enable</strong> = put a shortcut in the "to-do at boot" folder.
+- <strong>disable</strong> = remove that shortcut.</p>
+<p>That's all. You can even look at it:</p>
+<pre><code class="language-bash">ls /etc/systemd/system/multi-user.target.wants/
+</code></pre>
+<hr />
+<h2 id="7-reading-systemctl-status-like-a-pro">7. 🩺 Reading <code>systemctl status</code> like a pro</h2>
+<p>Most people glance at it and look for the colour green. Let's read it properly:</p>
+<pre><code class="language-text">● nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/usr/lib/systemd/system/nginx.service; enabled; preset: enabled)
+     Active: active (running) since Sun 2026-10-18 09:12:41 +0545; 2h 14min ago
+       Docs: man:nginx(8)
+   Main PID: 1523 (nginx)
+      Tasks: 3 (limit: 4547)
+     Memory: 5.2M
+        CPU: 38ms
+     CGroup: /system.slice/nginx.service
+             ├─1523 &quot;nginx: master process /usr/sbin/nginx&quot;
+             └─1524 &quot;nginx: worker process&quot;
+
+Oct 18 09:12:41 mypc systemd[1]: Starting nginx.service ...
+Oct 18 09:12:41 mypc systemd[1]: Started nginx.service ...
+</code></pre>
+<p>Line by line:</p>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>●</code> green</td>
+<td>Running happily. (⚪ = inactive, 🔴 = failed)</td>
+</tr>
+<tr>
+<td><code>Loaded: loaded (…; enabled; preset: enabled)</code></td>
+<td>The file was found at that path. <strong>enabled</strong> = starts at boot. <em>preset</em> = the distro's default</td>
+</tr>
+<tr>
+<td><code>Active: active (running)</code></td>
+<td>It's alive. Other states below ⬇️</td>
+</tr>
+<tr>
+<td><code>Main PID</code></td>
+<td>The process ID of the main process</td>
+</tr>
+<tr>
+<td><code>Tasks / Memory / CPU</code></td>
+<td>Resource usage</td>
+</tr>
+<tr>
+<td><code>CGroup</code></td>
+<td>The process family. systemd tracks every child, so <code>stop</code> really kills <strong>everything</strong></td>
+</tr>
+<tr>
+<td>Bottom lines</td>
+<td>The <strong>last few log lines</strong> from this service (straight from the journal)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-active-states-youll-meet">The <code>Active:</code> states you'll meet</h3>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>active (running)</code></td>
+<td>Working</td>
+</tr>
+<tr>
+<td><code>active (exited)</code></td>
+<td>Ran once and finished successfully (normal for one-shot tasks)</td>
+</tr>
+<tr>
+<td><code>inactive (dead)</code></td>
+<td>Not running (stopped, or never started)</td>
+</tr>
+<tr>
+<td><code>activating</code></td>
+<td>Starting up (or auto-restarting)</td>
+</tr>
+<tr>
+<td><code>failed</code></td>
+<td>Crashed or exited with an error. <strong>Look at the logs!</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="8-build-your-own-service-in-5-minutes">8. 🛠️ Build your own service in 5 minutes</h2>
+<p>The best way to understand services is to <strong>make one</strong>. We'll create a silly service that says hello every 5 seconds.</p>
+<h3 id="step-1-the-program">Step 1: The program</h3>
+<pre><code class="language-bash">sudo nano /usr/local/bin/hello.sh
+</code></pre>
+<pre><code class="language-bash">#!/bin/bash
+while true; do
+  echo &quot;Hello from my first service at $(date)&quot;
+  sleep 5
+done
+</code></pre>
+<pre><code class="language-bash">sudo chmod +x /usr/local/bin/hello.sh
+</code></pre>
+<p>(<code>/usr/local/bin</code> is where hand-made programs belong, as the file system page explained.)</p>
+<h3 id="step-2-the-unit-file-the-job-description">Step 2: The unit file (the "job description")</h3>
+<pre><code class="language-bash">sudo nano /etc/systemd/system/hello.service
+</code></pre>
+<pre><code class="language-ini">[Unit]
+Description=My first hello service
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/hello.sh
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<h3 id="understanding-every-line">Understanding every line</h3>
+<p>A unit file has <strong>three sections</strong>, each answering one question:</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>Question it answers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[Unit]</code></td>
+<td><strong>What is this?</strong> And how does it relate to others?</td>
+</tr>
+<tr>
+<td><code>[Service]</code></td>
+<td><strong>How do I run it?</strong></td>
+</tr>
+<tr>
+<td><code>[Install]</code></td>
+<td><strong>When should it start?</strong> (used by <code>enable</code>)</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Line</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Description=</code></td>
+<td>A human-friendly label shown in <code>status</code></td>
+</tr>
+<tr>
+<td><code>After=network.target</code></td>
+<td>"Start me <em>after</em> the network is up"</td>
+</tr>
+<tr>
+<td><code>ExecStart=</code></td>
+<td><strong>The command to run.</strong> Always use the <strong>full path</strong></td>
+</tr>
+<tr>
+<td><code>Restart=on-failure</code></td>
+<td>"If I crash, restart me"</td>
+</tr>
+<tr>
+<td><code>RestartSec=3</code></td>
+<td>"Wait 3 seconds before restarting"</td>
+</tr>
+<tr>
+<td><code>WantedBy=multi-user.target</code></td>
+<td>"When the system reaches multi-user mode, start me." That's the symlink target from earlier!</td>
+</tr>
+</tbody>
+</table>
+<h3 id="step-3-tell-systemd-and-launch">Step 3: Tell systemd and launch</h3>
+<pre><code class="language-bash">sudo systemctl daemon-reload          # &quot;Manager, I added a new job description. Please re-read the folder.&quot;
+sudo systemctl enable --now hello     # enable at boot + start now
+systemctl status hello                # check on it
+</code></pre>
+<h3 id="step-4-watch-its-output-with-no-log-files-needed">Step 4: Watch its output, with no log files needed</h3>
+<pre><code class="language-bash">journalctl -u hello -f
+</code></pre>
+<pre><code class="language-text">Oct 18 10:30:01 mypc hello.sh[2210]: Hello from my first service at Sun Oct 18 10:30:01 +0545 2026
+Oct 18 10:30:06 mypc hello.sh[2210]: Hello from my first service at Sun Oct 18 10:30:06 +0545 2026
+</code></pre>
+<blockquote>
+<p>✨ <strong>Click moment:</strong> your script just <code>echo</code>'d to its normal output, and systemd automatically captured it into the journal, labelled and timestamped. You never created a log file.</p>
+</blockquote>
+<h3 id="step-5-watch-it-self-heal">Step 5: Watch it self-heal 🩹</h3>
+<pre><code class="language-bash">sudo pkill -9 -f hello.sh      # violently kill it
+systemctl status hello         # it's already back, with a new PID!
+</code></pre>
+<p>(We used <code>-9</code> on purpose. A polite kill, which exits cleanly, doesn't count as a "failure", so <code>Restart=on-failure</code> would leave it dead. Use <code>Restart=always</code> if you want it back no matter what.)</p>
+<h3 id="step-6-clean-up">Step 6: Clean up</h3>
+<pre><code class="language-bash">sudo systemctl disable --now hello
+sudo rm /etc/systemd/system/hello.service
+sudo systemctl daemon-reload
+</code></pre>
+<p>You just wrote, installed, debugged, and removed a real service. 🎉</p>
+<h3 id="a-note-on-type">A note on <code>Type=</code></h3>
+<p>By default systemd assumes your program <strong>stays running in the foreground</strong> (<code>Type=simple</code>). Other common types:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>When to use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>simple</code> (default)</td>
+<td>Program runs continuously and doesn't fork into the background</td>
+</tr>
+<tr>
+<td><code>oneshot</code></td>
+<td>Does a task and exits (backups, setup scripts). Pair with <code>RemainAfterExit=yes</code> if you want it to show as "active" afterward</td>
+</tr>
+<tr>
+<td><code>forking</code></td>
+<td>Old-school daemons that fork into the background by themselves</td>
+</tr>
+<tr>
+<td><code>notify</code></td>
+<td>The program tells systemd when it's actually ready</td>
+</tr>
+</tbody>
+</table>
+<p>Other useful <code>[Service]</code> lines: <code>User=</code> (run as this user, not root), <code>WorkingDirectory=</code>, <code>Environment=</code>, <code>ExecStop=</code>, <code>ExecReload=</code>.</p>
+<hr />
+<h2 id="9-why-daemon-reload-exists">9. 🔁 Why daemon-reload exists</h2>
+<p>This confuses <em>everyone</em>, so let's solve it for good.</p>
+<p>systemd <strong>reads all unit files once and keeps them in memory</strong> (it's the manager with the filing cabinet in their head). If you add or edit a unit file on disk, the manager doesn't know. His memory is out of date.</p>
+<blockquote>
+<p>📣 <strong><code>daemon-reload</code> = "Manager, I changed the paperwork. Please re-read the folder."</strong></p>
+</blockquote>
+<p>Important details:</p>
+<ul>
+<li>It re-reads <strong>unit files</strong>. It does <strong>not</strong> restart your services.</li>
+<li>After editing a unit file, you usually need <strong>both</strong>: <code>daemon-reload</code> (so he knows the new rules) and <code>restart</code> (so the running service actually uses them).</li>
+<li>Forgot it? systemd even warns you: <em>"Warning: The unit file ... changed on disk. Run 'systemctl daemon-reload' to reload units."</em> Now you know exactly what that means.</li>
+</ul>
+<pre><code class="language-bash">sudo nano /etc/systemd/system/hello.service     # edit the file
+sudo systemctl daemon-reload                    # manager: re-read paperwork
+sudo systemctl restart hello                    # service: apply the new rules
+</code></pre>
+<hr />
+<h2 id="10-changing-a-service-without-breaking-it-drop-ins">10. 🩹 Changing a service without breaking it (drop-ins)</h2>
+<p>Want to tweak a service that came from a package (say, make nginx always restart)? Don't edit the original, because updates will overwrite it. Use a <strong>drop-in override</strong>:</p>
+<pre><code class="language-bash">sudo systemctl edit nginx
+</code></pre>
+<p>This opens an empty editor. Type only what you want to change:</p>
+<pre><code class="language-ini">[Service]
+Restart=always
+RestartSec=5
+</code></pre>
+<p>Save and exit. systemd stores it at:</p>
+<pre><code>/etc/systemd/system/nginx.service.d/override.conf
+</code></pre>
+<p>It automatically reloads, and your change is <strong>layered on top</strong> of the original file. Check the result with <code>systemctl cat nginx</code>.</p>
+<blockquote>
+<p>🧠 <strong>Analogy:</strong> The original job description stays in the library. You clip a <strong>sticky note</strong> on top: "Also: always restart if you fall over." If you remove the sticky note, everything is back to normal.</p>
+</blockquote>
+<p>(<code>sudo systemctl edit --full nginx</code> makes a full private copy in <code>/etc</code> instead.)</p>
+<hr />
+<h2 id="11-wants-requires-after-the-guest-list-vs-the-seating-chart">11. 🎉 Wants, Requires, After: the guest list vs the seating chart</h2>
+<p>Units can depend on each other. This is where people mix up two <strong>different</strong> ideas:</p>
+<table>
+<thead>
+<tr>
+<th>Idea</th>
+<th>Keywords</th>
+<th>Question it answers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dependency</strong></td>
+<td><code>Wants=</code>, <code>Requires=</code></td>
+<td>"Should that other unit <strong>also be started</strong> along with me?"</td>
+</tr>
+<tr>
+<td><strong>Ordering</strong></td>
+<td><code>After=</code>, <code>Before=</code></td>
+<td>"In what <strong>order</strong> do we start?"</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>🎂 <strong>The party analogy:</strong>
+<code>Wants=</code> is the <strong>guest list</strong>. "I'd like Priya to come to my party."
+<code>After=</code> is the <strong>seating order</strong>. "If she does come, I'll arrive after her."</p>
+<p>Inviting someone does <strong>not</strong> decide who arrives first, and arriving later does <strong>not</strong> invite them. You need to say both if you mean both.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Wants=x</code></td>
+<td><strong>Soft</strong> dependency. Start x too, but if x fails I carry on</td>
+</tr>
+<tr>
+<td><code>Requires=x</code></td>
+<td><strong>Hard</strong> dependency. If x fails or stops, I stop too</td>
+</tr>
+<tr>
+<td><code>After=x</code></td>
+<td>Start me <em>after</em> x has been started</td>
+</tr>
+<tr>
+<td><code>Before=x</code></td>
+<td>Start me <em>before</em> x</td>
+</tr>
+</tbody>
+</table>
+<p>A very common real-world line:</p>
+<pre><code class="language-ini">[Unit]
+After=network.target
+Wants=network-online.target
+</code></pre>
+<p>Common targets for ordering: <code>network.target</code> (network stack is set up) and <code>network-online.target</code> (network is actually <strong>connected</strong>). A service that needs real internet should use the second.</p>
+<p>See the whole tree with <code>systemctl list-dependencies nginx</code>.</p>
+<hr />
+<h2 id="12-targets-the-buildings-modes">12. 🌗 Targets: the building's "modes"</h2>
+<p>A <strong>target</strong> is a <em>named state of the system</em>, a group of units that should be running together. Think of a building's modes: "night mode" (minimal lights), "business hours" (everything on).</p>
+<table>
+<thead>
+<tr>
+<th>Target</th>
+<th>Mode</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>rescue.target</code></td>
+<td>Emergency repair, minimal services, root shell</td>
+</tr>
+<tr>
+<td><code>multi-user.target</code></td>
+<td>Full system, <strong>no GUI</strong> (servers)</td>
+</tr>
+<tr>
+<td><code>graphical.target</code></td>
+<td>Full system <strong>plus</strong> graphical login (desktops)</td>
+</tr>
+<tr>
+<td><code>poweroff.target</code> / <code>reboot.target</code></td>
+<td>Shutting down / rebooting</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-bash">systemctl get-default                              # what mode do we boot into?
+sudo systemctl set-default multi-user.target       # boot to text mode next time
+sudo systemctl set-default graphical.target        # back to GUI
+sudo systemctl isolate rescue.target               # switch mode right now
+</code></pre>
+<blockquote>
+<p>📜 <strong>For the history buffs:</strong> old Linux had <strong>runlevels</strong> (0-6). Targets are the modern equivalent: <code>runlevel 3</code> ≈ <code>multi-user.target</code>, <code>runlevel 5</code> ≈ <code>graphical.target</code>. Mentioned in old tutorials? Now you can translate.</p>
+</blockquote>
+<p>This is also the "destination" in the boot journey from the <a href="linux-boot-process-explained.md">boot page</a>. systemd's job during boot is simply to <strong>reach the default target</strong>.</p>
+<hr />
+<h2 id="13-journalctl-the-buildings-cctv-and-logbook">13. 📹 journalctl: the building's CCTV and logbook</h2>
+<p>Every service's output, every kernel message, every login attempt gets collected by <strong><code>systemd-journald</code></strong> into one central, <strong>indexed</strong> log called the <strong>journal</strong>.</p>
+<p><code>journalctl</code> is the tool that reads it.</p>
+<blockquote>
+<p>🆚 <strong>Old way:</strong> each program writes its own text file in <code>/var/log</code> (<code>syslog</code>, <code>auth.log</code>, <code>nginx/error.log</code>...), and you <code>grep</code> your way through them.
+<strong>Journal way:</strong> one searchable database where you can filter by service, time, severity, or boot.</p>
+</blockquote>
+<p>The journal is stored in <strong>binary form</strong> (that's why you can't <code>cat</code> it) in <code>/var/log/journal/</code> (persistent) or <code>/run/log/journal/</code> (gone after reboot). Ubuntu normally keeps it persistent. Traditional text logs like <code>/var/log/syslog</code> often still exist too.</p>
+<h3 id="the-commands-from-the-basics-up">The commands, from the basics up</h3>
+<pre><code class="language-bash">journalctl                     # everything, oldest first (use arrow keys, q to quit)
+journalctl -r                  # newest first
+journalctl -n 50               # last 50 lines
+journalctl -f                  # follow live, like `tail -f`
+</code></pre>
+<h3 id="filter-by-service-the-one-youll-use-most">Filter by service ⭐ (the one you'll use most)</h3>
+<pre><code class="language-bash">journalctl -u nginx            # only nginx's logs
+journalctl -u nginx -f         # follow nginx live
+journalctl -u nginx -n 100 --no-pager
+</code></pre>
+<h3 id="filter-by-boot">Filter by boot</h3>
+<pre><code class="language-bash">journalctl -b                  # this boot only
+journalctl -b -1               # the previous boot (handy after a crash!)
+journalctl --list-boots        # all boots the journal remembers
+</code></pre>
+<h3 id="filter-by-time">Filter by time</h3>
+<pre><code class="language-bash">journalctl --since &quot;1 hour ago&quot;
+journalctl --since &quot;2026-10-18 09:00&quot; --until &quot;2026-10-18 10:00&quot;
+journalctl --since today
+</code></pre>
+<h3 id="filter-by-severity">Filter by severity</h3>
+<pre><code class="language-bash">journalctl -p err              # errors and worse
+journalctl -p warning -b       # warnings and worse, this boot
+</code></pre>
+<p>Priority levels, from worst to chattiest: <code>emerg</code> → <code>alert</code> → <code>crit</code> → <code>err</code> → <code>warning</code> → <code>notice</code> → <code>info</code> → <code>debug</code>.</p>
+<h3 id="kernel-messages">Kernel messages</h3>
+<pre><code class="language-bash">journalctl -k                  # same idea as `dmesg`
+</code></pre>
+<h3 id="the-famous-xeu-mystery-solved">The famous <code>-xeu</code> mystery, solved</h3>
+<p>When a service fails, systemd tells you: <em>"See 'journalctl -xeu nginx.service' for details."</em> These are <strong>three flags squashed together</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-x</code></td>
+<td>Add <strong>explanatory help text</strong> to certain messages</td>
+</tr>
+<tr>
+<td><code>-e</code></td>
+<td>Jump to the <strong>end</strong> (newest lines)</td>
+</tr>
+<tr>
+<td><code>-u nginx.service</code></td>
+<td>Only this unit</td>
+</tr>
+</tbody>
+</table>
+<p>So <code>-xeu nginx</code> = <em>"show me nginx's latest logs, with explanations."</em> Not so scary now.</p>
+<h3 id="searching-and-combining">Searching and combining</h3>
+<pre><code class="language-bash">journalctl -u ssh -p err --since yesterday
+journalctl -b -u nginx | grep -i &quot;permission&quot;
+</code></pre>
+<h3 id="managing-the-journals-size">Managing the journal's size</h3>
+<p>Journals can grow big:</p>
+<pre><code class="language-bash">journalctl --disk-usage                 # how much space is it eating?
+sudo journalctl --vacuum-time=2weeks    # delete entries older than 2 weeks
+sudo journalctl --vacuum-size=500M      # trim down to 500 MB
+</code></pre>
+<hr />
+<h2 id="14-timers-crons-modern-cousin">14. ⏰ Timers: cron's modern cousin</h2>
+<p>Want to run something on a schedule? The classic tool is <strong>cron</strong>. systemd offers <strong>timers</strong>, with extras: logs in the journal, "run missed jobs after the PC was off", dependency handling, and easy status checks.</p>
+<p>A timer needs <strong>two files</strong>: the <strong>service</strong> (what to run) and the <strong>timer</strong> (when).</p>
+<p><strong><code>/etc/systemd/system/backup.service</code></strong></p>
+<pre><code class="language-ini">[Unit]
+Description=Nightly backup
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/backup.sh
+</code></pre>
+<p><strong><code>/etc/systemd/system/backup.timer</code></strong></p>
+<pre><code class="language-ini">[Unit]
+Description=Run backup daily
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+</code></pre>
+<pre><code class="language-bash">sudo systemctl daemon-reload
+sudo systemctl enable --now backup.timer     # note: enable the TIMER, not the service
+systemctl list-timers                        # see all timers and when they fire next
+</code></pre>
+<ul>
+<li><code>OnCalendar=daily</code> means once a day. You can also write things like <code>OnCalendar=Mon *-*-* 09:00:00</code>.</li>
+<li><code>Persistent=true</code> means "if the computer was off at the scheduled time, run it when it wakes up."</li>
+<li><code>OnBootSec=10min</code> means "10 minutes after boot."</li>
+</ul>
+<p>Test a calendar expression with: <code>systemd-analyze calendar "Mon *-*-* 09:00:00"</code>.</p>
+<hr />
+<h2 id="15-systemd-analyze-why-is-my-boot-slow">15. ⏱️ systemd-analyze: why is my boot slow?</h2>
+<pre><code class="language-bash">systemd-analyze                  # total boot time: firmware + loader + kernel + userspace
+systemd-analyze blame            # services ranked by how long they took
+systemd-analyze critical-chain   # the chain of units that actually held up boot
+</code></pre>
+<p><code>blame</code> shows who was <em>slow</em>, but not necessarily who delayed boot (services start in parallel). <code>critical-chain</code> shows the <strong>bottleneck path</strong>. Start there.</p>
+<hr />
+<h2 id="16-the-rest-of-the-family">16. 👨‍👩‍👧‍👦 The rest of the family</h2>
+<p>systemd comes with a team of small helper commands. You don't need them on day one, but it helps to know they exist:</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>hostnamectl</code></td>
+<td>View/change the computer's name</td>
+<td><code>hostnamectl set-hostname mylaptop</code></td>
+</tr>
+<tr>
+<td><code>timedatectl</code></td>
+<td>View/change time, date, timezone, NTP</td>
+<td><code>timedatectl set-timezone Asia/Kathmandu</code></td>
+</tr>
+<tr>
+<td><code>loginctl</code></td>
+<td>See logged-in users and sessions</td>
+<td><code>loginctl list-sessions</code></td>
+</tr>
+<tr>
+<td><code>resolvectl</code></td>
+<td>DNS resolver info</td>
+<td><code>resolvectl status</code></td>
+</tr>
+<tr>
+<td><code>networkctl</code></td>
+<td>Network link status (if networkd is used)</td>
+<td><code>networkctl status</code></td>
+</tr>
+<tr>
+<td><code>systemd-analyze</code></td>
+<td>Boot performance</td>
+<td><code>systemd-analyze blame</code></td>
+</tr>
+<tr>
+<td><code>coredumpctl</code></td>
+<td>Inspect crashed programs</td>
+<td><code>coredumpctl list</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="user-services">👤 User services</h3>
+<p>Regular users can have their own services too, without <code>sudo</code>:</p>
+<pre><code class="language-bash">systemctl --user status
+systemctl --user enable --now my-app
+</code></pre>
+<p>User unit files go in <code>~/.config/systemd/user/</code>. Handy for personal background tasks.</p>
+<h3 id="the-old-service-command-still-works">The old <code>service</code> command still works</h3>
+<pre><code class="language-bash">sudo service nginx restart
+</code></pre>
+<p>It's a legacy wrapper that quietly calls <code>systemctl</code> for you. If you see it in an old tutorial, it still works.</p>
+<hr />
+<h2 id="17-when-a-service-fails-the-detective-checklist">17. 🕵️ When a service fails: the detective checklist</h2>
+<p>Same routine, every time. Memorise this and you'll fix 90% of problems:</p>
+<pre><code class="language-text">1. systemctl status &lt;service&gt;          → what state? any hint in the last log lines?
+2. journalctl -xeu &lt;service&gt;           → the full story, newest at the bottom
+3. Fix the cause (config, path, permission...)
+4. sudo systemctl daemon-reload        → ONLY if you edited the unit file
+5. sudo systemctl restart &lt;service&gt;
+6. systemctl status &lt;service&gt;          → green? 🎉
+</code></pre>
+<h3 id="common-culprits">Common culprits</h3>
+<table>
+<thead>
+<tr>
+<th>Message / symptom</th>
+<th>What it usually means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Unit xyz.service not found</code></td>
+<td>Typo in the name, file in the wrong folder, or you forgot <code>daemon-reload</code></td>
+</tr>
+<tr>
+<td><code>status=203/EXEC</code></td>
+<td>systemd couldn't execute <code>ExecStart</code>: wrong path, or the file isn't executable (<code>chmod +x</code>), or a missing <code>#!</code> first line</td>
+</tr>
+<tr>
+<td><code>status=217/USER</code></td>
+<td>The <code>User=</code> you specified doesn't exist</td>
+</tr>
+<tr>
+<td><code>status=200/CHDIR</code></td>
+<td><code>WorkingDirectory=</code> doesn't exist</td>
+</tr>
+<tr>
+<td><code>Start request repeated too quickly</code></td>
+<td>It crashed several times in a row, and systemd gave up. Fix the underlying error, then <code>sudo systemctl reset-failed &lt;service&gt;</code></td>
+</tr>
+<tr>
+<td><code>Failed to connect to bus</code> / <code>Access denied</code></td>
+<td>You forgot <code>sudo</code> for a system-wide action</td>
+</tr>
+<tr>
+<td><code>Job failed. See "journalctl -xe"</code></td>
+<td>Exactly what it says. Run it!</td>
+</tr>
+<tr>
+<td>Service works manually but fails under systemd</td>
+<td>systemd runs it with a <strong>minimal environment</strong> (no <code>$PATH</code> like your shell, different user, no terminal). Use full paths and set <code>Environment=</code></td>
+</tr>
+<tr>
+<td>Changed config, nothing changed</td>
+<td>You didn't <code>restart</code>/<code>reload</code>. Or you edited the wrong file. Check <code>systemctl cat</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>🧠 <strong>The golden rule:</strong> <code>status</code> tells you <strong>that</strong> something is wrong. <code>journalctl</code> tells you <strong>why</strong>.</p>
+</blockquote>
+<hr />
+<h2 id="18-cheat-sheet">18. 📋 Cheat Sheet</h2>
+<h3 id="systemctl">systemctl</h3>
+<table>
+<thead>
+<tr>
+<th>I want to...</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>See a service's state</td>
+<td><code>systemctl status X</code></td>
+</tr>
+<tr>
+<td>Start / stop now</td>
+<td><code>sudo systemctl start X</code> / <code>stop X</code></td>
+</tr>
+<tr>
+<td>Restart / reload config</td>
+<td><code>sudo systemctl restart X</code> / <code>reload X</code></td>
+</tr>
+<tr>
+<td>Start at every boot</td>
+<td><code>sudo systemctl enable X</code></td>
+</tr>
+<tr>
+<td>Both enable and start</td>
+<td><code>sudo systemctl enable --now X</code></td>
+</tr>
+<tr>
+<td>Stop auto-start</td>
+<td><code>sudo systemctl disable X</code></td>
+</tr>
+<tr>
+<td>Block a service entirely</td>
+<td><code>sudo systemctl mask X</code></td>
+</tr>
+<tr>
+<td>See what's failing</td>
+<td><code>systemctl --failed</code></td>
+</tr>
+<tr>
+<td>List all services</td>
+<td><code>systemctl list-units --type=service</code></td>
+</tr>
+<tr>
+<td>See the unit file(s)</td>
+<td><code>systemctl cat X</code></td>
+</tr>
+<tr>
+<td>Override a unit safely</td>
+<td><code>sudo systemctl edit X</code></td>
+</tr>
+<tr>
+<td>Re-read unit files</td>
+<td><code>sudo systemctl daemon-reload</code></td>
+</tr>
+<tr>
+<td>Clear a "failed" mark</td>
+<td><code>sudo systemctl reset-failed X</code></td>
+</tr>
+<tr>
+<td>Check/change boot mode</td>
+<td><code>systemctl get-default</code> / <code>set-default</code></td>
+</tr>
+<tr>
+<td>List timers</td>
+<td><code>systemctl list-timers</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="journalctl">journalctl</h3>
+<table>
+<thead>
+<tr>
+<th>I want to...</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Logs for one service</td>
+<td><code>journalctl -u X</code></td>
+</tr>
+<tr>
+<td>Follow live</td>
+<td><code>journalctl -u X -f</code></td>
+</tr>
+<tr>
+<td>Latest with explanations</td>
+<td><code>journalctl -xeu X</code></td>
+</tr>
+<tr>
+<td>This boot only</td>
+<td><code>journalctl -b</code></td>
+</tr>
+<tr>
+<td>Previous boot</td>
+<td><code>journalctl -b -1</code></td>
+</tr>
+<tr>
+<td>Errors only</td>
+<td><code>journalctl -p err</code></td>
+</tr>
+<tr>
+<td>Time range</td>
+<td><code>journalctl --since "1 hour ago"</code></td>
+</tr>
+<tr>
+<td>Kernel messages</td>
+<td><code>journalctl -k</code></td>
+</tr>
+<tr>
+<td>Check disk usage</td>
+<td><code>journalctl --disk-usage</code></td>
+</tr>
+<tr>
+<td>Trim old logs</td>
+<td><code>sudo journalctl --vacuum-time=2weeks</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-one-line-mental-model">The one-line mental model</h3>
+<blockquote>
+<p><strong>systemd = manager · unit file = job description · systemctl = walkie-talkie · journalctl = CCTV · target = building mode · enable = shortcut in the boot to-do folder · daemon-reload = "re-read the paperwork"</strong></p>
+</blockquote>
+<hr />
+<h2 id="final-words">🎬 Final Words</h2>
+<p>Next time you paste <code>sudo systemctl daemon-reload &amp;&amp; sudo systemctl enable --now myapp</code>, you'll know exactly what each piece does, and, more importantly, <em>what to do when it doesn't work</em>.</p>
+<p>That's the real difference between <strong>copying commands</strong> and <strong>understanding Linux</strong>. You don't need to memorise every flag (unless an interviewer is staring at you). This page will always be here when you need it. 😉</p>
+<hr />
+<h2 id="references-further-reading">📚 References &amp; Further Reading</h2>
+<p><strong>Official documentation</strong>
+- <a href="https://systemd.io">systemd project home</a>
+- <a href="https://www.freedesktop.org/software/systemd/man/latest/systemctl.html">systemctl manual</a>
+- <a href="https://www.freedesktop.org/software/systemd/man/latest/journalctl.html">journalctl manual</a>
+- <a href="https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html">systemd.unit (unit file reference)</a>
+- <a href="https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html">systemd.service</a>
+- <a href="https://www.freedesktop.org/software/systemd/man/latest/systemd.timer.html">systemd.timer</a></p>
+<p><strong>Background and history</strong>
+- <a href="https://en.wikipedia.org/wiki/Systemd">systemd (Wikipedia)</a>
+- <a href="https://en.wikipedia.org/wiki/Daemon_(computing)">Daemon (computing)</a>
+- <a href="https://en.wikipedia.org/wiki/Init">Init</a>
+- <a href="https://en.wikipedia.org/wiki/Cron">cron</a></p>
+<p><strong>Tutorials worth bookmarking</strong>
+- <a href="https://wiki.archlinux.org/title/Systemd">ArchWiki: systemd</a> (excellent even if you're not on Arch)
+- <a href="https://wiki.archlinux.org/title/Systemd/Timers">ArchWiki: systemd/Timers</a>
+- <a href="https://www.digitalocean.com/community/tutorials/systemd-essentials-working-with-services-units-and-the-journal">DigitalOcean: systemd essentials</a></p>
+<p><strong>Related pages on this site</strong>
+- <a href="../">The Story Behind the Penguin (history)</a>
+- <a href="linux-file-system-explained.md">The Linux File System, Explained</a>
+- <a href="linux-boot-process-explained.md">From Power Button to Desktop (boot process)</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.expand", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../javascripts/tab-dropdown.js"></script>
+      
+    
+  </body>
+</html>
