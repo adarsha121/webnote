@@ -1,6 +1,10 @@
 // toggle-sidebars.js
 (function() {
     function initSidebarToggle() {
+        if (window.matchMedia('(max-width: 76.2344em)').matches) {
+            return;
+        }
+
         // Create the toggle button
         const btn = document.createElement('button');
         btn.className = 'sidebar-toggle';

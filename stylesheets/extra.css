@@ -81,6 +81,19 @@ a:hover { color: #ffffff !important; }
 
 /* Mobile & Tablet backdrop resets */
 @media screen and (max-width: 76.2344em) {
+
+  .md-header,.md-tabs,.sidebar-toggle{
+    display: none !important;
+  }
+
+  /* hide nav bar for mobile and tablet */
+  .md-header,.md-tabs{
+    display: none !important;
+  }
+
+  .sidebar-toggle {
+    display: none !important;
+  }
   [data-md-color-scheme="slate"],
   [data-md-color-scheme="slate"] body,
   [data-md-color-scheme="slate"] .md-main,

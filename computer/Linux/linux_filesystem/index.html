@@ -1,0 +1,4668 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://adarsha121.github.io/webnote/computer/Linux/linux_filesystem/">
+      
+      
+        <link rel="prev" href="../linux_commands/">
+      
+      
+        <link rel="next" href="../../Python/numpy_pandas/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Linux File System - My Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#the-linux-file-system-explained" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="My Notes" class="md-header__button md-logo" aria-label="My Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            My Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Linux File System
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="blue"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../physics/mechanics/" class="md-tabs__link">
+          
+  
+  
+  Physics
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../math/calculus.md" class="md-tabs__link">
+          
+  
+  
+  Math
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../ai/rag.md" class="md-tabs__link">
+          
+  
+  
+  AI/ML
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Programming
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../tsc/intro_ed/" class="md-tabs__link">
+          
+  
+  
+  TSC
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="My Notes" class="md-nav__button md-logo" aria-label="My Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    My Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Physics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Physics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../physics/mechanics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mechanics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../physics/quantum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quantum
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Math
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Math
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../math/calculus.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculus
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../math/linear.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear Algebra
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI/ML
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    AI/ML
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ai/rag.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RAG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Programming
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Programming
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linux_commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux File System
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux File System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📑 Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-root-is-everything" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 🌳 / (root) is everything
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 🌳 / (root) is everything">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows-vs-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows vs Linux
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dont-confuse-these-two" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ Don't confuse these two
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#golden-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 Golden rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-quick-map-cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Quick Map (cheat sheet)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-home-your-personal-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 🏠 /home: your personal space
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 🏠 /home: your personal space">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-points" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key points
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#notable-subfolders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notable subfolders
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pro-tip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 Pro tip
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-bin-essential-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. ⚙️ /bin: essential commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. ⚙️ /bin: essential commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modern-note-its-a-shortcut-now" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 Modern note: it's a shortcut now
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-etc-configuration-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 🛠️ /etc: configuration files
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 🛠️ /etc: configuration files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#important-files-and-folders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Important files and folders
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#careful" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ Careful
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-usr-installed-software-and-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 📦 /usr: installed software and resources
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 📦 /usr: installed software and resources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subdirectories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subdirectories
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usrlocal-spotlight" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /usr/local spotlight
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usrshare-spotlight" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /usr/share spotlight
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-var-variable-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 📜 /var: variable data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 📜 /var: variable data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subdirectories_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subdirectories
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-read-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: read logs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 Tip
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-tmp-temporary-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 🗑️ /tmp: temporary files
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 🗑️ /tmp: temporary files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-points_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key points
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-dev-devices-as-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 🔌 /dev: devices as files
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 🔌 /dev: devices as files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-entries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common entries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fun-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fun examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-proc-the-live-process-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 📊 /proc: the live process window
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 📊 /proc: the live process window">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-entries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key entries
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-sys-kernel-and-hardware-panel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 🎛️ /sys: kernel and hardware panel
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 🎛️ /sys: kernel and hardware panel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-change-screen-brightness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: change screen brightness
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-subfolders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key subfolders
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#proc-vs-sys-at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /proc vs /sys at a glance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-boot-startup-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 🚀 /boot: startup files
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. 🚀 /boot: startup files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#whats-inside" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's inside
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#warning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ Warning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-sbin-system-administration-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 🧰 /sbin: system administration commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. 🧰 /sbin: system administration commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-lib-and-lib64-shared-libraries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. 📚 /lib and /lib64: shared libraries
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. 📚 /lib and /lib64: shared libraries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-opt-optional-software" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. 🧳 /opt: optional software
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="15. 🧳 /opt: optional software">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-mnt-and-media-mount-points" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. 💾 /mnt and /media: mount points
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="16. 💾 /mnt and /media: mount points">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#media-automatic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /media (automatic)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mnt-manual" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /mnt (manual)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analogy_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mnt-vs-media" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /mnt vs /media
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-root-the-administrators-home" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17. 👑 /root: the administrator's home
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="17. 👑 /root: the administrator&#39;s home">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18-run-runtime-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18. ⏱️ /run: runtime data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="18. ⏱️ /run: runtime data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#19-srv-served-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19. 🏪 /srv: served data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19. 🏪 /srv: served data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#20-snap-snap-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        20. 📦 /snap: Snap packages
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="20. 📦 /snap: Snap packages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21-swapimg-swap-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21. 💤 /swap.img: swap file
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="21. 💤 /swap.img: swap file">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22-lostfound-recovery-bin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22. 🧯 /lost+found: recovery bin
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="22. 🧯 /lost+found: recovery bin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-cdrom-legacy-optical-mount" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        23. 💿 /cdrom: legacy optical mount
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24-the-usr-is-merged-entries-explained" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        24. 🧩 The *.usr-is-merged entries explained
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="24. 🧩 The *.usr-is-merged entries explained">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        History
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-usr-merge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The "usr merge"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-the-usr-is-merged-folders-are" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the *.usr-is-merged folders are
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analogy_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#25-putting-it-all-together-a-commands-journey" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25. 🧭 Putting it all together: a command's journey
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#26-handy-commands-to-explore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26. 🔍 Handy commands to explore
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 Summary / TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Python
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Python/numpy_pandas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Numpy and Pandas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Python/matplotlib/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Matplotlib
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSC
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    TSC
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/intro_ed/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    शिक्षाकाै परिचय
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/learning_principle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    शैक्षिक सिद्धान्त
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/16th_plan_about_edu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    साैह्रौं योजना
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/bhugool/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    भुगाेल
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/cirriculum_and_books/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    पाठ्यक्रम
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/constution_edu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    सबि‌धान
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/ed_act_2028/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    शिक्षा एेन
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/ed_niyamawali/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    सिक्षा नियमावली
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/tsc_niyamabali_2057/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    शिक्षाक सेवा आयोग नियमावली
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/history_nepal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    इतिहास
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/local_govt_ed_related/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    थानीय सरकार सञ्चालन ऐन
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/intl_orgs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    अन्तराष्ट्रिय स‌घसस्था
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/constution_edu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    सबि‌धान
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📑 Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-root-is-everything" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 🌳 / (root) is everything
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 🌳 / (root) is everything">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows-vs-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows vs Linux
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dont-confuse-these-two" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ Don't confuse these two
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#golden-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 Golden rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-quick-map-cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Quick Map (cheat sheet)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-home-your-personal-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 🏠 /home: your personal space
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 🏠 /home: your personal space">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-points" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key points
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#notable-subfolders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notable subfolders
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pro-tip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 Pro tip
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-bin-essential-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. ⚙️ /bin: essential commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. ⚙️ /bin: essential commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modern-note-its-a-shortcut-now" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 Modern note: it's a shortcut now
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-etc-configuration-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 🛠️ /etc: configuration files
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 🛠️ /etc: configuration files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#important-files-and-folders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Important files and folders
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#careful" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ Careful
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-usr-installed-software-and-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 📦 /usr: installed software and resources
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 📦 /usr: installed software and resources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subdirectories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subdirectories
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usrlocal-spotlight" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /usr/local spotlight
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usrshare-spotlight" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /usr/share spotlight
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-var-variable-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 📜 /var: variable data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 📜 /var: variable data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subdirectories_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subdirectories
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-read-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: read logs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 Tip
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-tmp-temporary-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 🗑️ /tmp: temporary files
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 🗑️ /tmp: temporary files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-points_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key points
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-dev-devices-as-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 🔌 /dev: devices as files
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 🔌 /dev: devices as files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-entries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common entries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fun-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fun examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-proc-the-live-process-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 📊 /proc: the live process window
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 📊 /proc: the live process window">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-entries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key entries
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-sys-kernel-and-hardware-panel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 🎛️ /sys: kernel and hardware panel
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 🎛️ /sys: kernel and hardware panel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-change-screen-brightness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: change screen brightness
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-subfolders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key subfolders
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#proc-vs-sys-at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /proc vs /sys at a glance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-boot-startup-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 🚀 /boot: startup files
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. 🚀 /boot: startup files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#whats-inside" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's inside
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#warning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ Warning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-sbin-system-administration-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 🧰 /sbin: system administration commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. 🧰 /sbin: system administration commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-lib-and-lib64-shared-libraries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. 📚 /lib and /lib64: shared libraries
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. 📚 /lib and /lib64: shared libraries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-opt-optional-software" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. 🧳 /opt: optional software
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="15. 🧳 /opt: optional software">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-mnt-and-media-mount-points" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. 💾 /mnt and /media: mount points
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="16. 💾 /mnt and /media: mount points">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#media-automatic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /media (automatic)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mnt-manual" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /mnt (manual)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analogy_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mnt-vs-media" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        /mnt vs /media
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-root-the-administrators-home" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17. 👑 /root: the administrator's home
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="17. 👑 /root: the administrator&#39;s home">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18-run-runtime-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18. ⏱️ /run: runtime data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="18. ⏱️ /run: runtime data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#19-srv-served-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19. 🏪 /srv: served data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19. 🏪 /srv: served data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#20-snap-snap-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        20. 📦 /snap: Snap packages
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="20. 📦 /snap: Snap packages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21-swapimg-swap-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21. 💤 /swap.img: swap file
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="21. 💤 /swap.img: swap file">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22-lostfound-recovery-bin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22. 🧯 /lost+found: recovery bin
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="22. 🧯 /lost+found: recovery bin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analogy_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-cdrom-legacy-optical-mount" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        23. 💿 /cdrom: legacy optical mount
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24-the-usr-is-merged-entries-explained" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        24. 🧩 The *.usr-is-merged entries explained
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="24. 🧩 The *.usr-is-merged entries explained">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        History
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-usr-merge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The "usr merge"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-the-usr-is-merged-folders-are" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the *.usr-is-merged folders are
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analogy_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#25-putting-it-all-together-a-commands-journey" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25. 🧭 Putting it all together: a command's journey
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#26-handy-commands-to-explore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26. 🔍 Handy commands to explore
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎯 Summary / TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="the-linux-file-system-explained">🐧 The Linux File System, Explained</h1>
+<blockquote>
+<p><strong>One tree to rule them all.</strong> Everything in Linux, from your photos to your keyboard to your running programs, lives somewhere inside a single tree that starts at <code>/</code>.</p>
+</blockquote>
+<p>This guide walks through every top-level directory you see on a typical Ubuntu system (the <code>*.usr-is-merged</code>, <code>snap</code>, <code>swap.img</code> and <code>cdrom</code> entries are the giveaway), ordered from <strong>most relevant to everyday use</strong> to <strong>least</strong>.</p>
+<hr />
+<h2 id="table-of-contents">📑 Table of Contents</h2>
+<ol>
+<li><a href="#1--root-is-everything">The Big Idea: <code>/</code> (root) is everything</a></li>
+<li><a href="#2-quick-map-cheat-sheet">Quick Map (cheat sheet)</a></li>
+<li><a href="#3-home--your-personal-space"><code>/home</code>: your personal space</a></li>
+<li><a href="#4-bin--essential-commands"><code>/bin</code>: essential commands</a></li>
+<li><a href="#5-etc--configuration-files"><code>/etc</code>: configuration files</a></li>
+<li><a href="#6-usr--installed-software-and-resources"><code>/usr</code>: the big library of installed software</a></li>
+<li><a href="#7-var--variable-data"><code>/var</code>: data that changes</a></li>
+<li><a href="#8-tmp--temporary-files"><code>/tmp</code>: scratch paper</a></li>
+<li><a href="#9-dev--devices-as-files"><code>/dev</code>: devices as files</a></li>
+<li><a href="#10-proc--the-live-process-window"><code>/proc</code>: live view of processes</a></li>
+<li><a href="#11-sys--kernel-and-hardware-panel"><code>/sys</code>: kernel and hardware control panel</a></li>
+<li><a href="#12-boot--startup-files"><code>/boot</code>: startup files</a></li>
+<li><a href="#13-sbin--system-administration-commands"><code>/sbin</code>: admin commands</a></li>
+<li><a href="#14-lib-and-lib64--shared-libraries"><code>/lib</code> and <code>/lib64</code>: shared libraries</a></li>
+<li><a href="#15-opt--optional-software"><code>/opt</code>: optional third-party software</a></li>
+<li><a href="#16-mnt-and-media--mount-points"><code>/mnt</code> and <code>/media</code>: mounting other storage</a></li>
+<li><a href="#17-root--the-administrators-home"><code>/root</code>: the administrator's home</a></li>
+<li><a href="#18-run--runtime-data"><code>/run</code>: runtime data since boot</a></li>
+<li><a href="#19-srv--served-data"><code>/srv</code>: data served to others</a></li>
+<li><a href="#20-snap--snap-packages"><code>/snap</code>: Snap packages</a></li>
+<li><a href="#21-swapimg--swap-file"><code>/swap.img</code>: swap file</a></li>
+<li><a href="#22-lostfound--recovery-bin"><code>/lost+found</code>: filesystem recovery bin</a></li>
+<li><a href="#23-cdrom--legacy-optical-mount"><code>/cdrom</code>: legacy optical media mount</a></li>
+<li><a href="#24-the-usr-is-merged-entries-explained">The <code>*.usr-is-merged</code> entries</a></li>
+<li><a href="#25-putting-it-all-together-a-commands-journey">Putting it all together: a command's journey</a></li>
+<li><a href="#26-handy-commands-to-explore">Handy commands to explore</a></li>
+</ol>
+<hr />
+<h2 id="1-root-is-everything">1. 🌳 <code>/</code> (root) is everything</h2>
+<h3 id="windows-vs-linux">Windows vs Linux</h3>
+<p>On <strong>Windows</strong>, storage is split into separate drives:</p>
+<pre><code>C:\          D:\          E:\ (USB)
+</code></pre>
+<p>On <strong>Linux</strong>, there are <strong>no drive letters</strong>. There is <strong>one single tree</strong>, and its starting point (the trunk) is <code>/</code>, called <strong>root</strong>.</p>
+<pre><code>/
+├── home
+├── etc
+├── usr
+├── var
+└── ...everything else
+</code></pre>
+<p>A second hard disk, a USB (PenDrive), a network share: all of them get <strong>attached (mounted) onto a branch</strong> of this one tree. For example, a USB stick might appear at <code>/media/yourname/MYUSB</code>.</p>
+<blockquote>
+<p>Think of Linux as <strong>one giant tree</strong>. Windows is more like <strong>a row of separate cupboards</strong> (C:, D:, E:). In Linux, new cupboards are not placed beside the tree; they are <strong>grafted onto a branch</strong>.</p>
+</blockquote>
+<h3 id="dont-confuse-these-two">⚠️ Don't confuse these two</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/</code></td>
+<td>The <strong>root of the entire file system</strong> (the trunk)</td>
+</tr>
+<tr>
+<td><code>/root</code></td>
+<td>The <strong>home directory of the root user</strong> (the admin account)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="golden-rules">📝 Golden rules</h3>
+<ul>
+<li><strong>Everything is a file</strong>: documents, folders, devices, even running processes are represented as files.</li>
+<li><strong>Case-sensitive</strong>: <code>Notes.txt</code> and <code>notes.txt</code> are different files.</li>
+<li><strong>Forward slash <code>/</code></strong> separates folders (not <code>\</code>).</li>
+<li>Paths starting with <code>/</code> are <strong>absolute</strong> (<code>/home/sam/notes.txt</code>); others are <strong>relative</strong> to where you are.</li>
+</ul>
+<hr />
+<h2 id="2-quick-map-cheat-sheet">2. Quick Map (cheat sheet)</h2>
+<table>
+<thead>
+<tr>
+<th>Directory</th>
+<th>One-line meaning</th>
+<th>Analogy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/home</code></td>
+<td>Users' personal files</td>
+<td>Your bedroom</td>
+</tr>
+<tr>
+<td><code>/bin</code></td>
+<td>Essential commands</td>
+<td>Basic kitchen tools</td>
+</tr>
+<tr>
+<td><code>/etc</code></td>
+<td>System configuration</td>
+<td>The control panel / settings</td>
+</tr>
+<tr>
+<td><code>/usr</code></td>
+<td>Installed programs and libraries</td>
+<td>The main warehouse</td>
+</tr>
+<tr>
+<td><code>/var</code></td>
+<td>Logs, caches, changing data</td>
+<td>The diary / mailroom</td>
+</tr>
+<tr>
+<td><code>/tmp</code></td>
+<td>Temporary files</td>
+<td>Scratch paper</td>
+</tr>
+<tr>
+<td><code>/dev</code></td>
+<td>Hardware as files</td>
+<td>Plug sockets on the wall</td>
+</tr>
+<tr>
+<td><code>/proc</code></td>
+<td>Live process/kernel info</td>
+<td>Hospital monitor</td>
+</tr>
+<tr>
+<td><code>/sys</code></td>
+<td>Kernel/hardware control</td>
+<td>Dashboard switches</td>
+</tr>
+<tr>
+<td><code>/boot</code></td>
+<td>Startup files</td>
+<td>The ignition key</td>
+</tr>
+<tr>
+<td><code>/sbin</code></td>
+<td>Admin commands</td>
+<td>The manager's toolbox</td>
+</tr>
+<tr>
+<td><code>/lib</code>, <code>/lib64</code></td>
+<td>Shared libraries</td>
+<td>Shared ingredient pantry</td>
+</tr>
+<tr>
+<td><code>/opt</code></td>
+<td>Optional third-party software</td>
+<td>The guest suite</td>
+</tr>
+<tr>
+<td><code>/mnt</code>, <code>/media</code></td>
+<td>Mount points for other storage</td>
+<td>Docking ports</td>
+</tr>
+<tr>
+<td><code>/root</code></td>
+<td>Admin's home</td>
+<td>The principal's office</td>
+</tr>
+<tr>
+<td><code>/run</code></td>
+<td>Runtime state since boot</td>
+<td>Sticky notes for today</td>
+</tr>
+<tr>
+<td><code>/srv</code></td>
+<td>Data served to others</td>
+<td>The shop counter</td>
+</tr>
+<tr>
+<td><code>/snap</code></td>
+<td>Snap packages</td>
+<td>Sealed lunchboxes</td>
+</tr>
+<tr>
+<td><code>/swap.img</code></td>
+<td>Swap file</td>
+<td>Overflow desk</td>
+</tr>
+<tr>
+<td><code>/lost+found</code></td>
+<td>Recovered file fragments</td>
+<td>Lost-property office</td>
+</tr>
+<tr>
+<td><code>/cdrom</code></td>
+<td>Legacy CD/DVD mount</td>
+<td>The old CD slot</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-home-your-personal-space">3. 🏠 <code>/home</code>: your personal space</h2>
+<p><strong>What it is:</strong> Every normal user gets their own folder here. This is where <strong>you</strong> live: documents, downloads, pictures, and your personal app settings.</p>
+<pre><code>/home
+├── sam/
+│   ├── Desktop/
+│   ├── Documents/
+│   ├── Downloads/
+│   ├── Pictures/
+│   ├── Music/
+│   ├── Videos/
+│   ├── .bashrc
+│   ├── .config/
+│   └── .ssh/
+└── priya/
+</code></pre>
+<h3 id="analogy">🧠 Analogy</h3>
+<blockquote>
+<p><code>/home</code> is an <strong>apartment building</strong>. Each user has their own locked apartment (<code>/home/sam</code>, <code>/home/priya</code>). Sam can't casually wander into Priya's flat.</p>
+</blockquote>
+<h3 id="key-points">Key points</h3>
+<ul>
+<li>Your folder can be written as <code>~</code> (tilde). <code>cd ~</code> takes you home. <code>~</code> is shorthand for <code>/home/yourname</code>.</li>
+<li><strong>Hidden files</strong> start with a dot (<code>.</code>), for example <code>.bashrc</code>, <code>.config</code>. They hold your personal app settings. Use <code>ls -a</code> to see them.</li>
+</ul>
+<h3 id="notable-subfolders">Notable subfolders</h3>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>~/Documents</code>, <code>~/Downloads</code>, <code>~/Pictures</code> ...</td>
+<td>Standard user folders</td>
+</tr>
+<tr>
+<td><code>~/.config</code></td>
+<td>Per-user app settings (modern apps)</td>
+</tr>
+<tr>
+<td><code>~/.local/share</code></td>
+<td>Per-user app data (themes, trash, etc.)</td>
+</tr>
+<tr>
+<td><code>~/.cache</code></td>
+<td>Per-user cache; safe to delete</td>
+</tr>
+<tr>
+<td><code>~/.ssh</code></td>
+<td>Your SSH keys (keep private!)</td>
+</tr>
+<tr>
+<td><code>~/.bashrc</code></td>
+<td>Your shell customisations (aliases, prompt)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pro-tip">💡 Pro tip</h3>
+<p>Since all your personal data and settings live here, <strong>backing up <code>/home</code> backs up "you"</strong>. Many people put <code>/home</code> on a separate partition so reinstalling Linux doesn't wipe their files.</p>
+<hr />
+<h2 id="4-bin-essential-commands">4. ⚙️ <code>/bin</code>: essential commands</h2>
+<p><strong>What it is:</strong> Short for <strong>binaries</strong>: the programs (commands) everyone needs, even in emergencies. Things like <code>ls</code>, <code>cp</code>, <code>mv</code>, <code>cat</code>, <code>bash</code>, <code>rm</code>.</p>
+<pre><code class="language-bash">$ which ls
+/usr/bin/ls
+
+$ ls -l /bin
+lrwxrwxrwx 1 root root 7 ... /bin -&gt; usr/bin
+</code></pre>
+<h3 id="analogy_1">🧠 Analogy</h3>
+<blockquote>
+<p><code>/bin</code> is the <strong>basic toolbox in your kitchen drawer</strong>: knife, spoon, can opener. Without them you can't do the basics.</p>
+</blockquote>
+<h3 id="modern-note-its-a-shortcut-now">🔗 Modern note: it's a shortcut now</h3>
+<p>On modern Ubuntu, <code>/bin</code> is just a <strong>symbolic link (shortcut)</strong> pointing to <code>/usr/bin</code>. Old systems kept them separate; new ones merged them (see <a href="#24-the-usr-is-merged-entries-explained">section 24</a>). So <code>/bin/ls</code> and <code>/usr/bin/ls</code> are literally the same file.</p>
+<hr />
+<h2 id="5-etc-configuration-files">5. 🛠️ <code>/etc</code>: configuration files</h2>
+<p><strong>What it is:</strong> The <strong>settings centre</strong> of the whole system. Almost every service and program stores its system-wide config here, mostly as plain text files you can read and edit.</p>
+<blockquote>
+<p>Fun fact: "etc" originally meant <em>et cetera</em> (miscellaneous), but today think of it as <strong>"Editable Text Configuration"</strong>.</p>
+</blockquote>
+<h3 id="analogy_2">🧠 Analogy</h3>
+<blockquote>
+<p><code>/etc</code> is the <strong>Settings app</strong> of Linux. Instead of clicking toggles, you edit text files.</p>
+</blockquote>
+<h3 id="important-files-and-folders">Important files and folders</h3>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/etc/passwd</code></td>
+<td>List of user accounts (no actual passwords despite the name)</td>
+</tr>
+<tr>
+<td><code>/etc/shadow</code></td>
+<td>Encrypted password hashes (root-only)</td>
+</tr>
+<tr>
+<td><code>/etc/group</code></td>
+<td>User groups</td>
+</tr>
+<tr>
+<td><code>/etc/sudoers</code></td>
+<td>Who may use <code>sudo</code></td>
+</tr>
+<tr>
+<td><code>/etc/fstab</code></td>
+<td>Which disks to mount at boot</td>
+</tr>
+<tr>
+<td><code>/etc/hostname</code></td>
+<td>The computer's name</td>
+</tr>
+<tr>
+<td><code>/etc/hosts</code></td>
+<td>Local name → IP address mapping</td>
+</tr>
+<tr>
+<td><code>/etc/apt/</code></td>
+<td>Package manager settings (repositories in <code>sources.list.d</code>)</td>
+</tr>
+<tr>
+<td><code>/etc/ssh/</code></td>
+<td>SSH server and client settings</td>
+</tr>
+<tr>
+<td><code>/etc/systemd/</code></td>
+<td>Service manager configuration</td>
+</tr>
+<tr>
+<td><code>/etc/network/</code>, <code>/etc/netplan/</code></td>
+<td>Network configuration</td>
+</tr>
+<tr>
+<td><code>/etc/cron.d/</code>, <code>/etc/crontab</code></td>
+<td>Scheduled tasks</td>
+</tr>
+<tr>
+<td><code>/etc/os-release</code></td>
+<td>Info about your distro and version</td>
+</tr>
+<tr>
+<td><code>/etc/default/</code></td>
+<td>Default settings for various services</td>
+</tr>
+<tr>
+<td><code>/etc/environment</code></td>
+<td>System-wide environment variables</td>
+</tr>
+</tbody>
+</table>
+<h3 id="example">Example</h3>
+<pre><code class="language-bash">$ cat /etc/os-release
+PRETTY_NAME=&quot;Ubuntu 24.04 LTS&quot;
+...
+$ cat /etc/hostname
+my-laptop
+</code></pre>
+<h3 id="careful">⚠️ Careful</h3>
+<p>Edit with <code>sudo</code>, and <strong>make a backup first</strong>: <code>sudo cp /etc/fstab /etc/fstab.bak</code>. A typo in the wrong file can stop your system from booting.</p>
+<hr />
+<h2 id="6-usr-installed-software-and-resources">6. 📦 <code>/usr</code>: installed software and resources</h2>
+<p><strong>What it is:</strong> Despite the name, it does <strong>not</strong> mean "user". It stands for <strong>Unix System Resources</strong>. This is the <strong>largest directory</strong>, holding most installed programs, libraries, and documentation. It is mostly <strong>read-only</strong> during normal use.</p>
+<h3 id="analogy_3">🧠 Analogy</h3>
+<blockquote>
+<p><code>/usr</code> is the <strong>city's main warehouse</strong>. Whenever you install an app, its parts get shelved here.</p>
+</blockquote>
+<h3 id="subdirectories">Subdirectories</h3>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/usr/bin</code></td>
+<td>Most user commands (<code>python3</code>, <code>git</code>, <code>gcc</code>, <code>ls</code>...)</td>
+</tr>
+<tr>
+<td><code>/usr/sbin</code></td>
+<td>Admin commands (<code>useradd</code>, <code>iptables</code>...)</td>
+</tr>
+<tr>
+<td><code>/usr/lib</code></td>
+<td>Libraries used by programs in <code>/usr/bin</code></td>
+</tr>
+<tr>
+<td><code>/usr/lib64</code></td>
+<td>64-bit libraries (some systems)</td>
+</tr>
+<tr>
+<td><code>/usr/local</code></td>
+<td><strong>Software you install manually</strong>; package manager won't touch it</td>
+</tr>
+<tr>
+<td><code>/usr/share</code></td>
+<td>Architecture-independent data: icons, docs, fonts, man pages, locale files</td>
+</tr>
+<tr>
+<td><code>/usr/include</code></td>
+<td>C/C++ header files (for developers)</td>
+</tr>
+<tr>
+<td><code>/usr/src</code></td>
+<td>Source code (e.g., Linux kernel headers)</td>
+</tr>
+<tr>
+<td><code>/usr/games</code></td>
+<td>Old-school games</td>
+</tr>
+</tbody>
+</table>
+<h3 id="usrlocal-spotlight"><code>/usr/local</code> spotlight</h3>
+<p>If you compile a program from source (<code>./configure &amp;&amp; make &amp;&amp; sudo make install</code>), it normally lands in <code>/usr/local/bin</code>. This keeps your hand-installed stuff separate from what <code>apt</code> manages.</p>
+<pre><code>/usr/local/bin/mytool     ← your custom stuff
+/usr/bin/git              ← installed by apt
+</code></pre>
+<h3 id="usrshare-spotlight"><code>/usr/share</code> spotlight</h3>
+<pre><code class="language-bash">$ ls /usr/share
+applications  doc  fonts  icons  man  themes  zoneinfo ...
+</code></pre>
+<p>This is where the <code>man</code> pages (<code>/usr/share/man</code>) and desktop icons live.</p>
+<hr />
+<h2 id="7-var-variable-data">7. 📜 <code>/var</code>: variable data</h2>
+<p><strong>What it is:</strong> <code>var</code> = <strong>variable</strong>. Files here <strong>grow and change constantly</strong> while the system runs: logs, caches, mail, databases, and queued jobs.</p>
+<h3 id="analogy_4">🧠 Analogy</h3>
+<blockquote>
+<p>If <code>/etc</code> is the <em>rulebook</em>, <code>/var</code> is the <strong>diary and mailroom</strong>: it records what has been happening.</p>
+</blockquote>
+<h3 id="subdirectories_1">Subdirectories</h3>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/var/log</code></td>
+<td><strong>System and app logs</strong>. First stop when troubleshooting</td>
+</tr>
+<tr>
+<td><code>/var/cache</code></td>
+<td>Cached data (e.g. downloaded <code>.deb</code> packages in <code>/var/cache/apt</code>)</td>
+</tr>
+<tr>
+<td><code>/var/lib</code></td>
+<td>Persistent app state (databases, package manager data, Docker, snap data)</td>
+</tr>
+<tr>
+<td><code>/var/spool</code></td>
+<td>Queued items (print jobs, cron jobs, mail)</td>
+</tr>
+<tr>
+<td><code>/var/tmp</code></td>
+<td>Temp files that <strong>survive reboots</strong> (unlike <code>/tmp</code>)</td>
+</tr>
+<tr>
+<td><code>/var/mail</code></td>
+<td>User mailboxes</td>
+</tr>
+<tr>
+<td><code>/var/www</code></td>
+<td>Often the default website folder for Apache/Nginx</td>
+</tr>
+<tr>
+<td><code>/var/run</code></td>
+<td>Symlink to <code>/run</code></td>
+</tr>
+<tr>
+<td><code>/var/crash</code></td>
+<td>Crash reports</td>
+</tr>
+<tr>
+<td><code>/var/backups</code></td>
+<td>Automatic backups of key system files</td>
+</tr>
+</tbody>
+</table>
+<h3 id="example-read-logs">Example: read logs</h3>
+<pre><code class="language-bash">sudo tail -f /var/log/syslog      # watch system messages live
+sudo less /var/log/auth.log       # who logged in? failed sudo attempts?
+journalctl -xe                    # systemd's journal (stored in /var/log/journal)
+</code></pre>
+<h3 id="tip">💡 Tip</h3>
+<p>If your disk is mysteriously full, check <code>/var/log</code> and <code>/var/cache</code> first: <code>sudo du -sh /var/* | sort -h</code>.</p>
+<hr />
+<h2 id="8-tmp-temporary-files">8. 🗑️ <code>/tmp</code>: temporary files</h2>
+<p><strong>What it is:</strong> A <strong>scratch space</strong> any user or program can write to. Cleared on reboot (or periodically).</p>
+<h3 id="analogy_5">🧠 Analogy</h3>
+<blockquote>
+<p><code>/tmp</code> is <strong>scratch paper</strong> on your desk. Great for rough work, but don't put anything you care about on it. Someone will bin it.</p>
+</blockquote>
+<pre><code class="language-bash">echo &quot;draft idea&quot; &gt; /tmp/idea.txt
+</code></pre>
+<h3 id="key-points_1">Key points</h3>
+<ul>
+<li><strong>Anyone can write here</strong>, but each user can only delete <strong>their own</strong> files (the "sticky bit", shown as <code>drwxrwxrwt</code>).</li>
+<li>Installers, browsers, and compilers often drop temporary files here.</li>
+<li>For temp files that must survive a reboot, use <code>/var/tmp</code>.</li>
+</ul>
+<hr />
+<h2 id="9-dev-devices-as-files">9. 🔌 <code>/dev</code>: devices as files</h2>
+<p><strong>What it is:</strong> Hardware is represented as <strong>files</strong>. You don't "open a driver"; you read from and write to a file.</p>
+<h3 id="analogy_6">🧠 Analogy</h3>
+<blockquote>
+<p><code>/dev</code> is the <strong>wall of plug sockets</strong>. Every device (disk, keyboard, webcam) has its own socket, and you talk to it by using the file.</p>
+</blockquote>
+<h3 id="common-entries">Common entries</h3>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/dev/sda</code>, <code>/dev/sda1</code></td>
+<td>First SATA/SCSI disk and its first partition</td>
+</tr>
+<tr>
+<td><code>/dev/nvme0n1</code>, <code>/dev/nvme0n1p1</code></td>
+<td>First NVMe SSD and its first partition</td>
+</tr>
+<tr>
+<td><code>/dev/tty*</code></td>
+<td>Terminals</td>
+</tr>
+<tr>
+<td><code>/dev/null</code></td>
+<td><strong>Black hole</strong>: anything written vanishes</td>
+</tr>
+<tr>
+<td><code>/dev/zero</code></td>
+<td>Endless stream of zero bytes</td>
+</tr>
+<tr>
+<td><code>/dev/random</code>, <code>/dev/urandom</code></td>
+<td>Random number generators</td>
+</tr>
+<tr>
+<td><code>/dev/loop*</code></td>
+<td>Loop devices (mount image files as disks; used heavily by Snap)</td>
+</tr>
+<tr>
+<td><code>/dev/pts/</code></td>
+<td>Pseudo-terminals (terminal windows)</td>
+</tr>
+<tr>
+<td><code>/dev/shm</code></td>
+<td>Shared memory (RAM-backed)</td>
+</tr>
+<tr>
+<td><code>/dev/disk/by-uuid/</code></td>
+<td>Disks listed by their unique ID</td>
+</tr>
+</tbody>
+</table>
+<h3 id="fun-examples">Fun examples</h3>
+<pre><code class="language-bash">ls /dev/sd*                      # list SATA disks
+command_that_is_noisy &gt; /dev/null   # throw away output
+head -c 16 /dev/urandom | xxd       # 16 random bytes
+</code></pre>
+<hr />
+<h2 id="10-proc-the-live-process-window">10. 📊 <code>/proc</code>: the live process window</h2>
+<p><strong>What it is:</strong> A <strong>virtual</strong> file system. It doesn't exist on disk; the kernel generates it in memory. It exposes <strong>live information</strong> about running processes and the system.</p>
+<h3 id="analogy_7">🧠 Analogy</h3>
+<blockquote>
+<p><code>/proc</code> is the <strong>hospital monitor</strong> beside the patient: heart rate, temperature, live and always changing. Nothing is stored; it just shows what's happening <em>now</em>.</p>
+</blockquote>
+<h3 id="key-entries">Key entries</h3>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>What you'll find</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/proc/cpuinfo</code></td>
+<td>CPU details</td>
+</tr>
+<tr>
+<td><code>/proc/meminfo</code></td>
+<td>RAM usage</td>
+</tr>
+<tr>
+<td><code>/proc/uptime</code></td>
+<td>How long the system has been running</td>
+</tr>
+<tr>
+<td><code>/proc/version</code></td>
+<td>Kernel version</td>
+</tr>
+<tr>
+<td><code>/proc/mounts</code></td>
+<td>Currently mounted file systems</td>
+</tr>
+<tr>
+<td><code>/proc/&lt;PID&gt;/</code></td>
+<td>A folder for each running process (e.g. <code>/proc/1234/</code>)</td>
+</tr>
+<tr>
+<td><code>/proc/self/</code></td>
+<td>The process looking at it (a handy shortcut)</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-bash">cat /proc/cpuinfo | grep &quot;model name&quot;
+cat /proc/meminfo | head -3
+ls /proc/self/
+</code></pre>
+<p>Tools like <code>top</code>, <code>ps</code>, and <code>free</code> mostly just read from here!</p>
+<hr />
+<h2 id="11-sys-kernel-and-hardware-panel">11. 🎛️ <code>/sys</code>: kernel and hardware panel</h2>
+<p><strong>What it is:</strong> Another <strong>virtual</strong> file system, a structured view of devices, drivers, and kernel settings. Where <code>/proc</code> is a bit of a historical grab-bag, <code>/sys</code> is the tidy, organised version for hardware.</p>
+<h3 id="analogy_8">🧠 Analogy</h3>
+<blockquote>
+<p><code>/sys</code> is the <strong>dashboard with switches and dials</strong>. You can read gauges <em>and</em> flip some switches.</p>
+</blockquote>
+<h3 id="example-change-screen-brightness">Example: change screen brightness</h3>
+<pre><code class="language-bash">cat /sys/class/backlight/*/brightness
+echo 50 | sudo tee /sys/class/backlight/*/brightness
+</code></pre>
+<h3 id="key-subfolders">Key subfolders</h3>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/sys/class/</code></td>
+<td>Devices grouped by type (net, block, power_supply, backlight)</td>
+</tr>
+<tr>
+<td><code>/sys/devices/</code></td>
+<td>The real hardware tree</td>
+</tr>
+<tr>
+<td><code>/sys/block/</code></td>
+<td>Block devices (disks)</td>
+</tr>
+<tr>
+<td><code>/sys/power/</code></td>
+<td>Power management (suspend, hibernate)</td>
+</tr>
+<tr>
+<td><code>/sys/module/</code></td>
+<td>Loaded kernel modules</td>
+</tr>
+</tbody>
+</table>
+<h3 id="proc-vs-sys-at-a-glance"><code>/proc</code> vs <code>/sys</code> at a glance</h3>
+<table>
+<thead>
+<tr>
+<th><code>/proc</code></th>
+<th><code>/sys</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mostly <strong>processes</strong> + some system info</td>
+<td>Mostly <strong>hardware, drivers, kernel config</strong></td>
+</tr>
+<tr>
+<td>Older, less organised</td>
+<td>Newer, tidy structure</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="12-boot-startup-files">12. 🚀 <code>/boot</code>: startup files</h2>
+<p><strong>What it is:</strong> Everything the computer needs to <strong>start Linux</strong>: the kernel, the initial RAM disk, and the bootloader (GRUB).</p>
+<h3 id="analogy_9">🧠 Analogy</h3>
+<blockquote>
+<p><code>/boot</code> is the <strong>ignition key and starter motor</strong>. Without it the car won't start, no matter how good the engine is.</p>
+</blockquote>
+<h3 id="whats-inside">What's inside</h3>
+<table>
+<thead>
+<tr>
+<th>File/Folder</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>vmlinuz-&lt;version&gt;</code></td>
+<td>The compressed <strong>Linux kernel</strong></td>
+</tr>
+<tr>
+<td><code>initrd.img-&lt;version&gt;</code></td>
+<td>Initial RAM disk, a tiny temporary system used during early boot</td>
+</tr>
+<tr>
+<td><code>grub/</code></td>
+<td>GRUB bootloader config (<code>grub.cfg</code>)</td>
+</tr>
+<tr>
+<td><code>config-&lt;version&gt;</code></td>
+<td>Kernel build config</td>
+</tr>
+<tr>
+<td><code>System.map-&lt;version&gt;</code></td>
+<td>Kernel symbol table</td>
+</tr>
+<tr>
+<td><code>efi/</code></td>
+<td>EFI System Partition mount (on UEFI machines)</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-bash">ls /boot
+uname -r        # shows the kernel version currently running
+</code></pre>
+<h3 id="warning">⚠️ Warning</h3>
+<p>Don't delete files here unless you're sure. Removing the running kernel can leave you unable to boot. Use <code>sudo apt autoremove</code> to clean old kernels safely.</p>
+<hr />
+<h2 id="13-sbin-system-administration-commands">13. 🧰 <code>/sbin</code>: system administration commands</h2>
+<p><strong>What it is:</strong> <strong>System binaries</strong>: commands meant for administrators, such as <code>fdisk</code>, <code>mkfs</code>, <code>reboot</code>, <code>iptables</code>, <code>ip</code>. Many need <code>sudo</code>.</p>
+<h3 id="analogy_10">🧠 Analogy</h3>
+<blockquote>
+<p><code>/bin</code> is the kitchen toolbox for everyone; <code>/sbin</code> is the <strong>manager's toolbox</strong>: shutting the shop, rewiring the electrics, rearranging storage.</p>
+</blockquote>
+<p>On modern Ubuntu, <code>/sbin</code> is a <strong>symlink to <code>/usr/sbin</code></strong>.</p>
+<pre><code class="language-bash">sudo fdisk -l          # list disk partitions
+sudo reboot            # restart the machine
+</code></pre>
+<hr />
+<h2 id="14-lib-and-lib64-shared-libraries">14. 📚 <code>/lib</code> and <code>/lib64</code>: shared libraries</h2>
+<p><strong>What it is:</strong> <strong>Libraries</strong> are reusable code that many programs share, similar to <code>.dll</code> files on Windows. Instead of each program bundling its own copy, they all borrow from here.</p>
+<h3 id="analogy_11">🧠 Analogy</h3>
+<blockquote>
+<p>Libraries are the <strong>shared pantry</strong>. Every recipe (program) needs flour and salt (common code); keeping one pantry is smarter than one per cook.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/lib</code></td>
+<td>Shared libraries (<code>.so</code> files = "shared objects") needed by <code>/bin</code> and <code>/sbin</code></td>
+</tr>
+<tr>
+<td><code>/lib64</code></td>
+<td>64-bit libraries, including the dynamic loader <code>ld-linux-x86-64.so.2</code></td>
+</tr>
+<tr>
+<td><code>/lib/modules/&lt;kernel-version&gt;/</code></td>
+<td><strong>Kernel modules</strong> (drivers)</td>
+</tr>
+<tr>
+<td><code>/lib/firmware/</code></td>
+<td>Firmware blobs for hardware (Wi-Fi cards, GPUs)</td>
+</tr>
+<tr>
+<td><code>/lib/systemd/</code></td>
+<td>systemd unit files and helpers</td>
+</tr>
+</tbody>
+</table>
+<p>On modern Ubuntu, <code>/lib</code> → <code>/usr/lib</code> and <code>/lib64</code> → <code>/usr/lib64</code> (symlinks).</p>
+<pre><code class="language-bash">ldd /bin/ls            # shows which libraries &quot;ls&quot; depends on
+</code></pre>
+<hr />
+<h2 id="15-opt-optional-software">15. 🧳 <code>/opt</code>: optional software</h2>
+<p><strong>What it is:</strong> Home for <strong>self-contained, third-party</strong> software that doesn't follow the standard layout, for example Google Chrome, Zoom, or some commercial tools. Each gets its own subfolder.</p>
+<h3 id="analogy_12">🧠 Analogy</h3>
+<blockquote>
+<p><code>/opt</code> is the <strong>guest suite</strong>. Visitors (big third-party apps) bring their own furniture and live in their own self-contained room, instead of scattering things around your house.</p>
+</blockquote>
+<pre><code>/opt
+├── google/chrome/
+├── zoom/
+└── some-vendor-app/
+    ├── bin/
+    ├── lib/
+    └── config/
+</code></pre>
+<p><strong>Rule of thumb:</strong>
+- Installed via <code>apt</code> → goes to <code>/usr</code>
+- Compiled by you → <code>/usr/local</code>
+- Big bundled third-party app → <code>/opt</code></p>
+<hr />
+<h2 id="16-mnt-and-media-mount-points">16. 💾 <code>/mnt</code> and <code>/media</code>: mount points</h2>
+<p>Remember: Linux has no <code>D:</code> drive. <strong>Mounting</strong> means "attach this storage to a folder in the tree". Two folders exist for this.</p>
+<h3 id="media-automatic"><code>/media</code> (automatic)</h3>
+<p>Used when you plug in a <strong>USB stick, SD card, or external drive</strong>. The desktop mounts it automatically.</p>
+<pre><code>/media/sam/MY_USB/
+</code></pre>
+<h3 id="mnt-manual"><code>/mnt</code> (manual)</h3>
+<p>A <strong>temporary manual mount point</strong> for admins.</p>
+<pre><code class="language-bash">sudo mount /dev/sdb1 /mnt          # attach a disk
+ls /mnt                            # browse it
+sudo umount /mnt                   # detach safely
+</code></pre>
+<h3 id="analogy_13">🧠 Analogy</h3>
+<blockquote>
+<p>Think of your computer as a <strong>ship with docking ports</strong>. <code>/media</code> is the <strong>auto-docking port</strong> (the ship docks by itself). <code>/mnt</code> is the <strong>manual docking port</strong> where the captain docks things by hand.</p>
+</blockquote>
+<h3 id="mnt-vs-media"><code>/mnt</code> vs <code>/media</code></h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><code>/media</code></th>
+<th><code>/mnt</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mounted by</td>
+<td>Desktop automatically</td>
+<td>You, manually</td>
+</tr>
+<tr>
+<td>Typical use</td>
+<td>USB, SD, DVDs</td>
+<td>Temporary admin mounts, extra disks</td>
+</tr>
+<tr>
+<td>Folder structure</td>
+<td><code>/media/&lt;user&gt;/&lt;label&gt;</code></td>
+<td>Whatever you choose</td>
+</tr>
+</tbody>
+</table>
+<p><em>(On WSL, Windows drives show up as <code>/mnt/c</code>, <code>/mnt/d</code>.)</em></p>
+<hr />
+<h2 id="17-root-the-administrators-home">17. 👑 <code>/root</code>: the administrator's home</h2>
+<p><strong>What it is:</strong> The <strong>home directory of the <code>root</code> user</strong> (the all-powerful superuser). It's kept <strong>outside <code>/home</code></strong> so it stays available even if <code>/home</code> is on another disk that fails to mount.</p>
+<h3 id="analogy_14">🧠 Analogy</h3>
+<blockquote>
+<p>If <code>/home/sam</code> is Sam's apartment, <code>/root</code> is the <strong>principal's private office</strong>. Locked to normal users.</p>
+</blockquote>
+<pre><code class="language-bash">ls /root            # Permission denied
+sudo ls /root       # works
+</code></pre>
+<blockquote>
+<p>Remember: <code>/root</code> ≠ <code>/</code>. One is the superuser's home; the other is the trunk of the entire tree.</p>
+</blockquote>
+<hr />
+<h2 id="18-run-runtime-data">18. ⏱️ <code>/run</code>: runtime data</h2>
+<p><strong>What it is:</strong> A <strong>RAM-based</strong> (tmpfs) folder holding information about the system <strong>since it booted</strong>: PID files, sockets, lock files. It is wiped on every reboot.</p>
+<h3 id="analogy_15">🧠 Analogy</h3>
+<blockquote>
+<p><code>/run</code> is the <strong>sticky notes</strong> on today's whiteboard. They're useful <em>now</em>, thrown away at night (reboot).</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/run/user/&lt;UID&gt;</code></td>
+<td>Per-user runtime data (e.g., <code>/run/user/1000</code>)</td>
+</tr>
+<tr>
+<td><code>/run/lock</code></td>
+<td>Lock files</td>
+</tr>
+<tr>
+<td><code>/run/systemd</code></td>
+<td>systemd runtime state</td>
+</tr>
+<tr>
+<td><code>/run/*.pid</code></td>
+<td>Process ID files</td>
+</tr>
+<tr>
+<td><code>/run/*.sock</code></td>
+<td>Communication sockets</td>
+</tr>
+</tbody>
+</table>
+<p><code>/var/run</code> is just a symlink to <code>/run</code>.</p>
+<hr />
+<h2 id="19-srv-served-data">19. 🏪 <code>/srv</code>: served data</h2>
+<p><strong>What it is:</strong> Data that your machine <strong>serves to others</strong> over the network: websites (HTTP), FTP files, Git repos, etc. It's often <strong>empty</strong> on desktop installs.</p>
+<h3 id="analogy_16">🧠 Analogy</h3>
+<blockquote>
+<p><code>/srv</code> is the <strong>shop counter</strong>. What's placed here is meant for customers (other computers), not for you.</p>
+</blockquote>
+<pre><code>/srv/www/        ← a website
+/srv/ftp/        ← files for FTP clients
+/srv/git/        ← git repositories
+</code></pre>
+<p>(Some tools use <code>/var/www</code> instead; both conventions exist.)</p>
+<hr />
+<h2 id="20-snap-snap-packages">20. 📦 <code>/snap</code>: Snap packages</h2>
+<p><strong>What it is:</strong> Ubuntu's <strong>Snap</strong> package system stores its software here. Each snap is a <strong>sealed, self-contained bundle</strong> (mounted as a compressed read-only image), so apps carry their own dependencies.</p>
+<h3 id="analogy_17">🧠 Analogy</h3>
+<blockquote>
+<p>If <code>apt</code> is <strong>buying loose ingredients</strong>, Snap is a <strong>sealed lunchbox</strong>: everything the meal needs is packed inside and doesn't mix with other food.</p>
+</blockquote>
+<pre><code>/snap
+├── bin/              ← symlinks to snap commands
+├── core22/ ...       ← base runtime snaps
+├── firefox/
+└── snapd/
+</code></pre>
+<pre><code class="language-bash">snap list              # see installed snaps
+sudo snap install vlc  # install one
+</code></pre>
+<p>Snap data lives in <code>/var/lib/snapd</code>, and per-user data in <code>~/snap</code>. Because each snap is mounted as a loop device, you'll see many <code>/dev/loopN</code> entries.</p>
+<hr />
+<h2 id="21-swapimg-swap-file">21. 💤 <code>/swap.img</code>: swap file</h2>
+<p><strong>What it is:</strong> A <strong>file acting as extra memory</strong>. When RAM fills up, Linux moves less-used data here (disk-based "overflow memory"). Ubuntu creates it by default instead of a separate swap partition.</p>
+<h3 id="analogy_18">🧠 Analogy</h3>
+<blockquote>
+<p>RAM is your <strong>desk</strong>; swap is the <strong>cupboard beside it</strong>. When the desk is full, you move papers into the cupboard. It works, but fetching from it is slower.</p>
+</blockquote>
+<pre><code class="language-bash">swapon --show          # see active swap
+free -h                # RAM and swap usage
+ls -lh /swap.img       # its size
+</code></pre>
+<p>⚠️ Don't delete it casually. Disable it first with <code>sudo swapoff /swap.img</code> and remove its line from <code>/etc/fstab</code>.</p>
+<hr />
+<h2 id="22-lostfound-recovery-bin">22. 🧯 <code>/lost+found</code>: recovery bin</h2>
+<p><strong>What it is:</strong> A special folder created by the <code>ext4</code> file system. When a disk check (<code>fsck</code>) after a crash finds file <strong>fragments with no name or parent folder</strong>, it drops them here.</p>
+<h3 id="analogy_19">🧠 Analogy</h3>
+<blockquote>
+<p>The <strong>lost-property office</strong> of your disk. Normally empty; if something lands here, it's a rescued orphan.</p>
+</blockquote>
+<ul>
+<li>You'll find one on each ext4 partition's top level.</li>
+<li>Only root can read it. Normally you just leave it alone.</li>
+</ul>
+<hr />
+<h2 id="23-cdrom-legacy-optical-mount">23. 💿 <code>/cdrom</code>: legacy optical mount</h2>
+<p><strong>What it is:</strong> A mount point for <strong>CD/DVD drives</strong> from the days of installer discs. Usually <strong>empty</strong> on modern systems; Ubuntu creates it as part of the install process. Today, optical media are mounted under <code>/media/&lt;user&gt;/</code> instead.</p>
+<hr />
+<h2 id="24-the-usr-is-merged-entries-explained">24. 🧩 The <code>*.usr-is-merged</code> entries explained</h2>
+<p>You have <code>bin.usr-is-merged</code>, <code>lib.usr-is-merged</code>, and <code>sbin.usr-is-merged</code>. These look odd, but they have a simple story.</p>
+<h3 id="history">History</h3>
+<p>Originally:</p>
+<pre><code>/bin   → essential commands for boot/rescue
+/usr/bin → everything else
+</code></pre>
+<p>That split dates back to the 1970s, when disks were tiny and <code>/usr</code> lived on a separate disk. Today it's pointless.</p>
+<h3 id="the-usr-merge">The "usr merge"</h3>
+<p>Modern distros <strong>merged</strong> them: <code>/bin</code>, <code>/sbin</code>, <code>/lib</code>, <code>/lib64</code> are now <strong>symlinks into <code>/usr</code></strong>.</p>
+<pre><code>/bin   → usr/bin
+/sbin  → usr/sbin
+/lib   → usr/lib
+/lib64 → usr/lib64
+</code></pre>
+<h3 id="what-the-usr-is-merged-folders-are">What the <code>*.usr-is-merged</code> folders are</h3>
+<p>They're <strong>empty marker directories</strong> left by a Debian/Ubuntu package that records "this system has completed the usr-merge". They hold nothing; treat them as <strong>"✅ merged" stickers</strong>. Leave them alone.</p>
+<h3 id="analogy_20">🧠 Analogy</h3>
+<blockquote>
+<p>Two filing cabinets (<code>/bin</code> and <code>/usr/bin</code>) were merged into one. The old cabinet's drawer fronts now carry a note: <em>"see the other cabinet"</em>. That's the symlink. The <code>*.usr-is-merged</code> folders are the <em>"merge complete"</em> stamps.</p>
+</blockquote>
+<hr />
+<h2 id="25-putting-it-all-together-a-commands-journey">25. 🧭 Putting it all together: a command's journey</h2>
+<p>What actually happens when you type <code>ls</code> or open Firefox?</p>
+<ol>
+<li><strong>Power on</strong>: firmware starts the bootloader in <code>/boot</code> (GRUB), which loads the <strong>kernel</strong> (<code>vmlinuz</code>) and <code>initrd.img</code>.</li>
+<li>The kernel mounts <code>/</code>, reads <code>/etc/fstab</code>, and attaches other disks.</li>
+<li><strong>systemd</strong> reads its configuration from <code>/etc/systemd</code> and starts services. Their runtime state goes in <code>/run</code> and logs go to <code>/var/log</code>.</li>
+<li>Devices appear in <code>/dev</code>; the kernel exposes info in <code>/proc</code> and <code>/sys</code>.</li>
+<li>You log in, and your shell starts in <code>/home/you</code>, with settings from <code>~/.bashrc</code>.</li>
+<li>You type <code>ls</code>. The shell searches the folders in your <code>$PATH</code> (<code>/usr/local/bin</code>, <code>/usr/bin</code>, ...) and finds <code>/usr/bin/ls</code>.</li>
+<li><code>ls</code> borrows shared code from <code>/usr/lib</code>, then lists the files you asked for.</li>
+</ol>
+<pre><code class="language-bash">echo $PATH
+# /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+</code></pre>
+<hr />
+<h2 id="26-handy-commands-to-explore">26. 🔍 Handy commands to explore</h2>
+<pre><code class="language-bash">ls /                      # list the top level
+tree -L 1 /               # tree view, one level deep (install: sudo apt install tree)
+pwd                       # where am I?
+cd /                      # jump to root
+cd ~                      # jump home
+df -h                     # disk usage per mounted file system
+du -sh /var/*             # which folders are biggest?
+lsblk                     # block devices and their mount points
+mount | column -t         # everything currently mounted
+findmnt                   # mounts as a tree
+file /bin                 # confirms it's a symlink
+ls -l /                   # shows symlinks like bin -&gt; usr/bin
+man hier                  # official manual for the file system hierarchy
+</code></pre>
+<hr />
+<h2 id="summary-tldr">🎯 Summary / TL;DR</h2>
+<ul>
+<li>Linux has <strong>one tree</strong> starting at <code>/</code>; extra storage is <strong>mounted</strong> onto branches.</li>
+<li><strong>You live in</strong> <code>/home</code>.</li>
+<li><strong>Settings live in</strong> <code>/etc</code>.</li>
+<li><strong>Programs live in</strong> <code>/usr</code> (with <code>/bin</code>, <code>/sbin</code>, <code>/lib</code> as shortcuts into it).</li>
+<li><strong>Changing data and logs live in</strong> <code>/var</code>; <strong>scratch work in</strong> <code>/tmp</code>.</li>
+<li><strong>Hardware = files</strong> in <code>/dev</code>; <strong>live system info</strong> in <code>/proc</code> and <code>/sys</code>.</li>
+<li><strong>Startup files</strong> are in <code>/boot</code>.</li>
+<li>Extras: <code>/opt</code> (third-party), <code>/mnt</code> + <code>/media</code> (mounting), <code>/snap</code> (Snap apps), <code>/swap.img</code> (overflow memory), <code>/lost+found</code> (recovered fragments).</li>
+</ul>
+<blockquote>
+<p>💬 <em>"In Linux, everything is a file, and every file has a place."</em></p>
+</blockquote>
+<hr />
+<p><em>Based on Ubuntu (24.04-style layout with merged <code>/usr</code>). Other distributions may vary slightly, but the core idea (the Filesystem Hierarchy Standard) stays the same.</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.expand", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../javascripts/tab-dropdown.js"></script>
+      
+    
+  </body>
+</html>
