@@ -1,0 +1,4630 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://adarsha121.github.io/webnote/computer/Linux/user123/">
+      
+      
+        <link rel="prev" href="../partition/">
+      
+      
+        <link rel="next" href="../misc/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>Manage many users - My Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#users-groups-in-linux-who-are-you-and-what-are-you-allowed-to-do" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="My Notes" class="md-header__button md-logo" aria-label="My Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            My Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Manage many users
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="blue"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../physics/mechanics/" class="md-tabs__link">
+          
+  
+  
+  Physics
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../math/calculus.md" class="md-tabs__link">
+          
+  
+  
+  Math
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../ai/rag.md" class="md-tabs__link">
+          
+  
+  
+  AI/ML
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Programming
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../tsc/intro_ed/" class="md-tabs__link">
+          
+  
+  
+  TSC
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="My Notes" class="md-nav__button md-logo" aria-label="My Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    My Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Physics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Physics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../physics/mechanics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mechanics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../physics/quantum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quantum
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Math
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Math
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../math/calculus.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calculus
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../math/linear.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear Algebra
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI/ML
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    AI/ML
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ai/rag.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RAG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Programming
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Programming
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Linux
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linux_commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linux_filesystem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux File System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how_it_boots/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How it Boots
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sys_ctl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../partition/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linux Partition
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manage many users
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manage many users
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📑 Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-why-linux-is-obsessed-with-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 🤔 Why Linux is obsessed with users
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-the-mental-model-an-apartment-building-with-keycards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 🏢 The mental model: an apartment building with keycards
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-the-three-kinds-of-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 🎫 The three kinds of users
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-where-users-live-the-files-behind-the-scenes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 📒 Where users live: the files behind the scenes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 📒 Where users live: the files behind the scenes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-etcpasswd-the-register-of-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 /etc/passwd: the register of users
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-etcshadow-the-vault-of-password-hashes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 /etc/shadow: the vault of password hashes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-etcgroup-the-register-of-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 /etc/group: the register of groups
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-other-important-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Other important files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dont-edit-these-by-hand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧰 Don't edit these by hand!
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-who-am-i-inspecting-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 🔍 Who am I? Inspecting users
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 🔍 Who am I? Inspecting users">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#listing-users-and-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Listing users and groups
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#only-the-real-humans-uid-1000" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Only the real humans (UID 1000+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-creating-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. ➕ Creating users
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. ➕ Creating users">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adduser-vs-useradd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        adduser vs useradd
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-friendly-way-adduser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The friendly way: adduser
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-just-happened-the-click-moment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What just happened? (the click moment 💡)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-precise-way-useradd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The precise way: useradd
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-and-give-groups-in-one-go" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create and give groups in one go
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-system-service-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating a system (service) user
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-user-without-a-password-for-ssh-key-only-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create a user without a password (for SSH-key-only access)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-passwords-and-account-locking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 🔐 Passwords and account locking
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 🔐 Passwords and account locking">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-and-changing-passwords" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting and changing passwords
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#locking-unlocking-expiring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Locking, unlocking, expiring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quick-glossary-of-ways-to-disable-someone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick glossary of "ways to disable someone"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-modifying-existing-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 🔧 Modifying existing users
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 🔧 Modifying existing users">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-most-used-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The most-used options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-most-expensive-typo-in-linux-administration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚨 The most expensive typo in Linux administration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#renaming-a-user-properly-full-recipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Renaming a user properly (full recipe)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#users-can-change-some-things-themselves-with-no-sudo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Users can change some things themselves, with no sudo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-deleting-users-safely" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. ❌ Deleting users, safely
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. ❌ Deleting users, safely">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The commands
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remove-a-user-from-a-group-not-delete-the-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remove a user from a group (not delete the user!)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-safe-offboarding-routine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧯 The safe-offboarding routine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-orphan-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🕳️ The orphan problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-groups-teams-with-shared-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 👥 Groups: teams with shared keys
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 👥 Groups: teams with shared keys">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#primary-vs-supplementary-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Primary vs supplementary groups
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#group-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Group commands
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#i-added-myself-to-the-group-but-it-doesnt-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⏳ "I added myself to the group, but it doesn't work!"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#famous-groups-on-ubuntu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Famous groups on Ubuntu
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-real-use-case-a-shared-project-folder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🗂️ A real use case: a shared project folder
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-root-su-and-sudo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 👑 root, su and sudo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 👑 root, su and sudo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#whos-root" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Who's root?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudo-borrow-the-master-key-sign-the-logbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudo: borrow the master key, sign the logbook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#giving-someone-sudo-powers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Giving someone sudo powers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fine-grained-control-visudo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fine-grained control: visudo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fine-grained control: visudo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-tidy-way-drop-in-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ The tidy way: drop-in files
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#su-become-another-user-entirely" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        su: become another user entirely
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudo-vs-su-at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudo vs su at a glance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-who-is-logged-in-right-now" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 👀 Who is logged in right now?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. 👀 Who is logged in right now?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kick-someone-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kick someone off
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#check-logs-for-login-and-sudo-activity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check logs for login and sudo activity
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-real-world-recipes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 🍳 Real-world recipes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. 🍳 Real-world recipes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recipe-1-onboard-a-new-teammate-with-ssh-key-access-and-sudo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recipe 1: Onboard a new teammate with SSH-key access and sudo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recipe-2-someone-leaves-the-team" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recipe 2: Someone leaves the team
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recipe-3-a-service-account-for-your-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recipe 3: A service account for your app
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recipe-4-a-user-forgot-their-password" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recipe 4: A user forgot their password
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recipe-5-you-lost-sudo-access-to-your-own-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recipe 5: You lost sudo access to your own machine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recipe-6-audit-who-has-real-powers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recipe 6: Audit who has real powers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-security-habits-worth-building" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. 🔒 Security habits worth building
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-when-things-go-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. 🆘 When things go wrong
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. 📋 Cheat Sheet
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="16. 📋 Cheat Sheet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inspect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-change-remove-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create / change / remove users
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Groups
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#privilege" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Privilege
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-one-line-mental-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 The one-line mental model
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final-words" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎬 Final Words
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references-further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 References &amp; Further Reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../misc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Miscellaneous
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Python
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Python/numpy_pandas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Numpy and Pandas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Python/matplotlib/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Matplotlib
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Python/scipy_sympy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scipy & Sympy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSC
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    TSC
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/intro_ed/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    शिक्षाकाै परिचय
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/learning_principle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    शैक्षिक सिद्धान्त
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/16th_plan_about_edu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    साैह्रौं योजना
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/bhugool/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    भुगाेल
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/cirriculum_and_books/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    पाठ्यक्रम
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/constution_edu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    सबि‌धान
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/ed_act_2028/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    शिक्षा एेन
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/ed_niyamawali/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    सिक्षा नियमावली
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/tsc_niyamabali_2057/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    शिक्षाक सेवा आयोग नियमावली
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/history_nepal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    इतिहास
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/local_govt_ed_related/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    थानीय सरकार सञ्चालन ऐन
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/intl_orgs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    अन्तराष्ट्रिय स‌घसस्था
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tsc/constution_edu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    सबि‌धान
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📑 Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-why-linux-is-obsessed-with-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 🤔 Why Linux is obsessed with users
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-the-mental-model-an-apartment-building-with-keycards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 🏢 The mental model: an apartment building with keycards
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-the-three-kinds-of-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 🎫 The three kinds of users
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-where-users-live-the-files-behind-the-scenes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 📒 Where users live: the files behind the scenes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 📒 Where users live: the files behind the scenes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-etcpasswd-the-register-of-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 /etc/passwd: the register of users
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-etcshadow-the-vault-of-password-hashes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 /etc/shadow: the vault of password hashes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-etcgroup-the-register-of-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 /etc/group: the register of groups
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-other-important-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Other important files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dont-edit-these-by-hand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧰 Don't edit these by hand!
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-who-am-i-inspecting-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 🔍 Who am I? Inspecting users
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 🔍 Who am I? Inspecting users">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#listing-users-and-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Listing users and groups
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#only-the-real-humans-uid-1000" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Only the real humans (UID 1000+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-creating-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. ➕ Creating users
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. ➕ Creating users">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adduser-vs-useradd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        adduser vs useradd
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-friendly-way-adduser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The friendly way: adduser
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-just-happened-the-click-moment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What just happened? (the click moment 💡)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-precise-way-useradd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The precise way: useradd
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-and-give-groups-in-one-go" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create and give groups in one go
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-system-service-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating a system (service) user
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-a-user-without-a-password-for-ssh-key-only-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create a user without a password (for SSH-key-only access)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-passwords-and-account-locking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 🔐 Passwords and account locking
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 🔐 Passwords and account locking">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-and-changing-passwords" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting and changing passwords
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#locking-unlocking-expiring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Locking, unlocking, expiring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quick-glossary-of-ways-to-disable-someone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick glossary of "ways to disable someone"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-modifying-existing-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 🔧 Modifying existing users
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 🔧 Modifying existing users">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-most-used-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The most-used options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-most-expensive-typo-in-linux-administration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚨 The most expensive typo in Linux administration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#renaming-a-user-properly-full-recipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Renaming a user properly (full recipe)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#users-can-change-some-things-themselves-with-no-sudo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Users can change some things themselves, with no sudo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-deleting-users-safely" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. ❌ Deleting users, safely
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. ❌ Deleting users, safely">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The commands
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remove-a-user-from-a-group-not-delete-the-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remove a user from a group (not delete the user!)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-safe-offboarding-routine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧯 The safe-offboarding routine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-orphan-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🕳️ The orphan problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-groups-teams-with-shared-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 👥 Groups: teams with shared keys
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 👥 Groups: teams with shared keys">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#primary-vs-supplementary-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Primary vs supplementary groups
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#group-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Group commands
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#i-added-myself-to-the-group-but-it-doesnt-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⏳ "I added myself to the group, but it doesn't work!"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#famous-groups-on-ubuntu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Famous groups on Ubuntu
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-real-use-case-a-shared-project-folder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🗂️ A real use case: a shared project folder
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-root-su-and-sudo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 👑 root, su and sudo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 👑 root, su and sudo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#whos-root" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Who's root?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudo-borrow-the-master-key-sign-the-logbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudo: borrow the master key, sign the logbook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#giving-someone-sudo-powers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Giving someone sudo powers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fine-grained-control-visudo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fine-grained control: visudo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fine-grained control: visudo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-tidy-way-drop-in-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ The tidy way: drop-in files
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#su-become-another-user-entirely" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        su: become another user entirely
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sudo-vs-su-at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sudo vs su at a glance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-who-is-logged-in-right-now" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 👀 Who is logged in right now?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. 👀 Who is logged in right now?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kick-someone-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kick someone off
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#check-logs-for-login-and-sudo-activity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Check logs for login and sudo activity
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-real-world-recipes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 🍳 Real-world recipes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. 🍳 Real-world recipes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recipe-1-onboard-a-new-teammate-with-ssh-key-access-and-sudo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recipe 1: Onboard a new teammate with SSH-key access and sudo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recipe-2-someone-leaves-the-team" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recipe 2: Someone leaves the team
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recipe-3-a-service-account-for-your-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recipe 3: A service account for your app
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recipe-4-a-user-forgot-their-password" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recipe 4: A user forgot their password
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recipe-5-you-lost-sudo-access-to-your-own-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recipe 5: You lost sudo access to your own machine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recipe-6-audit-who-has-real-powers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recipe 6: Audit who has real powers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-security-habits-worth-building" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. 🔒 Security habits worth building
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-when-things-go-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. 🆘 When things go wrong
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-cheat-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. 📋 Cheat Sheet
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="16. 📋 Cheat Sheet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inspect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-change-remove-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create / change / remove users
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Groups
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#privilege" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Privilege
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-one-line-mental-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧠 The one-line mental model
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final-words" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎬 Final Words
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references-further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 References &amp; Further Reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="users-groups-in-linux-who-are-you-and-what-are-you-allowed-to-do">👥 Users &amp; Groups in Linux: Who Are You, and What Are You Allowed to Do?</h1>
+<p>Quick quiz. You've just joined a team, and your senior says: <em>"I'll make an account for you on the server. Send me your username."</em></p>
+<p>A few minutes later you get this back:</p>
+<pre><code class="language-text">sam is not in the sudoers file. This incident will be reported.
+</code></pre>
+<p>Dramatic, right? 😅 (Don't worry, nobody is coming to your house. The attempt is just written in a log.)</p>
+<p>That one line is a whole lesson: Linux is built around <strong>who you are</strong> and <strong>what you're allowed to do</strong>. In this page we'll learn how to <strong>create, inspect, change, lock, and remove users and groups</strong>, and understand what's really happening behind each command.</p>
+<p>☕ <em>Coffee time. This is one of the most important pages in the whole series.</em></p>
+<hr />
+<h2 id="table-of-contents">📑 Table of Contents</h2>
+<ol>
+<li><a href="#1--why-linux-is-obsessed-with-users">Why Linux is obsessed with users</a></li>
+<li><a href="#2--the-mental-model-an-apartment-building-with-keycards">The mental model: an apartment building with keycards</a></li>
+<li><a href="#3--the-three-kinds-of-users">The three kinds of users</a></li>
+<li><a href="#4--where-users-live-the-files-behind-the-scenes">Where users live: the files behind the scenes</a></li>
+<li><a href="#5--who-am-i-inspecting-users">Who am I? Inspecting users</a></li>
+<li><a href="#6--creating-users">Creating users</a></li>
+<li><a href="#7--passwords-and-account-locking">Passwords and account locking</a></li>
+<li><a href="#8--modifying-existing-users">Modifying existing users</a></li>
+<li><a href="#9--deleting-users-safely">Deleting users, safely</a></li>
+<li><a href="#10--groups-teams-with-shared-keys">Groups: teams with shared keys</a></li>
+<li><a href="#11--root-su-and-sudo">root, su and sudo</a></li>
+<li><a href="#12--who-is-logged-in-right-now">Who is logged in right now?</a></li>
+<li><a href="#13--real-world-recipes">Real-world recipes</a></li>
+<li><a href="#14--security-habits-worth-building">Security habits worth building</a></li>
+<li><a href="#15--when-things-go-wrong">When things go wrong</a></li>
+<li><a href="#16--cheat-sheet">Cheat sheet</a></li>
+<li><a href="#-references--further-reading">References</a></li>
+</ol>
+<hr />
+<h2 id="1-why-linux-is-obsessed-with-users">1. 🤔 Why Linux is obsessed with users</h2>
+<p>Remember the <a href="../">history page</a>? Unix was born in the 1960s-70s in the era of <strong>time-sharing</strong>: one big, expensive computer, <strong>many people using it at the same time</strong> from different terminals.</p>
+<p>That immediately raises problems:</p>
+<ul>
+<li>How do we stop Alice from reading Bob's files?</li>
+<li>How do we stop a student from deleting the whole system?</li>
+<li>Who's allowed to install software or shut the machine down?</li>
+</ul>
+<p>The answer: <strong>every person (and every program) has an identity</strong>, and every file and action is checked against that identity. Linux inherited this design, which is why it's so solid for servers, and why a virus on Linux has a harder time doing system-wide damage than on a single-user-minded system.</p>
+<blockquote>
+<p>🧠 <strong>Even if you're the only person using your laptop, Linux is still multi-user.</strong> Your web server, your printer service, and your database all run as their <em>own</em> users, so that if one is compromised, it can't touch everything else.</p>
+</blockquote>
+<hr />
+<h2 id="2-the-mental-model-an-apartment-building-with-keycards">2. 🏢 The mental model: an apartment building with keycards</h2>
+<p>Picture Linux as an <strong>apartment building</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>In the building</th>
+<th>In Linux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🧑 A <strong>resident</strong> with a personal keycard</td>
+<td>A <strong>user</strong> (with a unique number called a <strong>UID</strong>)</td>
+</tr>
+<tr>
+<td>🏠 Their private apartment</td>
+<td>Their <strong>home directory</strong> (<code>/home/sam</code>)</td>
+</tr>
+<tr>
+<td>👥 A <strong>club or team</strong> (gym members, book club)</td>
+<td>A <strong>group</strong> (with a number called a <strong>GID</strong>)</td>
+</tr>
+<tr>
+<td>🔑 The <strong>master key</strong> that opens everything</td>
+<td>The <strong>root</strong> user (UID 0)</td>
+</tr>
+<tr>
+<td>📝 "Borrow the master key, but sign the logbook"</td>
+<td><strong><code>sudo</code></strong> (and the log entry it leaves)</td>
+</tr>
+<tr>
+<td>📒 The <strong>resident register</strong> at reception</td>
+<td><strong><code>/etc/passwd</code></strong>, <code>/etc/shadow</code>, <code>/etc/group</code></td>
+</tr>
+<tr>
+<td>🏷️ The <strong>keycard office</strong></td>
+<td>Tools like <code>adduser</code>, <code>usermod</code>, <code>passwd</code></td>
+</tr>
+</tbody>
+</table>
+<p>Hold on to this picture. Every command below is just <em>"someone at the keycard office doing paperwork."</em></p>
+<blockquote>
+<p>🔢 <strong>Key insight:</strong> Linux doesn't actually care about <em>names</em>. It cares about <strong>numbers</strong>. <code>sam</code> is a friendly label for UID <code>1000</code>. Files are owned by the <strong>number</strong>, and names are just looked up for our convenience.</p>
+</blockquote>
+<hr />
+<h2 id="3-the-three-kinds-of-users">3. 🎫 The three kinds of users</h2>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>UID range (typical)</th>
+<th>Who is it?</th>
+<th>Can log in?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>👑 <strong>root</strong></td>
+<td><code>0</code></td>
+<td>The superuser. Can do <strong>anything</strong></td>
+<td>Possible, but normally disabled on Ubuntu</td>
+</tr>
+<tr>
+<td>🤖 <strong>System users</strong></td>
+<td><code>1</code> to <code>999</code></td>
+<td>Accounts for services and programs: <code>www-data</code> (web server), <code>syslog</code>, <code>daemon</code>, <code>nobody</code></td>
+<td>❌ No (no password, shell set to <code>nologin</code>)</td>
+</tr>
+<tr>
+<td>🧑 <strong>Regular users</strong></td>
+<td><code>1000</code> and up</td>
+<td><strong>Real humans</strong> like you</td>
+<td>✅ Yes</td>
+</tr>
+</tbody>
+</table>
+<p>Why do system users exist? <strong>Least privilege.</strong> If your web server runs as <code>www-data</code> instead of root and gets hacked, the attacker is trapped in a tiny, powerless room instead of holding the master key.</p>
+<blockquote>
+<p>🎭 You saw this earlier: in the <a href="linux-systemd-explained.md">systemd page</a> a service can be run with <code>User=someone</code>. Now you know <em>who</em> that someone is.</p>
+</blockquote>
+<p>The UID ranges are defined in <code>/etc/login.defs</code> if you're curious. (Ubuntu and Debian start regular users at 1000.)</p>
+<hr />
+<h2 id="4-where-users-live-the-files-behind-the-scenes">4. 📒 Where users live: the files behind the scenes</h2>
+<p>When you "create a user", commands simply <strong>add lines to a few plain text files</strong> in <code>/etc</code> (the settings area from the <a href="linux-file-system-explained.md">file system page</a>). Learn these and everything makes sense.</p>
+<h3 id="41-etcpasswd-the-register-of-users">4.1 <code>/etc/passwd</code>: the register of users</h3>
+<pre><code class="language-bash">cat /etc/passwd
+</code></pre>
+<p>Each line is one user, with <strong>7 fields separated by colons</strong>:</p>
+<pre><code class="language-text">sam:x:1000:1000:Sam Rai,,,:/home/sam:/bin/bash
+│   │  │    │      │         │          └── 7. login shell
+│   │  │    │      │         └───────────── 6. home directory
+│   │  │    │      └─────────────────────── 5. full name / comment (GECOS)
+│   │  │    └────────────────────────────── 4. primary group ID (GID)
+│   │  └─────────────────────────────────── 3. user ID (UID)
+│   └────────────────────────────────────── 2. password placeholder (&quot;x&quot; = look in shadow)
+└────────────────────────────────────────── 1. username
+</code></pre>
+<blockquote>
+<p>🤨 <strong>Fun fact:</strong> The file is called "passwd" because passwords <strong>used to be stored right inside it</strong>. But the file must be readable by everyone (programs need it to translate UIDs to names), so anyone could copy the password hashes. The fix was to move them to <code>/etc/shadow</code>, which only root can read. The name stuck, the passwords left.</p>
+</blockquote>
+<p>A <strong>system user</strong> line looks like:</p>
+<pre><code class="language-text">www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+</code></pre>
+<p>Notice the shell: <strong><code>/usr/sbin/nologin</code></strong>. It politely refuses interactive logins. A door with no handle.</p>
+<h3 id="42-etcshadow-the-vault-of-password-hashes">4.2 <code>/etc/shadow</code>: the vault of password hashes</h3>
+<pre><code class="language-bash">sudo cat /etc/shadow      # root only
+</code></pre>
+<pre><code class="language-text">sam:$y$j9T$abc...xyz:20744:0:99999:7:::
+ │       │             │   │   │   └── 6. warn this many days before expiry
+ │       │             │   │   └────── 5. max days before password must change
+ │       │             │   └────────── 4. min days between changes
+ │       │             └────────────── 3. last change (days since 1 Jan 1970)
+ │       └──────────────────────────── 2. the password HASH (never the password itself!)
+ └──────────────────────────────────── 1. username
+</code></pre>
+<ul>
+<li>Passwords are stored as one-way <strong>hashes</strong>, not text. Even root can't "read" your password. The system hashes what you type and compares.</li>
+<li>The prefix tells the algorithm: <code>$y$</code> = yescrypt (modern Ubuntu default), <code>$6$</code> = SHA-512 (older), <code>$5$</code> = SHA-256, <code>$1$</code> = MD5 (ancient, avoid).</li>
+<li>A field starting with <strong><code>!</code></strong> or equal to <strong><code>*</code></strong> means <strong>no password login possible</strong>. <code>!</code> in front of a hash means the account is <strong>locked</strong>.</li>
+<li>"Days since 1 Jan 1970" is the <strong>Unix epoch</strong>. Yes, Unix time itself is a callback to the history lesson.</li>
+</ul>
+<h3 id="43-etcgroup-the-register-of-groups">4.3 <code>/etc/group</code>: the register of groups</h3>
+<pre><code class="language-text">developers:x:1005:sam,priya,arjun
+│          │ │    └── members (supplementary)
+│          │ └─────── GID
+│          └───────── password placeholder (rarely used)
+└──────────────────── group name
+</code></pre>
+<h3 id="44-other-important-files">4.4 Other important files</h3>
+<table>
+<thead>
+<tr>
+<th>File / folder</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/etc/gshadow</code></td>
+<td>Protected group info (group passwords/admins), the shadow's twin for groups</td>
+</tr>
+<tr>
+<td><code>/etc/skel/</code></td>
+<td><strong>Template</strong> for new home directories. Anything here is copied into every new user's home (<code>.bashrc</code>, <code>.profile</code>...)</td>
+</tr>
+<tr>
+<td><code>/etc/login.defs</code></td>
+<td>System-wide defaults: UID ranges, password aging, umask</td>
+</tr>
+<tr>
+<td><code>/etc/adduser.conf</code></td>
+<td>Defaults for the friendly <code>adduser</code> command (Debian/Ubuntu)</td>
+</tr>
+<tr>
+<td><code>/etc/default/useradd</code></td>
+<td>Defaults for the low-level <code>useradd</code> command</td>
+</tr>
+<tr>
+<td><code>/etc/sudoers</code> and <code>/etc/sudoers.d/</code></td>
+<td>Who may use <code>sudo</code>, and how</td>
+</tr>
+<tr>
+<td><code>/etc/shells</code></td>
+<td>List of valid login shells</td>
+</tr>
+<tr>
+<td><code>/home/&lt;user&gt;</code></td>
+<td>The user's personal space</td>
+</tr>
+<tr>
+<td><code>/var/log/auth.log</code> (or <code>journalctl</code>)</td>
+<td>Log of logins, <code>sudo</code> use, failures</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dont-edit-these-by-hand">🧰 Don't edit these by hand!</h3>
+<p>Technically they're just text files. But a typo in <code>/etc/passwd</code> can lock everyone out. Use the proper commands (<code>adduser</code>, <code>usermod</code>...) or the safe editors (<code>vipw</code>, <code>visudo</code>). Treat these files like the reception's register: <strong>read freely, write through the front desk</strong>.</p>
+<hr />
+<h2 id="5-who-am-i-inspecting-users">5. 🔍 Who am I? Inspecting users</h2>
+<p>Before changing anything, learn to <em>look</em>:</p>
+<pre><code class="language-bash">whoami             # your username
+id                 # your UID, GID, and ALL groups
+id sam             # same, for another user
+groups             # just the group names
+groups sam
+</code></pre>
+<p>A typical <code>id</code> output:</p>
+<pre><code class="language-text">uid=1000(sam) gid=1000(sam) groups=1000(sam),4(adm),27(sudo),100(users)
+</code></pre>
+<p>Read it as: <em>"I'm sam, UID 1000. My main group is sam. I'm also in adm, sudo and users."</em></p>
+<h3 id="listing-users-and-groups">Listing users and groups</h3>
+<pre><code class="language-bash">getent passwd              # ALL users (local + network/LDAP if configured)
+getent passwd sam          # one user
+getent group               # all groups
+getent group sudo          # who's in the sudo group?
+
+cut -d: -f1 /etc/passwd    # just the usernames
+</code></pre>
+<h3 id="only-the-real-humans-uid-1000">Only the real humans (UID 1000+)</h3>
+<pre><code class="language-bash">getent passwd | awk -F: '$3 &gt;= 1000 &amp;&amp; $3 &lt; 65534 {print $1}'
+</code></pre>
+<blockquote>
+<p>💡 <code>getent</code> is better than reading <code>/etc/passwd</code> directly because it also asks any network directories (like company LDAP). Same output format, more complete.</p>
+</blockquote>
+<hr />
+<h2 id="6-creating-users">6. ➕ Creating users</h2>
+<p>Linux has <strong>two</strong> commands for this, which confuses everybody at first.</p>
+<h3 id="adduser-vs-useradd"><code>adduser</code> vs <code>useradd</code></h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><code>adduser</code></th>
+<th><code>useradd</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Style</td>
+<td>🤝 Friendly, interactive</td>
+<td>🔧 Low-level, raw</td>
+</tr>
+<tr>
+<td>Available</td>
+<td>Debian / Ubuntu (a wrapper script)</td>
+<td>Every Linux</td>
+</tr>
+<tr>
+<td>Creates home dir?</td>
+<td>✅ Yes, automatically</td>
+<td>❌ Only if you add <code>-m</code></td>
+</tr>
+<tr>
+<td>Asks for password?</td>
+<td>✅ Yes</td>
+<td>❌ No (set it afterwards with <code>passwd</code>)</td>
+</tr>
+<tr>
+<td>Default shell</td>
+<td><code>/bin/bash</code></td>
+<td>May be a basic <code>/bin/sh</code> unless you pass <code>-s</code></td>
+</tr>
+<tr>
+<td>Best for</td>
+<td>Humans typing commands</td>
+<td>Scripts and automation</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>🍕 <strong>Analogy:</strong> <code>adduser</code> is the <strong>waiter who asks "how would you like your steak?"</strong> <code>useradd</code> is <strong>handing the kitchen a raw ticket</strong> with only what you wrote on it. Same kitchen, different experience.</p>
+</blockquote>
+<h3 id="the-friendly-way-adduser">The friendly way: <code>adduser</code></h3>
+<pre><code class="language-bash">sudo adduser sam
+</code></pre>
+<pre><code class="language-text">Adding user `sam' ...
+Adding new group `sam' (1001) ...
+Adding new user `sam' (1001) with group `sam' ...
+Creating home directory `/home/sam' ...
+Copying files from `/etc/skel' ...
+New password:
+Retype new password:
+Full Name []: Sam Rai
+Room Number []:
+...
+</code></pre>
+<h3 id="what-just-happened-the-click-moment">What just happened? (the click moment 💡)</h3>
+<p>Behind that friendly dialogue, these things occurred:</p>
+<ol>
+<li>A line was <strong>added to <code>/etc/passwd</code></strong> (the user).</li>
+<li>A line was <strong>added to <code>/etc/shadow</code></strong> (their password hash).</li>
+<li>A <strong>new group with the same name</strong> was created in <code>/etc/group</code>. By default every user gets a <strong>personal primary group</strong>.</li>
+<li><strong><code>/home/sam</code> was created</strong>, owned by sam.</li>
+<li>Files from <strong><code>/etc/skel</code></strong> (<code>.bashrc</code>, <code>.profile</code>...) were copied in.</li>
+</ol>
+<p>Check it yourself:</p>
+<pre><code class="language-bash">grep sam /etc/passwd
+grep sam /etc/group
+ls -la /home/sam
+</code></pre>
+<h3 id="the-precise-way-useradd">The precise way: <code>useradd</code></h3>
+<pre><code class="language-bash">sudo useradd -m -s /bin/bash -c &quot;Sam Rai&quot; sam
+sudo passwd sam
+</code></pre>
+<p>Key options:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-m</code></td>
+<td><strong>Create the home directory.</strong> (Forget this and you'll have a user with no home!)</td>
+</tr>
+<tr>
+<td><code>-s /bin/bash</code></td>
+<td>Set the login shell</td>
+</tr>
+<tr>
+<td><code>-c "Sam Rai"</code></td>
+<td>Comment / full name</td>
+</tr>
+<tr>
+<td><code>-d /path</code></td>
+<td>Custom home directory</td>
+</tr>
+<tr>
+<td><code>-u 1500</code></td>
+<td>Choose a specific UID</td>
+</tr>
+<tr>
+<td><code>-g groupname</code></td>
+<td>Set the <strong>primary</strong> group</td>
+</tr>
+<tr>
+<td><code>-G group1,group2</code></td>
+<td>Set <strong>supplementary</strong> groups at creation</td>
+</tr>
+<tr>
+<td><code>-e 2027-12-31</code></td>
+<td>Account expires on this date</td>
+</tr>
+<tr>
+<td><code>-r</code></td>
+<td>Create a <strong>system</strong> user (low UID, no home)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="create-and-give-groups-in-one-go">Create and give groups in one go</h3>
+<pre><code class="language-bash">sudo useradd -m -s /bin/bash -G sudo,developers sam
+</code></pre>
+<h3 id="creating-a-system-service-user">Creating a system (service) user</h3>
+<p>For a background app that should never log in:</p>
+<pre><code class="language-bash">sudo useradd -r -s /usr/sbin/nologin myapp
+# or the friendly Debian way:
+sudo adduser --system --group --no-create-home myapp
+</code></pre>
+<p>Then in a systemd unit: <code>User=myapp</code>. Least privilege, achieved. 🎯</p>
+<h3 id="create-a-user-without-a-password-for-ssh-key-only-access">Create a user without a password (for SSH-key-only access)</h3>
+<pre><code class="language-bash">sudo adduser --disabled-password sam
+</code></pre>
+<hr />
+<h2 id="7-passwords-and-account-locking">7. 🔐 Passwords and account locking</h2>
+<h3 id="setting-and-changing-passwords">Setting and changing passwords</h3>
+<pre><code class="language-bash">passwd                  # change YOUR OWN password
+sudo passwd sam         # set/reset sam's password (as admin)
+</code></pre>
+<p>Root can set any password without knowing the old one. This is the standard fix for "I forgot my password" on a user account.</p>
+<h3 id="locking-unlocking-expiring">Locking, unlocking, expiring</h3>
+<table>
+<thead>
+<tr>
+<th>Goal</th>
+<th>Command</th>
+<th>What happens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🔒 Lock the account's password</td>
+<td><code>sudo passwd -l sam</code></td>
+<td>Puts a <code>!</code> in front of the hash in <code>/etc/shadow</code></td>
+</tr>
+<tr>
+<td>🔓 Unlock</td>
+<td><code>sudo passwd -u sam</code></td>
+<td>Removes the <code>!</code></td>
+</tr>
+<tr>
+<td>⏰ Force a new password at next login</td>
+<td><code>sudo passwd -e sam</code></td>
+<td>Expires the password immediately</td>
+</tr>
+<tr>
+<td>📊 Show password status</td>
+<td><code>sudo passwd -S sam</code></td>
+<td><code>L</code> = locked, <code>P</code> = has password, <code>NP</code> = no password</td>
+</tr>
+<tr>
+<td>📅 Set account expiry date</td>
+<td><code>sudo usermod -e 2027-06-30 sam</code></td>
+<td>Account dies on that date</td>
+</tr>
+<tr>
+<td>🧐 View aging info</td>
+<td><code>sudo chage -l sam</code></td>
+<td>Last change, expiry, warnings</td>
+</tr>
+<tr>
+<td>🔁 Require change every 90 days</td>
+<td><code>sudo chage -M 90 sam</code></td>
+<td>Sets max password age</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ <strong>Subtle point:</strong> <code>passwd -l</code> locks the <strong>password</strong>. The user could still log in with an <strong>SSH key</strong>, since that doesn't use the password! To truly block everything, also expire the account or change their shell:</p>
+<p><code>bash
+sudo usermod -e 1 sam                       # expire the account (date in the past)
+sudo usermod -s /usr/sbin/nologin sam       # no interactive shell</code></p>
+</blockquote>
+<h3 id="quick-glossary-of-ways-to-disable-someone">Quick glossary of "ways to disable someone"</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th style="text-align: center;">Blocks password login</th>
+<th style="text-align: center;">Blocks SSH key login</th>
+<th style="text-align: center;">Reversible</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>passwd -l</code> (lock)</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">Yes</td>
+</tr>
+<tr>
+<td><code>usermod -e 1</code> (expire account)</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">Yes (<code>usermod -e ""</code>)</td>
+</tr>
+<tr>
+<td>Shell = <code>nologin</code></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅ (no shell to run)</td>
+<td style="text-align: center;">Yes</td>
+</tr>
+<tr>
+<td><code>userdel</code> (delete)</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌ No</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="8-modifying-existing-users">8. 🔧 Modifying existing users</h2>
+<p>The tool is <strong><code>usermod</code></strong>: "user modify". Pattern:</p>
+<pre><code>sudo usermod  &lt;OPTIONS&gt;  &lt;username&gt;
+</code></pre>
+<h3 id="the-most-used-options">The most-used options</h3>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Add to a group (⭐ <strong>always with <code>-a</code></strong>)</td>
+<td><code>sudo usermod -aG docker sam</code></td>
+</tr>
+<tr>
+<td>Change login shell</td>
+<td><code>sudo usermod -s /bin/zsh sam</code></td>
+</tr>
+<tr>
+<td>Change full-name comment</td>
+<td><code>sudo usermod -c "Samir Rai" sam</code></td>
+</tr>
+<tr>
+<td>Change username</td>
+<td><code>sudo usermod -l newname oldname</code></td>
+</tr>
+<tr>
+<td>Move home directory</td>
+<td><code>sudo usermod -d /new/home -m sam</code></td>
+</tr>
+<tr>
+<td>Change UID</td>
+<td><code>sudo usermod -u 1500 sam</code></td>
+</tr>
+<tr>
+<td>Lock / unlock</td>
+<td><code>sudo usermod -L sam</code> / <code>-U sam</code></td>
+</tr>
+<tr>
+<td>Set expiry date</td>
+<td><code>sudo usermod -e 2027-06-30 sam</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-most-expensive-typo-in-linux-administration">🚨 The most expensive typo in Linux administration</h3>
+<pre><code class="language-bash">sudo usermod -G docker sam      # ❌ REPLACES all of sam's supplementary groups!
+sudo usermod -aG docker sam     # ✅ APPENDS docker to the existing list
+</code></pre>
+<p>Forgetting the <strong><code>-a</code></strong> means sam is <strong>removed from <code>sudo</code>, <code>adm</code>, and every other group</strong> and is left only with <code>docker</code>. Remember it as <strong>"-a = add, don't replace"</strong>, or as <strong>"-aG = add to Group."</strong></p>
+<h3 id="renaming-a-user-properly-full-recipe">Renaming a user properly (full recipe)</h3>
+<p>Changing only the login name leaves the old home folder and group behind. Do all three:</p>
+<pre><code class="language-bash">sudo usermod -l newname oldname              # 1. change login name
+sudo groupmod -n newname oldname             # 2. rename the matching group
+sudo usermod -d /home/newname -m newname     # 3. rename/move the home folder
+</code></pre>
+<p>(The user must not be logged in, or have running processes, while you do it.)</p>
+<h3 id="users-can-change-some-things-themselves-with-no-sudo">Users can change some things themselves, with no <code>sudo</code></h3>
+<pre><code class="language-bash">passwd           # own password
+chsh -s /bin/zsh # own login shell
+chfn             # own full name and contact info
+</code></pre>
+<hr />
+<h2 id="9-deleting-users-safely">9. ❌ Deleting users, safely</h2>
+<h3 id="the-commands">The commands</h3>
+<pre><code class="language-bash">sudo deluser sam                       # remove user, KEEP the home directory
+sudo deluser --remove-home sam         # remove user AND home directory
+sudo deluser --remove-all-files sam    # remove user and ALL files they own on the system
+
+sudo userdel sam                       # raw version, keeps home
+sudo userdel -r sam                    # raw version, removes home and mail
+</code></pre>
+<p>(<code>deluser</code> is the friendly Debian/Ubuntu one; <code>userdel</code> is the universal low-level one.)</p>
+<h3 id="remove-a-user-from-a-group-not-delete-the-user">Remove a user from a group (not delete the user!)</h3>
+<pre><code class="language-bash">sudo deluser sam developers        # Debian/Ubuntu friendly way
+sudo gpasswd -d sam developers     # works everywhere
+</code></pre>
+<h3 id="the-safe-offboarding-routine">🧯 The safe-offboarding routine</h3>
+<p>Deleting is <strong>permanent</strong>. A careful admin does this instead of deleting in a hurry:</p>
+<ol>
+<li><strong>Lock and disable first:</strong>
+   <code>bash
+   sudo usermod -L -e 1 -s /usr/sbin/nologin sam</code></li>
+<li><strong>Kick out active sessions:</strong>
+   <code>bash
+   sudo pkill -KILL -u sam</code></li>
+<li><strong>Back up the home directory:</strong>
+   <code>bash
+   sudo tar czf /root/sam-home-backup.tar.gz /home/sam</code></li>
+<li><strong>Wait</strong> (days or weeks) in case someone needs their data.</li>
+<li><strong>Then delete:</strong> <code>sudo deluser --remove-home sam</code></li>
+</ol>
+<h3 id="the-orphan-problem">🕳️ The orphan problem</h3>
+<p>Files owned by a user keep the <strong>UID number</strong> even after the user is gone. In <code>ls -l</code> they show as a bare number like <code>1001</code>. If a <strong>new</strong> user later gets that same UID, they would <strong>inherit those old files</strong>. Spooky and a security risk!</p>
+<p>Find stray files:</p>
+<pre><code class="language-bash">sudo find / -nouser -o -nogroup 2&gt;/dev/null
+</code></pre>
+<blockquote>
+<p>❗ <strong>Common error:</strong> <em>"userdel: user sam is currently used by process 1234"</em> means they're still logged in or running something. Kill their processes first (step 2), then retry.</p>
+</blockquote>
+<hr />
+<h2 id="10-groups-teams-with-shared-keys">10. 👥 Groups: teams with shared keys</h2>
+<p>Managing permissions <strong>per person</strong> gets messy fast. Groups solve this: <strong>give permissions to the group once, then just add or remove people.</strong></p>
+<blockquote>
+<p>🏀 <strong>Analogy:</strong> A <strong>sports club membership</strong>. The gym's rule says <em>"members of the Basketball Club may use Court 2."</em> To let Priya play, you don't change the court's rules. You just <strong>add Priya to the club</strong>.</p>
+</blockquote>
+<h3 id="primary-vs-supplementary-groups">Primary vs supplementary groups</h3>
+<p>Every user has:</p>
+<ul>
+<li><strong>One primary group:</strong> used as the <em>default group</em> for files they create. Usually a personal group with the same name as the user (<code>sam:sam</code>).</li>
+<li><strong>Zero or more supplementary groups:</strong> extra memberships that grant extra access (<code>sudo</code>, <code>docker</code>, <code>developers</code>...).</li>
+</ul>
+<pre><code class="language-bash">id sam
+# uid=1000(sam) gid=1000(sam) groups=1000(sam),27(sudo),1005(developers)
+#                    ▲ primary          ▲ supplementary groups
+</code></pre>
+<h3 id="group-commands">Group commands</h3>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Create a group</td>
+<td><code>sudo groupadd developers</code></td>
+</tr>
+<tr>
+<td>Create a system group</td>
+<td><code>sudo groupadd -r myapp</code></td>
+</tr>
+<tr>
+<td>Delete a group</td>
+<td><code>sudo groupdel developers</code></td>
+</tr>
+<tr>
+<td>Rename a group</td>
+<td><code>sudo groupmod -n newname oldname</code></td>
+</tr>
+<tr>
+<td>Add a user to a group</td>
+<td><code>sudo usermod -aG developers sam</code></td>
+</tr>
+<tr>
+<td>Same, friendly (Debian/Ubuntu)</td>
+<td><code>sudo adduser sam developers</code></td>
+</tr>
+<tr>
+<td>Same, via gpasswd</td>
+<td><code>sudo gpasswd -a sam developers</code></td>
+</tr>
+<tr>
+<td>Remove a user from a group</td>
+<td><code>sudo gpasswd -d sam developers</code></td>
+</tr>
+<tr>
+<td>List a user's groups</td>
+<td><code>groups sam</code></td>
+</tr>
+<tr>
+<td>List members of a group</td>
+<td><code>getent group developers</code></td>
+</tr>
+<tr>
+<td>Change a user's primary group</td>
+<td><code>sudo usermod -g developers sam</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="i-added-myself-to-the-group-but-it-doesnt-work">⏳ "I added myself to the group, but it doesn't work!"</h3>
+<p>Group membership is <strong>read when you log in</strong>. Your current session still carries the <em>old</em> list. Fix it by either:</p>
+<ul>
+<li><strong>Logging out and back in</strong> (the clean fix), or</li>
+<li>Starting a shell with the new group: <code>newgrp docker</code>, or</li>
+<li>Opening a fresh login: <code>su - sam</code></li>
+</ul>
+<p>This is the cause of 80% of "it still says permission denied" confusion after <code>usermod -aG docker $USER</code>.</p>
+<h3 id="famous-groups-on-ubuntu">Famous groups on Ubuntu</h3>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>What membership gives you</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sudo</code></td>
+<td>Permission to use <code>sudo</code> (admin powers)</td>
+</tr>
+<tr>
+<td><code>adm</code></td>
+<td>Read access to many log files in <code>/var/log</code></td>
+</tr>
+<tr>
+<td><code>docker</code></td>
+<td>Run Docker without <code>sudo</code> (⚠️ this is practically root-equivalent!)</td>
+</tr>
+<tr>
+<td><code>www-data</code></td>
+<td>The web server's group, which is used to share web files</td>
+</tr>
+<tr>
+<td><code>dialout</code></td>
+<td>Access to serial ports (Arduino, modems)</td>
+</tr>
+<tr>
+<td><code>plugdev</code></td>
+<td>Access to pluggable devices (USB gadgets)</td>
+</tr>
+<tr>
+<td><code>lpadmin</code></td>
+<td>Manage printers</td>
+</tr>
+<tr>
+<td><code>audio</code>, <code>video</code></td>
+<td>Access to sound and graphics devices</td>
+</tr>
+<tr>
+<td><code>users</code></td>
+<td>Generic group for ordinary users</td>
+</tr>
+</tbody>
+</table>
+<h3 id="a-real-use-case-a-shared-project-folder">🗂️ A real use case: a shared project folder</h3>
+<pre><code class="language-bash">sudo groupadd developers
+sudo usermod -aG developers sam
+sudo usermod -aG developers priya
+
+sudo mkdir /srv/project
+sudo chgrp developers /srv/project
+sudo chmod 2775 /srv/project
+</code></pre>
+<p>Now Sam and Priya can both work in <code>/srv/project</code>. (That leading <code>2</code> is the <strong>setgid</strong> bit, which makes new files automatically belong to the <code>developers</code> group. We'll unpack the numbers on the <strong>permissions</strong> page, coming next.)</p>
+<hr />
+<h2 id="11-root-su-and-sudo">11. 👑 root, su and sudo</h2>
+<h3 id="whos-root">Who's root?</h3>
+<p><strong>root</strong> is the user with <strong>UID 0</strong>: no restrictions, no safety net, able to read, change, or delete <em>anything</em>. It's the <strong>master key</strong> from our building analogy.</p>
+<p>On Ubuntu, the root account <strong>has no usable password</strong> by default. You aren't supposed to log in as root. Instead you <em>borrow</em> its powers briefly with <code>sudo</code>.</p>
+<h3 id="sudo-borrow-the-master-key-sign-the-logbook"><code>sudo</code>: borrow the master key, sign the logbook</h3>
+<pre><code class="language-bash">sudo apt update                  # run ONE command as root
+sudo -i                          # open a root shell (careful!)
+sudo -u priya whoami             # run a command AS another user (prints: priya)
+sudo -l                          # list what YOU are allowed to do with sudo
+sudo !!                          # re-run your previous command with sudo (a classic)
+</code></pre>
+<p><strong>Why sudo is brilliant:</strong>
+1. It asks for <strong>your</strong> password, not root's. (Just proof that it's really you at the keyboard.)
+2. It's <strong>logged</strong>: who ran what, and when (<code>journalctl _COMM=sudo</code> or <code>/var/log/auth.log</code>).
+3. It grants power <strong>one command at a time</strong>, not an all-powerful session.
+4. It can be <strong>fine-tuned</strong> per user and per command.</p>
+<blockquote>
+<p>🥪 <strong>Fun fact:</strong> <code>sudo</code> stands for "superuser do" (purists say "substitute user do"). Its most famous cultural moment is the <a href="https://xkcd.com/149/">xkcd comic</a> where <em>"Make me a sandwich"</em> gets refused, but <em>"Sudo make me a sandwich"</em> works.</p>
+</blockquote>
+<h3 id="giving-someone-sudo-powers">Giving someone sudo powers</h3>
+<p>On Ubuntu, simply put the user in the <strong><code>sudo</code></strong> group:</p>
+<pre><code class="language-bash">sudo usermod -aG sudo sam
+</code></pre>
+<p>They must log out and in again for it to apply. Take it away with <code>sudo gpasswd -d sam sudo</code>.</p>
+<h3 id="fine-grained-control-visudo">Fine-grained control: <code>visudo</code></h3>
+<p>The rules live in <strong><code>/etc/sudoers</code></strong>. <strong>Never edit it with a normal editor.</strong> A syntax error can lock <em>everyone</em> out of sudo. Use <strong><code>visudo</code></strong>, which checks syntax before saving:</p>
+<pre><code class="language-bash">sudo visudo
+</code></pre>
+<p>The key lines:</p>
+<pre><code class="language-text">root    ALL=(ALL:ALL) ALL
+%sudo   ALL=(ALL:ALL) ALL
+</code></pre>
+<p>How to read <code>who  where=(as_whom:as_which_group)  what</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>%sudo</code></td>
+<td>The <strong>group</strong> <code>sudo</code> (the <code>%</code> means "group". Without it, it's a single user)</td>
+</tr>
+<tr>
+<td><code>ALL=</code></td>
+<td>On <strong>all hosts</strong></td>
+</tr>
+<tr>
+<td><code>(ALL:ALL)</code></td>
+<td>May act as <strong>any user</strong> and <strong>any group</strong></td>
+</tr>
+<tr>
+<td><code>ALL</code></td>
+<td>May run <strong>any command</strong></td>
+</tr>
+</tbody>
+</table>
+<h4 id="examples">Examples</h4>
+<pre><code class="language-text"># Priya may ONLY restart nginx, nothing else:
+priya ALL=(root) /usr/bin/systemctl restart nginx
+
+# The 'deploy' user can run the deploy script without a password prompt:
+deploy ALL=(root) NOPASSWD: /usr/local/bin/deploy.sh
+</code></pre>
+<h4 id="the-tidy-way-drop-in-files">✅ The tidy way: drop-in files</h4>
+<p>Instead of editing the main file, add a small file in <code>/etc/sudoers.d/</code>:</p>
+<pre><code class="language-bash">sudo visudo -f /etc/sudoers.d/priya
+</code></pre>
+<p>(Same "put your changes in your own file" idea as systemd drop-ins. 😉)</p>
+<blockquote>
+<p>⚠️ <strong><code>NOPASSWD</code> warning:</strong> It's convenient for automation, but it removes the safety check. Use it only for specific, narrow commands, never <code>NOPASSWD: ALL</code> on a machine that matters.</p>
+</blockquote>
+<h3 id="su-become-another-user-entirely"><code>su</code>: become another user entirely</h3>
+<pre><code class="language-bash">su - priya        # become priya, with HER full environment (login shell)
+su priya          # become priya, but keep much of YOUR environment
+su -              # become root (needs root's password, so usually disabled on Ubuntu)
+</code></pre>
+<p>The <strong><code>-</code></strong> (dash) means <em>"start a fresh login shell"</em>: her home directory, her <code>$PATH</code>, her settings. Without it you're in a hybrid, and weird bugs appear. <strong>When in doubt, use <code>su -</code>.</strong></p>
+<h3 id="sudo-vs-su-at-a-glance">sudo vs su at a glance</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><code>sudo</code></th>
+<th><code>su</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Asks for</td>
+<td><strong>Your</strong> password</td>
+<td><strong>Target user's</strong> password</td>
+</tr>
+<tr>
+<td>Scope</td>
+<td>One command (or a shell with <code>-i</code>)</td>
+<td>Full session as that user</td>
+</tr>
+<tr>
+<td>Logging</td>
+<td>Detailed per command</td>
+<td>Basic</td>
+</tr>
+<tr>
+<td>Modern default?</td>
+<td>✅ Yes (Ubuntu)</td>
+<td>Rarely needed</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="12-who-is-logged-in-right-now">12. 👀 Who is logged in right now?</h2>
+<pre><code class="language-bash">who                     # who's logged in, from where
+w                       # same, plus what each person is doing
+users                   # just the names
+last                    # history of logins (newest first)
+last -n 10              # the last 10
+sudo lastb              # FAILED login attempts (spotting brute-force attacks!)
+loginctl list-sessions  # systemd's view of sessions
+</code></pre>
+<h3 id="kick-someone-off">Kick someone off</h3>
+<pre><code class="language-bash">sudo pkill -KILL -u sam            # kill all of sam's processes
+sudo loginctl terminate-user sam   # end all of sam's sessions the systemd way
+</code></pre>
+<h3 id="check-logs-for-login-and-sudo-activity">Check logs for login and sudo activity</h3>
+<pre><code class="language-bash">sudo journalctl _COMM=sudo -b      # all sudo use this boot
+sudo less /var/log/auth.log        # login and authentication log
+journalctl -u ssh --since today    # SSH logins today
+</code></pre>
+<p>(All callbacks to the <a href="linux-systemd-explained.md">journalctl section</a> on the previous page.)</p>
+<hr />
+<h2 id="13-real-world-recipes">13. 🍳 Real-world recipes</h2>
+<h3 id="recipe-1-onboard-a-new-teammate-with-ssh-key-access-and-sudo">Recipe 1: Onboard a new teammate with SSH-key access and sudo</h3>
+<pre><code class="language-bash">sudo adduser --disabled-password priya
+sudo usermod -aG sudo,developers priya
+
+sudo mkdir -p /home/priya/.ssh
+echo &quot;ssh-ed25519 AAAA... priya@laptop&quot; | sudo tee /home/priya/.ssh/authorized_keys
+sudo chmod 700 /home/priya/.ssh
+sudo chmod 600 /home/priya/.ssh/authorized_keys
+sudo chown -R priya:priya /home/priya/.ssh
+</code></pre>
+<blockquote>
+<p>🔑 SSH is picky: if <code>.ssh</code> or <code>authorized_keys</code> are readable by others, it <strong>silently refuses</strong> the key. The <code>700</code> and <code>600</code> aren't decoration. (More on those numbers in the permissions page.)</p>
+</blockquote>
+<p>Note: with <code>--disabled-password</code> and <code>sudo</code>, Priya can't use <code>sudo</code> without a password set. Run <code>sudo passwd priya</code> if she'll need to, or grant a specific <code>NOPASSWD</code> rule.</p>
+<h3 id="recipe-2-someone-leaves-the-team">Recipe 2: Someone leaves the team</h3>
+<pre><code class="language-bash">sudo usermod -L -e 1 -s /usr/sbin/nologin sam
+sudo pkill -KILL -u sam
+sudo tar czf /root/sam-home.tar.gz /home/sam
+sudo gpasswd -d sam sudo
+# ...weeks later, when sure:
+sudo deluser --remove-home sam
+</code></pre>
+<h3 id="recipe-3-a-service-account-for-your-app">Recipe 3: A service account for your app</h3>
+<pre><code class="language-bash">sudo adduser --system --group --no-create-home --shell /usr/sbin/nologin myapp
+sudo chown -R myapp:myapp /opt/myapp
+# in the systemd unit: User=myapp  Group=myapp
+</code></pre>
+<h3 id="recipe-4-a-user-forgot-their-password">Recipe 4: A user forgot their password</h3>
+<pre><code class="language-bash">sudo passwd sam                 # set a new one
+sudo passwd -e sam              # (optional) force them to choose their own at next login
+</code></pre>
+<h3 id="recipe-5-you-lost-sudo-access-to-your-own-machine">Recipe 5: You lost sudo access to your own machine</h3>
+<p>If nobody has admin rights, boot into <strong>recovery mode</strong> from the <strong>GRUB menu</strong> (the bootloader from the <a href="linux-boot-process-explained.md">boot page</a>), choose a root shell, remount the disk as writable (<code>mount -o remount,rw /</code>), and run <code>usermod -aG sudo yourname</code>. Yes, physical access is power, which is why disk encryption and BIOS/UEFI passwords exist.</p>
+<h3 id="recipe-6-audit-who-has-real-powers">Recipe 6: Audit who has real powers</h3>
+<pre><code class="language-bash">awk -F: '$3 == 0 {print $1}' /etc/passwd     # who has UID 0? (should be ONLY &quot;root&quot;)
+getent group sudo                             # who's in sudo?
+sudo grep -r NOPASSWD /etc/sudoers /etc/sudoers.d/   # any passwordless rules?
+</code></pre>
+<p>If anything <em>besides</em> <code>root</code> shows up with UID 0, investigate immediately.</p>
+<hr />
+<h2 id="14-security-habits-worth-building">14. 🔒 Security habits worth building</h2>
+<ul>
+<li><strong>Never work as root.</strong> Use your normal account and <code>sudo</code> only when needed. Read a command twice before putting <code>sudo</code> in front of it.</li>
+<li><strong>Least privilege:</strong> give people only the groups and sudo rules they need.</li>
+<li><strong>Prefer SSH keys to passwords</strong> for remote access.</li>
+<li><strong>Remove or lock accounts promptly</strong> when people leave.</li>
+<li><strong>Don't share accounts.</strong> One person, one user, so logs are meaningful.</li>
+<li><strong>Treat the <code>docker</code> group like <code>root</code>.</strong> Anyone in it can effectively become root.</li>
+<li><strong>Use strong, unique passwords</strong> (or a password manager) and consider <code>chage -M</code> aging for shared servers.</li>
+<li><strong>Keep an eye on logs:</strong> <code>last</code>, <code>lastb</code> and <code>journalctl</code> tell you what's happening.</li>
+</ul>
+<hr />
+<h2 id="15-when-things-go-wrong">15. 🆘 When things go wrong</h2>
+<table>
+<thead>
+<tr>
+<th>Message / symptom</th>
+<th>What it usually means</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sam is not in the sudoers file. This incident will be reported.</code></td>
+<td>The user isn't in the <code>sudo</code> group</td>
+<td><code>sudo usermod -aG sudo sam</code> (from an admin account), then re-login</td>
+</tr>
+<tr>
+<td><code>usermod: user sam is currently used by process 1234</code></td>
+<td>They're logged in or a process runs as them</td>
+<td><code>sudo pkill -KILL -u sam</code>, then retry</td>
+</tr>
+<tr>
+<td><code>adduser: The user 'sam' already exists</code></td>
+<td>Name taken</td>
+<td>Pick another or check <code>getent passwd sam</code></td>
+</tr>
+<tr>
+<td>Group change "didn't work"</td>
+<td>Groups are read at <strong>login</strong></td>
+<td>Log out/in, or <code>newgrp groupname</code></td>
+</tr>
+<tr>
+<td>New user can't log in</td>
+<td>No password set, account locked, or shell is <code>nologin</code></td>
+<td><code>sudo passwd sam</code>; check <code>sudo passwd -S sam</code>; check shell in <code>/etc/passwd</code></td>
+</tr>
+<tr>
+<td>User created with <code>useradd</code> has no home / odd prompt</td>
+<td>Forgot <code>-m</code> / <code>-s /bin/bash</code></td>
+<td><code>sudo mkdir -p /home/sam &amp;&amp; sudo chown sam:sam /home/sam</code> and <code>sudo usermod -s /bin/bash sam</code></td>
+</tr>
+<tr>
+<td><code>su: Authentication failure</code></td>
+<td><code>su -</code> to root needs <strong>root's</strong> password, which Ubuntu leaves unset</td>
+<td>Use <code>sudo -i</code> instead</td>
+</tr>
+<tr>
+<td>Lost all groups after <code>usermod -G</code></td>
+<td>Forgot <code>-a</code></td>
+<td>Re-add them with <code>usermod -aG ...</code></td>
+</tr>
+<tr>
+<td>SSH key ignored</td>
+<td>Wrong permissions on <code>~/.ssh</code> or <code>authorized_keys</code></td>
+<td><code>chmod 700 ~/.ssh &amp;&amp; chmod 600 ~/.ssh/authorized_keys</code></td>
+</tr>
+<tr>
+<td>Files show a number instead of an owner</td>
+<td>Their user was deleted (orphaned UID)</td>
+<td>Find with <code>find / -nouser</code>, reassign with <code>chown</code></td>
+</tr>
+<tr>
+<td>Locked out after editing sudoers</td>
+<td>Edited without <code>visudo</code></td>
+<td>Boot recovery mode and fix the file (and use <code>visudo</code> next time!)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="16-cheat-sheet">16. 📋 Cheat Sheet</h2>
+<h3 id="inspect">Inspect</h3>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Who am I?</td>
+<td><code>whoami</code> · <code>id</code></td>
+</tr>
+<tr>
+<td>My groups</td>
+<td><code>groups</code></td>
+</tr>
+<tr>
+<td>All users / one user</td>
+<td><code>getent passwd</code> · <code>getent passwd sam</code></td>
+</tr>
+<tr>
+<td>Group members</td>
+<td><code>getent group developers</code></td>
+</tr>
+<tr>
+<td>Who's logged in?</td>
+<td><code>who</code> · <code>w</code></td>
+</tr>
+<tr>
+<td>Login history / failures</td>
+<td><code>last</code> · <code>sudo lastb</code></td>
+</tr>
+<tr>
+<td>Password status</td>
+<td><code>sudo passwd -S sam</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="create-change-remove-users">Create / change / remove users</h3>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>New user (friendly)</td>
+<td><code>sudo adduser sam</code></td>
+</tr>
+<tr>
+<td>New user (script style)</td>
+<td><code>sudo useradd -m -s /bin/bash sam</code></td>
+</tr>
+<tr>
+<td>Set password</td>
+<td><code>sudo passwd sam</code></td>
+</tr>
+<tr>
+<td>Add to group ⭐</td>
+<td><code>sudo usermod -aG groupname sam</code></td>
+</tr>
+<tr>
+<td>Change shell</td>
+<td><code>sudo usermod -s /bin/zsh sam</code></td>
+</tr>
+<tr>
+<td>Rename user</td>
+<td><code>sudo usermod -l new old</code></td>
+</tr>
+<tr>
+<td>Lock / unlock</td>
+<td><code>sudo usermod -L sam</code> / <code>-U sam</code></td>
+</tr>
+<tr>
+<td>Expire account</td>
+<td><code>sudo usermod -e 2027-06-30 sam</code></td>
+</tr>
+<tr>
+<td>Delete (keep files)</td>
+<td><code>sudo deluser sam</code></td>
+</tr>
+<tr>
+<td>Delete + home</td>
+<td><code>sudo deluser --remove-home sam</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="groups">Groups</h3>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Create / delete</td>
+<td><code>sudo groupadd name</code> · <code>sudo groupdel name</code></td>
+</tr>
+<tr>
+<td>Add / remove member</td>
+<td><code>sudo gpasswd -a sam grp</code> · <code>sudo gpasswd -d sam grp</code></td>
+</tr>
+<tr>
+<td>Use new group now</td>
+<td><code>newgrp grp</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="privilege">Privilege</h3>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Run one command as root</td>
+<td><code>sudo command</code></td>
+</tr>
+<tr>
+<td>Root shell</td>
+<td><code>sudo -i</code></td>
+</tr>
+<tr>
+<td>Be another user</td>
+<td><code>su - priya</code></td>
+</tr>
+<tr>
+<td>What can I sudo?</td>
+<td><code>sudo -l</code></td>
+</tr>
+<tr>
+<td>Edit sudo rules safely</td>
+<td><code>sudo visudo</code> · <code>sudo visudo -f /etc/sudoers.d/name</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-one-line-mental-model">🧠 The one-line mental model</h3>
+<blockquote>
+<p><strong>User = keycard (a UID) · group = club membership (a GID) · root = master key (UID 0) · sudo = borrow the master key and sign the logbook · /etc/passwd, shadow, group = the reception registers · <code>usermod -aG</code> = add to a club, don't replace the whole membership list</strong></p>
+</blockquote>
+<hr />
+<h2 id="final-words">🎬 Final Words</h2>
+<p>Next time you type <code>sudo usermod -aG docker $USER</code>, you'll know precisely what's happening: you're asking the keycard office to <strong>add</strong> you to the <em>docker</em> club, an update to <code>/etc/group</code> that your session will only notice after you log in again.</p>
+<p>Users and groups are the <strong>foundation of Linux security</strong>, and also the foundation of the next topic: <strong>file permissions</strong>, where all those <code>rwx</code> letters and numbers like <code>755</code> finally make sense. Now that you know <em>who</em> everyone is, we can talk about <em>what they're allowed to touch</em>.</p>
+<p>You don't need to memorise every option (unless an exam or interview is calling). This page will always be here when you need it. 😉</p>
+<hr />
+<h2 id="references-further-reading">📚 References &amp; Further Reading</h2>
+<p><strong>Manual pages (also available offline with <code>man &lt;command&gt;</code>)</strong>
+- <a href="https://manpages.ubuntu.com/manpages/noble/en/man8/adduser.8.html">adduser(8)</a> · <a href="https://manpages.ubuntu.com/manpages/noble/en/man8/useradd.8.html">useradd(8)</a> · <a href="https://manpages.ubuntu.com/manpages/noble/en/man8/usermod.8.html">usermod(8)</a>
+- <a href="https://manpages.ubuntu.com/manpages/noble/en/man5/passwd.5.html">passwd(5), the /etc/passwd format</a> · <a href="https://manpages.ubuntu.com/manpages/noble/en/man5/shadow.5.html">shadow(5)</a>
+- <a href="https://manpages.ubuntu.com/manpages/noble/en/man5/sudoers.5.html">sudoers(5)</a></p>
+<p><strong>Background</strong>
+- <a href="https://en.wikipedia.org/wiki/Superuser">Superuser (Wikipedia)</a>
+- <a href="https://en.wikipedia.org/wiki/Sudo">sudo (Wikipedia)</a>
+- <a href="https://en.wikipedia.org/wiki/Passwd">Passwd (Wikipedia)</a>
+- <a href="https://en.wikipedia.org/wiki/User_identifier">User identifier (UID)</a>
+- <a href="https://en.wikipedia.org/wiki/Principle_of_least_privilege">Principle of least privilege</a>
+- <a href="https://en.wikipedia.org/wiki/Unix_time">Unix time (the epoch)</a>
+- <a href="https://xkcd.com/149/">xkcd 149: Sandwich</a></p>
+<p><strong>Guides</strong>
+- <a href="https://documentation.ubuntu.com/server/">Ubuntu Server docs: User management</a>
+- <a href="https://wiki.archlinux.org/title/Users_and_groups">ArchWiki: Users and groups</a>
+- <a href="https://wiki.archlinux.org/title/Sudo">ArchWiki: sudo</a></p>
+<p><strong>Related pages on this site</strong>
+- <a href="../">The Story Behind the Penguin (history)</a>
+- <a href="linux-file-system-explained.md">The Linux File System, Explained</a>
+- <a href="linux-boot-process-explained.md">From Power Button to Desktop (boot process)</a>
+- <a href="linux-systemd-explained.md">systemd, systemctl &amp; journalctl</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.expand", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../../../javascripts/tab-dropdown.js"></script>
+      
+    
+  </body>
+</html>

@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#introduction-to-scipy-and-sympy" class="md-skip">
+        <a href="#scipy-sympy-a-practical-guide-for-physicists-and-mathematicians" class="md-skip">
           Skip to content
         </a>
       
@@ -996,6 +996,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../Linux/user123/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manage many users
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../Linux/misc/" class="md-nav__link">
         
   
@@ -1151,6 +1179,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -1193,6 +1223,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1201,10 +1233,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#introduction-to-scipy-and-sympy" class="md-nav__link">
+  <a href="#table-of-contents" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Introduction to scipy and sympy
+        Table of Contents
       
     </span>
   </a>
@@ -1677,6 +1709,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1685,10 +1719,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#introduction-to-scipy-and-sympy" class="md-nav__link">
+  <a href="#table-of-contents" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Introduction to scipy and sympy
+        Table of Contents
       
     </span>
   </a>
@@ -1712,10 +1746,1466 @@
 
 
 
-  <h1>Scipy & Sympy</h1>
+<h1 id="scipy-sympy-a-practical-guide-for-physicists-and-mathematicians">SciPy &amp; SymPy: A Practical Guide for Physicists and Mathematicians</h1>
+<blockquote>
+<p>A hands-on reference for doing <strong>numerical</strong> (SciPy) and <strong>symbolic</strong> (SymPy) mathematics in Python. It is a guide, not documentation: for each topic you get the one or two functions you will actually use, the few parameters worth tweaking, and a worked example with real output.</p>
+</blockquote>
+<p>All outputs below were produced with <strong>Python 3.12, NumPy 2.5, SciPy 1.18, SymPy 1.14</strong>. Random examples use a fixed seed, but your last digits may differ slightly across versions and platforms.</p>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<p><strong>Part 0 – Setup</strong>
+- <a href="#01-installation-and-imports">0.1 Installation and imports</a>
+- <a href="#02-scipy-vs-sympy-which-one-when">0.2 SciPy vs SymPy: which one, when?</a></p>
+<p><strong>Part I – SciPy (numerical)</strong>
+1. <a href="#1-physical-constants-and-units">Physical constants and units</a>
+2. <a href="#2-curve-fitting-and-regression">Curve fitting and regression</a>
+3. <a href="#3-interpolation">Interpolation</a>
+4. <a href="#4-numerical-differentiation">Numerical differentiation</a>
+5. <a href="#5-numerical-integration">Numerical integration</a>
+6. <a href="#6-ordinary-differential-equations">Ordinary differential equations</a>
+7. <a href="#7-linear-algebra-eigenvalues-and-eigenvectors">Linear algebra, eigenvalues and eigenvectors</a>
+8. <a href="#8-root-finding-and-optimization">Root finding and optimization</a>
+9. <a href="#9-fourier-transforms-and-signal-basics">Fourier transforms and signal basics</a>
+10. <a href="#10-special-functions">Special functions</a>
+11. <a href="#11-statistics-and-probability">Statistics and probability</a></p>
+<p><strong>Part II – SymPy (symbolic)</strong>
+12. <a href="#12-getting-started-symbols-assumptions-exact-numbers">Getting started: symbols, assumptions, exact numbers</a>
+13. <a href="#13-algebra">Algebra</a>
+14. <a href="#14-calculus-derivatives-integrals-limits-series-sums">Calculus: derivatives, integrals, limits, series, sums</a>
+15. <a href="#15-differential-equations">Differential equations</a>
+16. <a href="#16-linear-algebra">Linear algebra</a>
+17. <a href="#17-laplace-transform">Laplace transform</a>
+18. <a href="#18-fourier-transform-and-fourier-series">Fourier transform and Fourier series</a>
+19. <a href="#19-vector-calculus">Vector calculus</a>
+20. <a href="#20-physics-helpers-units-quantum-lagrangian-mechanics">Physics helpers: units, quantum, Lagrangian mechanics</a>
+21. <a href="#21-bridging-sympy-to-numpyscipy-with-lambdify">Bridging SymPy to NumPy/SciPy with <code>lambdify</code></a>
+22. <a href="#22-limitations-of-sympy">Limitations of SymPy</a></p>
+<p><strong>Part III – Wrap-up</strong>
+- <a href="#23-choosing-the-right-tool-cheat-sheet">23. Choosing the right tool: cheat sheet</a>
+- <a href="#24-conclusion">24. Conclusion</a>
+- <a href="#25-further-reading-and-references">25. Further reading and references</a></p>
+<hr />
+<h1 id="part-0-setup">Part 0 – Setup</h1>
+<h2 id="01-installation-and-imports">0.1 Installation and imports</h2>
+<pre><code class="language-bash">pip install numpy scipy sympy matplotlib
+</code></pre>
+<p>Conventions used throughout this guide:</p>
+<pre><code class="language-python">import numpy as np
+import sympy as sp          # or: from sympy import *  (fine for notebooks, avoid in scripts)
+from scipy import constants, optimize, integrate, interpolate, linalg, fft, special, stats
 
-<h2 id="introduction-to-scipy-and-sympy">Introduction to scipy and sympy</h2>
-<p><em>A powerful python for a gem for physicists and mathists</em></p>
+np.set_printoptions(precision=4, suppress=True)   # tidier array output
+</code></pre>
+<p>SciPy is organised into <strong>sub-packages</strong> that you import separately (<code>scipy.integrate</code>, <code>scipy.optimize</code>, ...). Importing bare <code>import scipy</code> does not give you all of them.</p>
+<h2 id="02-scipy-vs-sympy-which-one-when">0.2 SciPy vs SymPy: which one, when?</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>SciPy</strong></th>
+<th><strong>SymPy</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Works with</td>
+<td>Floating-point numbers and arrays</td>
+<td>Symbols and exact expressions</td>
+</tr>
+<tr>
+<td>Answer looks like</td>
+<td><code>0.7071067811865476</code></td>
+<td><code>sqrt(2)/2</code></td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>Fast (compiled code)</td>
+<td>Slow (pure Python, symbolic)</td>
+</tr>
+<tr>
+<td>Best for</td>
+<td>Data, simulation, large systems, anything with no closed form</td>
+<td>Derivations, exact results, checking by hand, generating formulas</td>
+</tr>
+<tr>
+<td>Fails when</td>
+<td>Problem is ill-conditioned or poorly scaled</td>
+<td>Expression explodes, or no closed form exists</td>
+</tr>
+</tbody>
+</table>
+<p><strong>A typical physics workflow uses both:</strong> derive an equation of motion or integral symbolically with SymPy, convert it to a fast function with <code>lambdify</code>, then solve or fit it numerically with SciPy. See <a href="#21-bridging-sympy-to-numpyscipy-with-lambdify">Section 21</a>.</p>
+<hr />
+<h1 id="part-i-scipy-numerical">Part I – SciPy (numerical)</h1>
+<h2 id="1-physical-constants-and-units">1. Physical constants and units</h2>
+<p><code>scipy.constants</code> contains the CODATA values (recent SciPy versions follow the 2022 set) and common unit conversion factors, all in <strong>SI units</strong>.</p>
+<h3 id="11-commonly-used-constants">1.1 Commonly used constants</h3>
+<pre><code class="language-python">from scipy import constants as C
+
+print(C.c)      # speed of light, m/s
+print(C.h)      # Planck constant, J s
+print(C.hbar)   # reduced Planck constant
+print(C.k)      # Boltzmann constant, J/K
+print(C.G)      # gravitational constant
+print(C.e)      # elementary charge, C
+print(C.N_A)    # Avogadro constant
+</code></pre>
+<pre><code>299792458.0
+6.62607015e-34
+1.0545718176461565e-34
+1.380649e-23
+6.6743e-11
+1.602176634e-19
+6.02214076e+23
+</code></pre>
+<p>Other handy names: <code>C.epsilon_0</code>, <code>C.mu_0</code>, <code>C.m_e</code>, <code>C.m_p</code>, <code>C.m_n</code>, <code>C.R</code> (gas constant), <code>C.sigma</code> (Stefan-Boltzmann), <code>C.alpha</code> (fine-structure constant), <code>C.g</code> (standard gravity), <code>C.golden</code> (golden ratio).</p>
+<h3 id="12-the-full-database-value-unit-uncertainty">1.2 The full database: value, unit, uncertainty</h3>
+<p>Every constant lives in <code>physical_constants</code> as a <code>(value, unit, uncertainty)</code> tuple.</p>
+<pre><code class="language-python">print(C.physical_constants['electron mass'])
+print(C.value('Planck constant'), C.unit('Planck constant'))
+</code></pre>
+<pre><code>(9.1093837139e-31, 'kg', 2.8e-40)
+6.62607015e-34 J Hz^-1
+</code></pre>
+<p>Can't remember the exact key? Search for it:</p>
+<pre><code class="language-python">print(C.find('Bohr')[:3])
+</code></pre>
+<pre><code>['Bohr magneton', 'Bohr magneton in Hz/T', 'Bohr magneton in K/T']
+</code></pre>
+<h3 id="13-unit-conversion-factors">1.3 Unit conversion factors</h3>
+<p>Conversion factors multiply a quantity <strong>into SI</strong>.</p>
+<pre><code class="language-python">print(C.eV)       # 1 eV in joules
+print(C.atm)      # 1 atm in pascals
+print(C.mile)     # 1 mile in metres
+print(C.degree)   # 1 degree in radians
+print(C.hour)     # 1 hour in seconds
+</code></pre>
+<pre><code>1.602176634e-19
+101325.0
+1609.344
+0.017453292519943295
+3600.0
+</code></pre>
+<pre><code class="language-python">print(C.convert_temperature(100, 'Celsius', 'Kelvin'))   # 373.15
+print(C.lambda2nu(500e-9))     # wavelength (m) -&gt; frequency (Hz)
+</code></pre>
+<pre><code>373.15
+599584916000000.0
+</code></pre>
+<p><strong>Example – energy of a 500 nm photon in eV:</strong></p>
+<pre><code class="language-python">E = C.h * C.c / 500e-9 / C.eV
+print(E)    # ≈ 2.48 eV
+</code></pre>
+<blockquote>
+<p><strong>Tip:</strong> <code>C.physical_constants</code> is a plain dict, so a quick <code>for name in C.physical_constants: ...</code> plus a string test is a fine way to browse. For rigorous work, always carry the uncertainty (third tuple entry) along.</p>
+</blockquote>
+<hr />
+<h2 id="2-curve-fitting-and-regression">2. Curve fitting and regression</h2>
+<p>Fitting is where constants lead naturally: you have measured data, and you want the parameters of a model (a spring constant, a decay time, a coupling strength). We go from the simplest model to a fully custom one.</p>
+<p>All examples in this section share this synthetic data (noise added to known "true" parameters so you can check the fit):</p>
+<pre><code class="language-python">rng = np.random.default_rng(0)
+x = np.linspace(0, 10, 30)
+y_lin  = 2.5*x + 1.0 + rng.normal(0, 0.5, x.size)           # true: slope 2.5, intercept 1
+y_quad = 0.5*x**2 - 3*x + 2 + rng.normal(0, 1, x.size)      # true: 0.5, -3, 2
+</code></pre>
+<h3 id="21-linear-fit">2.1 Linear fit</h3>
+<p><code>scipy.stats.linregress</code> is the quickest route and gives you uncertainties and correlation for free.</p>
+<pre><code class="language-python">from scipy import stats
+r = stats.linregress(x, y_lin)
+print(r.slope, r.intercept)
+print(&quot;R^2 =&quot;, r.rvalue**2, &quot;  slope std-err =&quot;, r.stderr)
+</code></pre>
+<pre><code>2.495195730208406 0.9632780990786465
+R^2 = 0.9970608712452762   slope std-err = 0.025602010549719674
+</code></pre>
+<p>For a plain polynomial of degree 1, <code>np.polyfit(x, y, 1)</code> returns the same <code>[slope, intercept]</code>.</p>
+<h3 id="22-polynomial-fit">2.2 Polynomial fit</h3>
+<p>Use NumPy's modern polynomial class. It rescales <code>x</code> internally, which keeps high-degree fits numerically stable.</p>
+<pre><code class="language-python">P = np.polynomial.Polynomial.fit(x, y_quad, deg=2)
+print(P.convert().coef)        # coefficients in the ORIGINAL x variable, lowest power first
+</code></pre>
+<pre><code>[ 1.3665 -2.422   0.4416]       # c0, c1, c2  (true: 2, -3, 0.5)
+</code></pre>
+<p><code>np.polyfit</code> also works (note: highest power first). Evaluate with <code>P(x_new)</code>.</p>
+<blockquote>
+<p><strong>Warning:</strong> High-degree polynomial fits oscillate wildly outside the data range and can fit noise. If a physical model exists, use it (<a href="#23-custom-function-fit-curve_fit">2.3</a>) instead of piling on degrees.</p>
+</blockquote>
+<h3 id="23-custom-function-fit-curve_fit">2.3 Custom function fit: <code>curve_fit</code></h3>
+<p><code>scipy.optimize.curve_fit</code> fits <strong>any</strong> function of the form <code>f(x, *params)</code> using non-linear least squares. Here, a damped oscillator:</p>
+<pre><code class="language-python">from scipy.optimize import curve_fit
+
+def damped(t, A, tau, w, phi):
+    return A*np.exp(-t/tau)*np.cos(w*t + phi)
+
+t = np.linspace(0, 10, 100)
+y = damped(t, 2.0, 3.0, 2.0, 0.5) + rng.normal(0, 0.05, t.size)   # true A=2, tau=3, w=2, phi=0.5
+
+popt, pcov = curve_fit(damped, t, y, p0=[1, 1, 1.8, 0])
+perr = np.sqrt(np.diag(pcov))          # 1-sigma uncertainties
+print(popt)
+print(perr)
+</code></pre>
+<pre><code>[1.9694 3.076  2.0102 0.4816]
+[0.0284 0.0609 0.0061 0.0125]
+</code></pre>
+<p><strong>Parameters worth knowing:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>What it does</th>
+<th>When to use it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>p0</code></td>
+<td>Initial guess</td>
+<td><strong>Always</strong> for oscillatory/non-linear models. Bad guesses are the #1 cause of failure</td>
+</tr>
+<tr>
+<td><code>bounds=(lower, upper)</code></td>
+<td>Restrict parameter ranges</td>
+<td>Keep amplitudes positive, phases in $[-\pi,\pi]$, etc.</td>
+</tr>
+<tr>
+<td><code>sigma</code></td>
+<td>Measurement uncertainties per point</td>
+<td>Weighted fits (you have error bars)</td>
+</tr>
+<tr>
+<td><code>absolute_sigma=True</code></td>
+<td>Treat <code>sigma</code> as real error bars, not relative weights</td>
+<td>Physics: when <code>sigma</code> are true uncertainties, so <code>pcov</code> is meaningful</td>
+</tr>
+<tr>
+<td><code>maxfev</code></td>
+<td>Max function evaluations</td>
+<td>Raise if you see "maximum number of calls reached"</td>
+</tr>
+<tr>
+<td><code>method</code></td>
+<td><code>'lm'</code> (default), <code>'trf'</code>, <code>'dogbox'</code></td>
+<td><code>'trf'</code>/<code>'dogbox'</code> are needed for <code>bounds</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Weighted fit with real error bars:</strong></p>
+<pre><code class="language-python">sig = 0.05 * np.ones_like(t)
+popt, pcov = curve_fit(damped, t, y, p0=[1, 1, 1.8, 0], sigma=sig, absolute_sigma=True)
+print(popt, np.sqrt(np.diag(pcov)))
+</code></pre>
+<pre><code>[1.9694 3.076  2.0102 0.4816] [0.0283 0.0607 0.0061 0.0125]
+</code></pre>
+<h3 id="24-goodness-of-fit">2.4 Goodness of fit</h3>
+<p>Never trust a fit without checking residuals. With known error bars, compute the <strong>reduced chi-squared</strong>; it should be close to 1.</p>
+<pre><code class="language-python">res  = y - damped(t, *popt)
+chi2 = np.sum((res/sig)**2)
+print(chi2 / (t.size - len(popt)))
+</code></pre>
+<pre><code>1.0057266238353433
+</code></pre>
+<ul>
+<li>$\chi^2_\nu \approx 1$: model and error bars are consistent.</li>
+<li>$\chi^2_\nu \gg 1$: model is wrong or errors underestimated.</li>
+<li>$\chi^2_\nu \ll 1$: errors overestimated (or overfitting).</li>
+</ul>
+<p>Also plot the residuals: structure in them (a trend, oscillation) means the model is missing something.</p>
+<h3 id="25-when-curve_fit-is-not-enough">2.5 When <code>curve_fit</code> is not enough</h3>
+<p><code>scipy.optimize.least_squares</code> is the lower-level engine. Use it when you need robust loss functions (<code>loss='soft_l1'</code> or <code>'huber'</code>) to down-weight outliers, or when your fit has vector residuals, such as fitting several datasets to shared parameters.</p>
+<hr />
+<h2 id="3-interpolation">3. Interpolation</h2>
+<p>Fitting assumes a model; interpolation just passes a smooth function <em>through</em> your data. Typical uses: resampling experimental data, tabulated potentials, smoothing before differentiating.</p>
+<h3 id="31-one-dimension">3.1 One dimension</h3>
+<pre><code class="language-python">from scipy import interpolate as ip
+
+xs = np.linspace(0, 2*np.pi, 8)
+ys = np.sin(xs)
+
+for kind in ['linear', 'cubic']:
+    f = ip.interp1d(xs, ys, kind=kind)
+    print(kind, f(1.0), &quot;  exact:&quot;, np.sin(1.0))
+</code></pre>
+<pre><code>linear 0.8038608117306651   exact: 0.8414709848078965
+cubic 0.8387508064447122   exact: 0.8414709848078965
+</code></pre>
+<p><code>kind</code> can be <code>'nearest'</code>, <code>'linear'</code>, <code>'quadratic'</code>, <code>'cubic'</code>. (<code>interp1d</code> is considered legacy; for new code prefer the spline classes below, which do the same and more.)</p>
+<h3 id="32-cubic-splines-the-workhorse">3.2 Cubic splines (the workhorse)</h3>
+<p><code>CubicSpline</code> gives you the function, its derivatives and its integral:</p>
+<pre><code class="language-python">cs = ip.CubicSpline(xs, ys)
+print(cs(1.0))            # value
+print(cs(1.0, 1))         # first derivative (exact: cos(1) = 0.5403)
+print(cs.integrate(0, np.pi))   # exact: 2
+</code></pre>
+<pre><code>0.8387508064447122
+0.5171038734973554
+2.004683577965597
+</code></pre>
+<p>Useful option: <code>bc_type='periodic'</code> for periodic data, <code>'natural'</code> for zero curvature at the ends, <code>'clamped'</code> to fix end slopes.</p>
+<h3 id="33-smoothing-noisy-data">3.3 Smoothing noisy data</h3>
+<p>Interpolating noisy data reproduces the noise. Use a <strong>smoothing spline</strong> instead:</p>
+<pre><code class="language-python">spl = ip.UnivariateSpline(x, y_lin, s=len(x)*0.25)   # s ≈ N * sigma^2 is the classic choice
+print(spl(5.0))
+</code></pre>
+<pre><code>13.357793410123822
+</code></pre>
+<p>The smoothing factor <code>s</code> is the one knob: <code>s=0</code> interpolates exactly; larger <code>s</code> gives a smoother curve.</p>
+<h3 id="34-higher-dimensions">3.4 Higher dimensions</h3>
+<p><strong>Regular grid</strong> (e.g., a tabulated potential on a rectangular mesh):</p>
+<pre><code class="language-python">xg = np.linspace(0, 1, 5)
+X, Y = np.meshgrid(xg, xg, indexing='ij')
+Z = np.sin(X)*np.cos(Y)
+g = ip.RegularGridInterpolator((xg, xg), Z, method='linear')
+print(g([[0.3, 0.6]]), &quot;  exact:&quot;, np.sin(.3)*np.cos(.6))
+</code></pre>
+<pre><code>[0.2407]   exact: 0.24390335148307188
+</code></pre>
+<p><strong>Scattered points</strong> (measurements at arbitrary positions): use <code>griddata</code> or <code>RBFInterpolator</code>.</p>
+<pre><code class="language-python">rng = np.random.default_rng(0)
+pts  = rng.random((50, 2))
+vals = np.sin(pts[:, 0])*np.cos(pts[:, 1])
+print(ip.griddata(pts, vals, [(0.5, 0.5)], method='cubic'))     # exact: 0.4207
+print(ip.RBFInterpolator(pts, vals)([[0.5, 0.5]]))
+</code></pre>
+<pre><code>[0.4207]
+[0.4207]
+</code></pre>
+<blockquote>
+<p><strong>Rule of thumb:</strong> Interpolate <em>inside</em> the data range only. Extrapolation is unreliable (and <code>interp1d</code> raises an error unless you pass <code>fill_value='extrapolate'</code>).</p>
+</blockquote>
+<hr />
+<h2 id="4-numerical-differentiation">4. Numerical differentiation</h2>
+<p>Once you have data or a function, derivatives come next: velocities from positions, gradients of potentials, Jacobians for solvers.</p>
+<p>Finite differences approximate $f'(x) \approx \dfrac{f(x+h) - f(x-h)}{2h}$. The trade-off: <strong>small $h$ reduces truncation error but amplifies round-off error</strong>, so there is an optimal step, and noisy data makes the problem much worse.</p>
+<h3 id="41-derivatives-of-sampled-data-npgradient">4.1 Derivatives of sampled data: <code>np.gradient</code></h3>
+<p>For data on a grid (no function available), <code>np.gradient</code> uses central differences inside and one-sided at the edges.</p>
+<pre><code class="language-python">x = np.linspace(0, 2*np.pi, 50)
+y = np.sin(x)
+h = x[1] - x[0]
+
+dy = np.gradient(y, h)                      # or np.gradient(y, x) for non-uniform grids
+print(dy[:3])
+print(np.cos(x)[:3])
+print(np.max(np.abs(dy[1:-1] - np.cos(x)[1:-1])))     # interior error
+</code></pre>
+<pre><code>[0.9973 0.9891 0.9646]
+[1.     0.9918 0.9673]
+0.002732537008859448
+</code></pre>
+<p>Note that the first point is off by about 0.003: the edge uses a first-order formula. Fix it with <code>edge_order=2</code>:</p>
+<pre><code class="language-python">print(np.gradient(y, h, edge_order=2)[:2])
+</code></pre>
+<pre><code>[1.0054 0.9891]
+</code></pre>
+<h3 id="42-derivatives-of-a-function-scipydifferentiate">4.2 Derivatives of a function: <code>scipy.differentiate</code></h3>
+<p>For a Python function, <code>scipy.differentiate.derivative</code> (SciPy ≥ 1.15) picks step sizes adaptively and reports an error estimate. It replaces the old <code>scipy.misc.derivative</code>, which was removed.</p>
+<pre><code class="language-python">from scipy.differentiate import derivative
+
+res = derivative(np.sin, np.pi/3)
+print(res.df, &quot;  exact:&quot;, np.cos(np.pi/3))
+print(res.success)    # True if the requested tolerance was met
+</code></pre>
+<pre><code>0.49999999999998995   exact: 0.5000000000000001
+True
+</code></pre>
+<p>It is <strong>vectorised</strong>, so pass an array of points in one call:</p>
+<pre><code class="language-python">print(derivative(np.exp, np.array([0., 1., 2.])).df)
+</code></pre>
+<pre><code>[1.      2.71828 7.38906]
+</code></pre>
+<p><strong>Parameters worth tweaking:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>order</code></td>
+<td>Order of the finite-difference rule (default 8; use 2–4 for cheap, noisy functions)</td>
+</tr>
+<tr>
+<td><code>initial_step</code></td>
+<td>Starting step size (default 0.5; reduce for rapidly varying functions)</td>
+</tr>
+<tr>
+<td><code>step_direction</code></td>
+<td><code>0</code> central (default), <code>1</code> forward-only, <code>-1</code> backward-only. Use one-sided near domain edges, kinks, or singularities</td>
+</tr>
+<tr>
+<td><code>maxiter</code>, <code>atol</code>, <code>rtol</code></td>
+<td>Iteration limit and tolerances</td>
+</tr>
+</tbody>
+</table>
+<p>One-sided derivative of $|x|$ at its kink:</p>
+<pre><code class="language-python">print(derivative(np.abs, 0.0, step_direction=1).df)    # right-hand derivative → 1
+</code></pre>
+<pre><code>0.9999999999999865
+</code></pre>
+<p><strong>Higher derivatives:</strong> nest the call (cheap for low order, but accuracy degrades with each level).</p>
+<pre><code class="language-python">d2 = derivative(lambda t: derivative(np.sin, t).df, 1.0).df
+print(d2, &quot;  exact:&quot;, -np.sin(1.0))
+</code></pre>
+<pre><code>-0.8414709848079684   exact: -0.8414709848078965
+</code></pre>
+<h3 id="43-gradients-jacobians-and-hessians-of-multivariable-functions">4.3 Gradients, Jacobians and Hessians of multivariable functions</h3>
+<pre><code class="language-python">from scipy.differentiate import jacobian, hessian
+
+# F: R^2 -&gt; R^2  with  F = (x0^2 x1,  5 x0 + sin x1),  evaluated at (1, 2)
+F = lambda x: np.array([x[0]**2*x[1], 5*x[0] + np.sin(x[1])])
+print(jacobian(F, np.array([1., 2.])).df)
+
+# scalar function -&gt; Hessian
+S = lambda x: x[0]**2*x[1] + x[1]**3
+print(hessian(S, np.array([1., 2.])).ddf)
+</code></pre>
+<pre><code>[[ 4.      1.    ]
+ [ 5.     -0.4161]]
+[[ 4.  2.]
+ [ 2. 12.]]
+</code></pre>
+<h3 id="44-a-taste-of-findiff-a-library-dedicated-to-finite-differences">4.4 A taste of <code>findiff</code>: a library dedicated to finite differences</h3>
+<p>If derivatives on grids are central to your work (PDEs, field theory, lattice problems), look at the <strong><code>findiff</code></strong> package. It is built specifically around finite-difference operators in any number of dimensions, and lets you write differential operators almost the way you would on paper.</p>
+<pre><code class="language-bash">pip install findiff
+</code></pre>
+<pre><code class="language-python">import numpy as np
+from findiff import Diff
+
+x = np.linspace(0, 2*np.pi, 200)
+dx = x[1] - x[0]
+
+d_dx   = Diff(0, dx)              # first derivative along axis 0 (default: 2nd-order accurate)
+d2_dx2 = Diff(0, dx, acc=4)**2    # second derivative, 4th-order accurate
+df  = d_dx(np.sin(x))
+d2f = d2_dx2(np.sin(x))
+</code></pre>
+<p>Things that make it appealing for physics:</p>
+<ul>
+<li><strong>Accuracy control</strong> with a single <code>acc=</code> keyword, instead of hand-deriving stencils.</li>
+<li><strong>Operators compose algebraically.</strong> In 2D, the Laplacian is just <code>Diff(0, dx)**2 + Diff(1, dy)**2</code>, and mixed derivatives are <code>Diff(0, dx) * Diff(1, dy)</code>.</li>
+<li><strong>Boundary handling</strong>: it automatically switches to one-sided stencils near the edges at the same order of accuracy, and supports periodic axes with <code>periodic=True</code>.</li>
+<li><strong>PDE/BVP solving</strong> with Dirichlet or Neumann boundary conditions through its <code>PDE</code> class, and <code>findiff.coefficients(deriv, acc)</code> to get raw stencil coefficients.</li>
+</ul>
+<h3 id="45-related-scikit-fdiff-and-numdifftools">4.5 Related: <code>scikit-fdiff</code> and <code>numdifftools</code></h3>
+<ul>
+<li><strong><code>scikit-fdiff</code></strong> (<code>pip install scikit-fdiff</code>, imported as <code>skfdiff</code>) is a slightly different beast: rather than differentiating arrays, it takes a PDE written as text (for example <code>"k * (dxxT + dyyT)"</code>), uses SymPy to build the finite-difference discretisation, and time-steps it with fast solvers. Handy for quickly prototyping transient PDEs (diffusion, advection, thin-film models). It is a small, niche project, so check that it still fits your Python version.</li>
+<li><strong><code>numdifftools</code></strong> offers Richardson-extrapolated derivatives, gradients and Hessians, a good alternative when <code>scipy.differentiate</code> isn't available.</li>
+</ul>
+<h3 id="46-practical-advice">4.6 Practical advice</h3>
+<ul>
+<li><strong>Noisy data:</strong> do not differentiate it directly. Smooth first (smoothing spline <a href="#33-smoothing-noisy-data">3.3</a>, or <code>scipy.signal.savgol_filter(y, window_length, polyorder, deriv=1, delta=dx)</code>).</li>
+<li><strong>Exact function available?</strong> Differentiate it symbolically with SymPy and <code>lambdify</code> it (<a href="#21-bridging-sympy-to-numpyscipy-with-lambdify">Section 21</a>). Exact derivatives beat any finite difference.</li>
+<li><strong>Big optimisation or ODE problems:</strong> supply analytic Jacobians when you can; it is usually the biggest speed-up available.</li>
+</ul>
+<hr />
+<h2 id="5-numerical-integration">5. Numerical integration</h2>
+<h3 id="51-one-dimensional-integrals-quad">5.1 One-dimensional integrals: <code>quad</code></h3>
+<p><code>scipy.integrate.quad</code> is an adaptive routine (QUADPACK) and returns <code>(value, error_estimate)</code>.</p>
+<pre><code class="language-python">from scipy import integrate as I
+
+# Gaussian integral: exact sqrt(pi) = 1.7724538509055159
+val, err = I.quad(lambda x: np.exp(-x**2), -np.inf, np.inf)
+print(val, err)
+</code></pre>
+<pre><code>1.7724538509055159 1.420263678094492e-08
+</code></pre>
+<p>Infinite limits work directly with <code>np.inf</code>. Integrable singularities are handled gracefully:</p>
+<pre><code class="language-python">print(I.quad(lambda x: 1/np.sqrt(x), 0, 1))     # exact 2
+</code></pre>
+<pre><code>(1.9999999999999984, 5.773159728050814e-15)
+</code></pre>
+<p><strong>Parameters worth tweaking:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Use it for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>limit</code></td>
+<td>Max subintervals (default 50). Raise for oscillatory integrands</td>
+</tr>
+<tr>
+<td><code>points=[...]</code></td>
+<td>Locations of kinks/discontinuities inside the interval</td>
+</tr>
+<tr>
+<td><code>epsabs</code>, <code>epsrel</code></td>
+<td>Tolerances (defaults ~1.5e-8)</td>
+</tr>
+<tr>
+<td><code>weight='sin'</code>/<code>'cos'</code>, <code>wvar=ω</code></td>
+<td>Fast, accurate oscillatory integrals $\int f(x)\sin(\omega x)\,dx$</td>
+</tr>
+<tr>
+<td><code>weight='cauchy'</code>, <code>wvar=c</code></td>
+<td>Principal value integrals</td>
+</tr>
+<tr>
+<td><code>args=(...)</code></td>
+<td>Extra parameters passed to the integrand</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-python"># oscillatory: Si(50) = ∫0^50 sin(x)/x dx  (needs a larger limit)
+print(I.quad(lambda x: np.sin(x)/x, 0, 50, limit=200))
+
+# kink at x = 1
+print(I.quad(lambda x: abs(x - 1), 0, 3, points=[1]))     # exact 2.5
+</code></pre>
+<pre><code>(1.5516170724859364, 3.1692223845247725e-10)
+(2.5, 2.7755575615628914e-14)
+</code></pre>
+<h3 id="52-multiple-integrals">5.2 Multiple integrals</h3>
+<pre><code class="language-python"># ∫0^1 ∫0^x  x*y dy dx = 1/8      (NOTE: dblquad's function takes (y, x), inner variable first)
+print(I.dblquad(lambda y, x: x*y, 0, 1, 0, lambda x: x))
+
+# ∫∫∫ over the unit cube of x*y*z = 1/8
+print(I.nquad(lambda x, y, z: x*y*z, [[0, 1], [0, 1], [0, 1]]))
+</code></pre>
+<pre><code>(0.125, 5.515032205777789e-15)
+(0.12499999999999999, 5.527033708952211e-15)
+</code></pre>
+<blockquote>
+<p>Beyond ~3 dimensions, nested <code>quad</code> becomes very slow; switch to Monte Carlo (<code>scipy.stats.qmc</code> for quasi-random points) or to <code>scipy.integrate.qmc_quad</code>.</p>
+</blockquote>
+<h3 id="53-integrating-sampled-data">5.3 Integrating sampled data</h3>
+<p>When you only have samples, use <code>trapezoid</code> or <code>simpson</code> (needs an odd number of points for best results).</p>
+<pre><code class="language-python">x = np.linspace(0, np.pi, 11)
+y = np.sin(x)
+print(I.trapezoid(y, x))        # exact 2
+print(I.simpson(y, x=x))
+print(I.cumulative_trapezoid(y, x, initial=0)[:4])     # running integral
+</code></pre>
+<pre><code>1.9835235375094544
+2.0001095173150043
+[0.     0.0485 0.1894 0.4088]
+</code></pre>
+<hr />
+<h2 id="6-ordinary-differential-equations">6. Ordinary differential equations</h2>
+<p>Integration's big sibling: $\dot{\mathbf y} = \mathbf f(t,\mathbf y)$. Write any ODE as a <strong>first-order system</strong>; for example $\ddot x = -x$ becomes $y_0 = x,\; y_1 = \dot x$.</p>
+<h3 id="61-initial-value-problems-solve_ivp">6.1 Initial value problems: <code>solve_ivp</code></h3>
+<pre><code class="language-python">f = lambda t, y: [y[1], -y[0]]            # harmonic oscillator
+sol = I.solve_ivp(f, [0, 10], [1, 0],
+                  t_eval=np.linspace(0, 10, 5), rtol=1e-9, atol=1e-12)
+print(sol.y[0])
+print(np.cos(sol.t))
+print(sol.status, sol.message)
+</code></pre>
+<pre><code>[ 1.     -0.8011  0.2837  0.3466 -0.8391]
+[ 1.     -0.8011  0.2837  0.3466 -0.8391]
+0 The solver successfully reached the end of the integration interval.
+</code></pre>
+<p><strong>Key parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Use it for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>method</code></td>
+<td><code>'RK45'</code> (default, non-stiff), <code>'DOP853'</code> (high accuracy), <code>'Radau'</code>/<code>'BDF'</code>/<code>'LSODA'</code> (stiff)</td>
+</tr>
+<tr>
+<td><code>rtol</code>, <code>atol</code></td>
+<td>Defaults (1e-3, 1e-6) are loose. For physics use <code>rtol=1e-9, atol=1e-12</code> when accuracy matters</td>
+</tr>
+<tr>
+<td><code>t_eval</code></td>
+<td>Output times (does not change the internal step)</td>
+</tr>
+<tr>
+<td><code>dense_output=True</code></td>
+<td>Get a continuous solution <code>sol.sol(t)</code></td>
+</tr>
+<tr>
+<td><code>events</code></td>
+<td>Stop or record when a condition is met (collisions, zero crossings)</td>
+</tr>
+<tr>
+<td><code>args</code></td>
+<td>Pass physical parameters to your function</td>
+</tr>
+<tr>
+<td><code>jac</code></td>
+<td>Analytic Jacobian (big speed-up for stiff problems)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="62-stiff-problems">6.2 Stiff problems</h3>
+<p>A problem is <strong>stiff</strong> when it contains widely separated time scales. Explicit methods like RK45 are forced into tiny steps; implicit methods are not:</p>
+<pre><code class="language-python">stiff = lambda t, y: -1000*(y - np.cos(t))
+print(I.solve_ivp(stiff, [0, 1], [0], method='Radau').nfev)
+print(I.solve_ivp(stiff, [0, 1], [0], method='RK45').nfev)
+</code></pre>
+<pre><code>100
+2132
+</code></pre>
+<p>If a solver crawls or <code>nfev</code> explodes, try <code>method='Radau'</code> or <code>'LSODA'</code>.</p>
+<h3 id="63-events-detecting-when-something-happens">6.3 Events: detecting when something happens</h3>
+<pre><code class="language-python">def hits_zero(t, y): return y[0]
+hits_zero.terminal  = True      # stop integration there
+hits_zero.direction = -1        # only when crossing downward
+
+sol = I.solve_ivp(f, [0, 10], [1, 0], events=hits_zero, rtol=1e-9)
+print(sol.t_events[0], &quot;  exact π/2 =&quot;, np.pi/2)
+</code></pre>
+<pre><code>[1.5708]   exact π/2 = 1.5707963267948966
+</code></pre>
+<h3 id="64-boundary-value-problems-solve_bvp">6.4 Boundary value problems: <code>solve_bvp</code></h3>
+<p>For problems with conditions at both ends (for example, $y''=-y$, $y(0)=0$, $y(\pi/2)=1$):</p>
+<pre><code class="language-python">def fun(x, y): return np.vstack([y[1], -y[0]])
+def bc(ya, yb): return np.array([ya[0], yb[0] - 1])      # residuals that must vanish
+
+xm = np.linspace(0, np.pi/2, 5)
+guess = np.zeros((2, xm.size))
+sol = I.solve_bvp(fun, bc, xm, guess)
+print(sol.status, sol.sol(np.pi/4)[0], np.sin(np.pi/4))
+</code></pre>
+<pre><code>0 0.70708860676209 0.7071067811865475
+</code></pre>
+<p><code>status == 0</code> means it converged. A poor initial guess is the usual reason it does not.</p>
+<hr />
+<h2 id="7-linear-algebra-eigenvalues-and-eigenvectors">7. Linear algebra, eigenvalues and eigenvectors</h2>
+<p><code>scipy.linalg</code> is a superset of <code>numpy.linalg</code> (always built against BLAS/LAPACK) with extras such as <code>expm</code>, <code>lu</code>, generalized eigenproblems and more.</p>
+<h3 id="71-solving-systems-and-basic-operations">7.1 Solving systems and basic operations</h3>
+<pre><code class="language-python">from scipy import linalg as la
+
+A = np.array([[2., 1.], [1., 3.]])
+print(la.solve(A, [1, 2]))          # solve A x = b   (never use inv(A) @ b)
+print(la.det(A))
+print(la.inv(A))
+</code></pre>
+<pre><code>[0.2 0.6]
+5.0
+[[ 0.6 -0.2]
+ [-0.2  0.4]]
+</code></pre>
+<p>Decompositions you will meet: <code>la.lu(A)</code>, <code>la.qr(A)</code>, <code>la.cholesky(A)</code> (for symmetric positive-definite), <code>la.svd(A)</code>.</p>
+<pre><code class="language-python">print(la.svd(np.array([[1, 2], [3, 4], [5, 6.]]))[1])   # singular values
+</code></pre>
+<pre><code>[9.5255 0.5143]
+</code></pre>
+<h3 id="72-eigenvalues-and-eigenvectors">7.2 Eigenvalues and eigenvectors</h3>
+<p>Choose the function to match the matrix. This matters for speed <strong>and</strong> correctness:</p>
+<table>
+<thead>
+<tr>
+<th>Matrix type</th>
+<th>Function</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Symmetric / Hermitian (observables, Hamiltonians)</td>
+<td><code>la.eigh</code></td>
+<td>Real eigenvalues, <strong>orthonormal</strong> eigenvectors, sorted ascending</td>
+</tr>
+<tr>
+<td>General</td>
+<td><code>la.eig</code></td>
+<td>Possibly complex eigenvalues</td>
+</tr>
+<tr>
+<td>Generalized $A v = \lambda B v$</td>
+<td><code>la.eigh(A, B)</code> / <code>la.eig(A, B)</code></td>
+<td>Overlap matrices (non-orthogonal bases)</td>
+</tr>
+<tr>
+<td>Tridiagonal</td>
+<td><code>la.eigh_tridiagonal</code></td>
+<td>Very fast for 1D finite-difference Hamiltonians</td>
+</tr>
+<tr>
+<td>Large sparse, only a few eigenpairs</td>
+<td><code>scipy.sparse.linalg.eigsh</code> / <code>eigs</code></td>
+<td>Don't build dense matrices</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-python">w, v = la.eigh(A)           # symmetric
+print(w)                    # eigenvalues
+print(v)                    # eigenvectors are the COLUMNS
+</code></pre>
+<pre><code>[1.382 3.618]
+[[-0.8507  0.5257]
+ [ 0.5257  0.8507]]
+</code></pre>
+<p>A rotation generator has purely imaginary eigenvalues:</p>
+<pre><code class="language-python">print(la.eig(np.array([[0, 1], [-1, 0.]]))[0])
+</code></pre>
+<pre><code>[0.+1.j 0.-1.j]
+</code></pre>
+<p>Useful extras: <code>la.eigh(A, subset_by_index=[0, 2])</code> computes only the lowest three eigenpairs.</p>
+<h3 id="73-matrix-functions-time-evolution">7.3 Matrix functions: time evolution</h3>
+<p>$e^{-iHt/\hbar}$ and rotation matrices are matrix exponentials:</p>
+<pre><code class="language-python">B = np.array([[0, 1], [-1, 0.]])
+print(la.expm(B))           # rotation by 1 radian
+</code></pre>
+<pre><code>[[ 0.5403  0.8415]
+ [-0.8415  0.5403]]
+</code></pre>
+<h3 id="74-physics-example-particle-in-a-box-finite-differences">7.4 Physics example: particle in a box (finite differences)</h3>
+<p>Discretise $-\tfrac12\psi'' = E\psi$ on $[0,1]$ with $\hbar=m=1$ and zero at the walls. The Hamiltonian is tridiagonal, so <code>eigh_tridiagonal</code> is ideal.</p>
+<pre><code class="language-python">n  = 500
+dx = 1.0/(n + 1)
+diag = np.full(n,   1.0/dx**2)
+off  = np.full(n-1, -0.5/dx**2)
+
+E = la.eigh_tridiagonal(diag, off, select='i', select_range=(0, 2))[0]
+print(E)
+print((np.pi*np.arange(1, 4))**2/2)      # exact n²π²/2
+</code></pre>
+<pre><code>[ 4.93478603 19.73895008 44.41191004]
+[ 4.9348022  19.7392088  44.4132198 ]
+</code></pre>
+<p><strong>Quantum harmonic oscillator</strong> ($V=\tfrac12x^2$): only the potential on the diagonal changes. The energies come out as $n+\tfrac12$:</p>
+<pre><code class="language-python">x  = np.linspace(-6, 6, 1200); dx = x[1] - x[0]
+diag = 1/dx**2 + 0.5*x**2
+off  = np.full(x.size-1, -0.5/dx**2)
+print(la.eigh_tridiagonal(diag, off, select='i', select_range=(0, 4))[0])
+</code></pre>
+<pre><code>[0.49999687 1.49998435 2.49995931 3.49992174 4.49987166]
+</code></pre>
+<h3 id="75-large-sparse-problems">7.5 Large sparse problems</h3>
+<pre><code class="language-python">from scipy.sparse import diags
+from scipy.sparse.linalg import eigsh
+
+n = 200
+H = diags([-np.ones(n-1), 2*np.ones(n), -np.ones(n-1)], [-1, 0, 1], format='csr')
+print(eigsh(H, k=3, which='SM')[0])      # 3 smallest eigenvalues
+</code></pre>
+<pre><code>[0.0002 0.001  0.0022]
+</code></pre>
+<p>For <code>which='SM'</code> on large problems, shift-invert (<code>sigma=0</code>) is usually much faster and more reliable than <code>'SM'</code>.</p>
+<blockquote>
+<p><strong>Tips:</strong> Check <code>np.allclose(A, A.T)</code> before calling <code>eigh</code>. It silently reads only one triangle. For ill-conditioned systems, check <code>np.linalg.cond(A)</code>.</p>
+</blockquote>
+<hr />
+<h2 id="8-root-finding-and-optimization">8. Root finding and optimization</h2>
+<h3 id="81-scalar-root-finding">8.1 Scalar root finding</h3>
+<p>Solve $\cos x = x$:</p>
+<pre><code class="language-python">from scipy import optimize as opt
+print(opt.brentq(lambda x: np.cos(x) - x, 0, 1))
+</code></pre>
+<pre><code>0.7390851332151559
+</code></pre>
+<p><code>brentq</code> needs a <strong>bracket</strong> where the function changes sign, but is guaranteed to converge. Without a bracket use <code>opt.newton(f, x0)</code> (faster, may fail).</p>
+<h3 id="82-systems-of-equations">8.2 Systems of equations</h3>
+<pre><code class="language-python">sol = opt.root(lambda v: [v[0]**2 + v[1]**2 - 1, v[0] - v[1]], x0=[1, 0])
+print(sol.x, sol.success)
+</code></pre>
+<pre><code>[0.7071 0.7071] True
+</code></pre>
+<h3 id="83-minimization">8.3 Minimization</h3>
+<p>Minimize the Rosenbrock "banana" function (minimum at $(1,1)$):</p>
+<pre><code class="language-python">rosen = lambda p: (1 - p[0])**2 + 100*(p[1] - p[0]**2)**2
+
+m = opt.minimize(rosen, x0=[-1, 1], method='BFGS')
+print(m.x, m.fun, m.nit)
+print(opt.minimize(rosen, [-1, 1], method='Nelder-Mead').x)
+</code></pre>
+<pre><code>[1. 1.] 1.9399467364197657e-11 31
+[1. 1.]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Good for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BFGS</code>, <code>L-BFGS-B</code></td>
+<td>Smooth functions; <code>L-BFGS-B</code> supports bounds and scales to many variables</td>
+</tr>
+<tr>
+<td><code>Nelder-Mead</code></td>
+<td>Noisy or non-smooth, no gradients needed</td>
+</tr>
+<tr>
+<td><code>SLSQP</code>, <code>trust-constr</code></td>
+<td>Constraints</td>
+</tr>
+<tr>
+<td><code>differential_evolution</code>, <code>basinhopping</code></td>
+<td><strong>Global</strong> optimization (many local minima)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Constraints:</strong> minimize $(x-1)^2+(y-2)^2$ subject to $x+y=1$:</p>
+<pre><code class="language-python">cons = {'type': 'eq', 'fun': lambda p: p[0] + p[1] - 1}
+print(opt.minimize(lambda p: (p[0]-1)**2 + (p[1]-2)**2, [0, 0], constraints=cons).x)
+</code></pre>
+<pre><code>[0. 1.]
+</code></pre>
+<p><strong>Global search</strong> when the landscape has many minima:</p>
+<pre><code class="language-python">print(opt.differential_evolution(rosen, bounds=[(-2, 2)]*2, seed=1).x)
+</code></pre>
+<pre><code>[1. 1.]
+</code></pre>
+<blockquote>
+<p><strong>Tips:</strong> Supply <code>jac=</code> (gradient) when you can. Scale variables so they are O(1). Always check <code>result.success</code> and <code>result.message</code>.</p>
+</blockquote>
+<hr />
+<h2 id="9-fourier-transforms-and-signal-basics">9. Fourier transforms and signal basics</h2>
+<h3 id="91-the-fft">9.1 The FFT</h3>
+<p>For real signals, use <code>rfft</code> (half the work, half the output).</p>
+<pre><code class="language-python">from scipy import fft
+
+N = 256
+t = np.linspace(0, 1, N, endpoint=False)          # 1 second, sampling rate 256 Hz
+s = np.sin(2*np.pi*50*t) + 0.5*np.sin(2*np.pi*80*t)
+
+F    = fft.rfft(s)
+freq = fft.rfftfreq(N, d=1/N)
+
+print(freq[np.argsort(abs(F))[-2:]])     # two strongest frequencies (Hz)
+print(2*abs(F)[[50, 80]]/N)              # recover amplitudes
+</code></pre>
+<pre><code>[80. 50.]
+[1.  0.5]
+</code></pre>
+<p><strong>Practical rules:</strong>
+- <strong>Nyquist:</strong> the highest resolvable frequency is half the sampling rate.
+- <strong>Normalisation:</strong> to get true amplitudes from <code>rfft</code>, multiply by <code>2/N</code>.
+- <strong>Windowing:</strong> if your signal doesn't contain a whole number of periods, apply a window (<code>np.hanning(N) * s</code>) to reduce spectral leakage.
+- Use <code>fft.fft2</code>/<code>fftn</code> for images and fields; <code>fft.fftshift</code> to centre zero frequency.
+- Spectral derivative: <code>ifft(1j*k*fft(f))</code> is extremely accurate for smooth periodic functions.</p>
+<h3 id="92-beyond-the-fft">9.2 Beyond the FFT</h3>
+<p><code>scipy.signal</code> provides filtering (<code>butter</code>, <code>filtfilt</code>, <code>savgol_filter</code>), peak finding (<code>find_peaks</code>), spectrograms and power spectral density (<code>welch</code>), and convolution (<code>fftconvolve</code>). Worth knowing about even though we won't expand on it here.</p>
+<hr />
+<h2 id="10-special-functions">10. Special functions</h2>
+<p>The functions that solutions of physics problems keep turning into: Bessel functions (cylindrical waves), Legendre polynomials and spherical harmonics (central potentials), Hermite polynomials (oscillators), the error function and gamma function (statistics, integrals), and elliptic integrals (pendulum, orbits).</p>
+<pre><code class="language-python">from scipy import special as sp_
+print(sp_.jv(0, 2.4048))            # Bessel J0 near its first zero
+print(sp_.jn_zeros(0, 3))           # first 3 zeros of J0 (drum modes!)
+print(sp_.gamma(0.5))               # sqrt(pi)
+print(sp_.erf(1))
+print(sp_.legendre(2).coef)         # P2(x) = 1.5x² - 0.5   (highest power first)
+print(sp_.eval_hermite(2, 1.0))     # H2(1) = 4x² - 2 = 2
+print(sp_.ellipk(0.5))              # complete elliptic integral K(m=0.5)
+print(sp_.zeta(2))                  # π²/6
+print(sp_.airy(0)[0])               # Ai(0)
+print(sp_.comb(5, 2), sp_.factorial(5))
+</code></pre>
+<pre><code>1.3268284301217434e-05
+[2.4048 5.5201 8.6537]
+1.7724538509055159
+0.8427007929497148
+[ 1.5  0.  -0.5]
+2.000000000000001
+1.8540746773013719
+1.6449340668482264
+0.3550280538878172
+10.0 120.0
+</code></pre>
+<p><strong>Notes:</strong>
+- <strong>Parameter convention for elliptic integrals</strong> is $m = k^2$ (not the modulus $k$), a frequent source of bugs.
+- Spherical harmonics: <code>special.sph_harm_y</code> (newer SciPy). The older <code>sph_harm</code> is deprecated and had a confusing argument order; check your version's docs.
+- Almost all functions are vectorised ("ufuncs") and accept arrays.
+- For <code>jv</code>, <code>iv</code>, etc., the first argument is the <strong>order</strong>; the second is the <strong>argument</strong>.</p>
+<hr />
+<h2 id="11-statistics-and-probability">11. Statistics and probability</h2>
+<p><code>scipy.stats</code> provides over 100 distributions with a uniform interface: <code>.pdf</code>, <code>.cdf</code>, <code>.ppf</code> (inverse CDF), <code>.sf</code> (survival, $1-\text{cdf}$), <code>.rvs</code> (random samples), <code>.fit</code>.</p>
+<pre><code class="language-python">from scipy import stats
+
+d = stats.norm(loc=0, scale=1)
+print(d.cdf(1.96))       # P(Z &lt; 1.96)
+print(d.ppf(0.975))      # the 97.5% quantile
+print(stats.chi2.sf(7.8, df=3))     # p-value for chi2 = 7.8 with 3 dof
+</code></pre>
+<pre><code>0.9750021048517795
+1.959963984540054
+0.050331097859853326
+</code></pre>
+<p>Hypothesis testing, for example a two-sample t-test on two sets of measurements:</p>
+<pre><code class="language-python">rng = np.random.default_rng(0)
+a, b = rng.normal(0, 1, 30), rng.normal(0.8, 1, 30)
+res = stats.ttest_ind(a, b)         # Welch's version: add equal_var=False
+print(res.statistic, res.pvalue)    # small p ⇒ means differ
+</code></pre>
+<p>Other everyday tools: <code>stats.pearsonr</code>, <code>stats.kstest</code> (does my data follow this distribution?), <code>stats.poisson</code>, <code>stats.binom</code> (counting experiments), <code>stats.gaussian_kde</code> (smooth density estimate), <code>stats.bootstrap</code> (uncertainty without formulas), <code>stats.qmc</code> (quasi-Monte Carlo).</p>
+<blockquote>
+<p>For error propagation, fits with uncertainties and correlated data, the <code>uncertainties</code>, <code>lmfit</code> and <code>iminuit</code> packages build on exactly what you have learned in <a href="#2-curve-fitting-and-regression">Section 2</a>.</p>
+</blockquote>
+<hr />
+<hr />
+<h1 id="part-ii-sympy-symbolic">Part II – SymPy (symbolic)</h1>
+<p>SymPy manipulates mathematics <strong>exactly</strong>: <code>sqrt(2)</code> stays <code>sqrt(2)</code>, integrals come back as formulas, and equations are solved for symbols. Use it to derive, simplify and verify, then hand the result to NumPy/SciPy to evaluate.</p>
+<pre><code class="language-python">import sympy as sp
+sp.init_printing()       # pretty (LaTeX) output in Jupyter; in plain scripts use print()
+</code></pre>
+<p>The examples below print plain text so that they read well in a terminal.</p>
+<h2 id="12-getting-started-symbols-assumptions-exact-numbers">12. Getting started: symbols, assumptions, exact numbers</h2>
+<h3 id="121-symbols-and-expressions">12.1 Symbols and expressions</h3>
+<pre><code class="language-python">x, y, z, t = sp.symbols('x y z t')
+n, k = sp.symbols('n k', integer=True)
+expr = (x + 1)**2
+print(expr, &quot;-&gt;&quot;, sp.expand(expr))
+</code></pre>
+<pre><code>(x + 1)**2 -&gt; x**2 + 2*x + 1
+</code></pre>
+<h3 id="122-assumptions-matter">12.2 Assumptions matter</h3>
+<p>SymPy refuses to simplify things that are not true for <strong>all</strong> complex numbers. Tell it what you know:</p>
+<pre><code class="language-python">a = sp.symbols('a', positive=True)
+x = sp.symbols('x')                      # generic complex symbol
+
+print(sp.sqrt(x**2))      # can't simplify: depends on the sign of x
+print(sp.sqrt(a**2))      # fine when a &gt; 0
+</code></pre>
+<pre><code>sqrt(x**2)
+a
+</code></pre>
+<p>Common assumptions: <code>real=True</code>, <code>positive=True</code>, <code>nonnegative=True</code>, <code>integer=True</code>, <code>nonzero=True</code>. Declaring them is the single most effective way to get cleaner integrals and simplifications.</p>
+<h3 id="123-exact-numbers-vs-floats">12.3 Exact numbers vs floats</h3>
+<p>Python's <code>1/3</code> is a float; SymPy's <code>Rational(1, 3)</code> is exact. Mixing floats into an expression makes the whole thing approximate.</p>
+<pre><code class="language-python">print(sp.Rational(1, 3) + sp.Rational(1, 6))      # exact
+print(sp.sqrt(2).evalf(30))                      # arbitrary precision
+print(sp.N(sp.pi, 30), float(sp.pi))
+print(sp.nsimplify(0.333333333333333))           # float -&gt; rational
+</code></pre>
+<pre><code>1/2
+1.41421356237309504880168872421
+3.14159265358979323846264338328 3.141592653589793
+1/3
+</code></pre>
+<p><code>expr.subs(...)</code> substitutes values; <code>expr.evalf(subs={...})</code> substitutes and evaluates numerically:</p>
+<pre><code class="language-python">print(sp.sin(x).subs(x, sp.pi/6))
+print((x**2 + y).subs({x: 2, y: 1}))
+</code></pre>
+<pre><code>1/2
+5
+</code></pre>
+<hr />
+<h2 id="13-algebra">13. Algebra</h2>
+<h3 id="131-rewriting-expressions">13.1 Rewriting expressions</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>expand</code></td>
+<td>Multiply out</td>
+</tr>
+<tr>
+<td><code>factor</code></td>
+<td>Factor polynomials</td>
+</tr>
+<tr>
+<td><code>simplify</code></td>
+<td>Heuristic "make it nicer" (can be slow, not always minimal)</td>
+</tr>
+<tr>
+<td><code>cancel</code></td>
+<td>Cancel common factors in a rational function</td>
+</tr>
+<tr>
+<td><code>apart</code></td>
+<td>Partial fractions</td>
+</tr>
+<tr>
+<td><code>trigsimp</code>, <code>powsimp</code>, <code>radsimp</code>, <code>logcombine</code></td>
+<td>Targeted simplifiers, <strong>faster and more predictable than <code>simplify</code></strong></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-python">print(sp.simplify(sp.sin(x)**2 + sp.cos(x)**2))
+print(sp.factor(x**3 - 1))
+print(sp.apart(1/(x**2 - 1), x))
+print(sp.cancel((x**2 - 1)/(x - 1)))
+</code></pre>
+<pre><code>1
+(x - 1)*(x**2 + x + 1)
+-1/(2*(x + 1)) + 1/(2*(x - 1))
+x + 1
+</code></pre>
+<h3 id="132-solving-equations">13.2 Solving equations</h3>
+<p><code>solve</code> returns a list; <code>solveset</code> returns a mathematically proper <em>set</em> and lets you restrict the domain.</p>
+<pre><code class="language-python">print(sp.solve(x**2 - 3*x + 2, x))
+print(sp.solve([x + y - 3, x - y - 1], [x, y]))      # linear system
+print(sp.solveset(sp.sin(x), x, sp.Interval(0, 2*sp.pi)))
+</code></pre>
+<pre><code>[1, 2]
+{x: 2, y: 1}
+{0, pi, 2*pi}
+</code></pre>
+<p>Equations can be written as <code>sp.Eq(lhs, rhs)</code> or as an expression assumed to equal zero.</p>
+<p><strong>No closed form? Go numerical</strong> with <code>nsolve</code> (needs a starting point):</p>
+<pre><code class="language-python">print(sp.nsolve(sp.cos(x) - x, x, 0.7))
+</code></pre>
+<pre><code>0.739085133215161
+</code></pre>
+<p>Quintics and higher have no solution in radicals; SymPy returns exact <strong>root objects</strong> you can evaluate:</p>
+<pre><code class="language-python">print(sp.solve(x**5 - x + 1, x)[0])
+</code></pre>
+<pre><code>CRootOf(x**5 - x + 1, 0)
+</code></pre>
+<h3 id="133-other-useful-algebra">13.3 Other useful algebra</h3>
+<pre><code class="language-python">print(sp.factorint(360), sp.isprime(97), sp.binomial(5, 2))
+print(sp.Poly(x**3 - 2*x + 1, x).nroots())     # numerical roots of a polynomial
+</code></pre>
+<pre><code>{2: 3, 3: 2, 5: 1} True 10
+[-1.61803398874989, 0.618033988749895, 1.00000000000000]
+</code></pre>
+<hr />
+<h2 id="14-calculus-derivatives-integrals-limits-series-sums">14. Calculus: derivatives, integrals, limits, series, sums</h2>
+<h3 id="141-derivatives">14.1 Derivatives</h3>
+<pre><code class="language-python">a = sp.symbols('a', positive=True)
+x, y = sp.symbols('x y')
+
+print(sp.diff(x**2*sp.sin(x), x))
+print(sp.diff(sp.sin(x*y), x, y))          # mixed partial ∂²/∂x∂y
+print(sp.diff(sp.exp(-a*x**2), x, 2))      # second derivative
+</code></pre>
+<pre><code>x**2*cos(x) + 2*x*sin(x)
+-x*y*sin(x*y) + cos(x*y)
+2*a*(2*a*x**2 - 1)*exp(-a*x**2)
+</code></pre>
+<p><code>Derivative(expr, x)</code> stays <strong>unevaluated</strong> (useful for writing equations); call <code>.doit()</code> to evaluate.</p>
+<h3 id="142-integrals">14.2 Integrals</h3>
+<pre><code class="language-python">print(sp.integrate(x*sp.exp(-x), (x, 0, sp.oo)))           # definite
+print(sp.integrate(sp.sin(x)**2, x))                       # indefinite
+print(sp.integrate(sp.exp(-a*x**2), (x, -sp.oo, sp.oo)))   # Gaussian with parameter
+print(sp.integrate(1/(1 + x**2), (x, -sp.oo, sp.oo)))
+print(sp.integrate(sp.sin(x)/x, (x, 0, sp.oo)))            # Dirichlet integral
+</code></pre>
+<pre><code>1
+x/2 - sin(x)*cos(x)/2
+sqrt(pi)/sqrt(a)
+pi
+pi/2
+</code></pre>
+<p>Note how declaring <code>a</code> positive made the Gaussian integral clean. Without it, SymPy returns a piecewise result with convergence conditions.</p>
+<p>Multiple integrals: <code>sp.integrate(f, (x, 0, 1), (y, 0, x))</code>. If SymPy cannot find a closed form it returns the integral unevaluated, which is a signal to go to <code>scipy.integrate.quad</code> (<a href="#22-limitations-of-sympy">Section 22</a>).</p>
+<h3 id="143-limits">14.3 Limits</h3>
+<pre><code class="language-python">n = sp.symbols('n')
+print(sp.limit(sp.sin(x)/x, x, 0))
+print(sp.limit((1 + 1/n)**n, n, sp.oo))
+print(sp.limit(1/x, x, 0, '+'))             # one-sided limit
+</code></pre>
+<pre><code>1
+E
+oo
+</code></pre>
+<h3 id="144-taylor-and-asymptotic-series">14.4 Taylor and asymptotic series</h3>
+<pre><code class="language-python">print(sp.series(sp.exp(x)*sp.cos(x), x, 0, 5))
+print(sp.series(sp.sin(x), x, 0, 6).removeO())     # drop the O(...) term to get a usable polynomial
+</code></pre>
+<pre><code>1 + x - x**3/3 - x**4/6 + O(x**5)
+x**5/120 - x**3/6 + x
+</code></pre>
+<p>Series about infinity: <code>sp.series(f, x, sp.oo, n)</code>. Perfect for small-parameter expansions: relativistic corrections, perturbation theory, small-angle approximations.</p>
+<h3 id="145-sums-and-products">14.5 Sums and products</h3>
+<pre><code class="language-python">k, n = sp.symbols('k n', integer=True, positive=True)
+print(sp.summation(1/k**2, (k, 1, sp.oo)))     # Basel problem
+print(sp.summation(k, (k, 1, n)))
+print(sp.product(k, (k, 1, 5)))
+</code></pre>
+<pre><code>pi**2/6
+n**2/2 + n/2
+120
+</code></pre>
+<hr />
+<h2 id="15-differential-equations">15. Differential equations</h2>
+<h3 id="151-ordinary-differential-equations">15.1 Ordinary differential equations</h3>
+<p>Declare the unknown as an undefined <code>Function</code>, build the equation with <code>Eq</code>, then <code>dsolve</code>.</p>
+<pre><code class="language-python">x = sp.symbols('x')
+f = sp.Function('f')
+
+# f'' + 4 f = 0   (harmonic oscillator)
+print(sp.dsolve(f(x).diff(x, 2) + 4*f(x), f(x)))
+
+# f' = x f  with  f(0) = 1
+print(sp.dsolve(f(x).diff(x) - x*f(x), f(x), ics={f(0): 1}))
+
+# driven oscillator f'' + f = sin(2x),  f(0) = 0, f'(0) = 0
+eq = f(x).diff(x, 2) + f(x) - sp.sin(2*x)
+print(sp.dsolve(eq, f(x), ics={f(0): 0, f(x).diff(x).subs(x, 0): 0}))
+</code></pre>
+<pre><code>Eq(f(x), C1*sin(2*x) + C2*cos(2*x))
+Eq(f(x), exp(x**2/2))
+Eq(f(x), 2*sin(x)/3 - sin(2*x)/3)
+</code></pre>
+<p><code>dsolve</code> handles linear constant-coefficient equations, separable, exact, Bernoulli, many first-order types and some systems. It accepts <code>hint='...'</code> to pick a method (<code>sp.classify_ode(eq, f(x))</code> lists what applies). Nonlinear equations such as the full pendulum $\ddot\theta = -\sin\theta$ have no closed form: go to <code>solve_ivp</code>.</p>
+<h3 id="152-partial-differential-equations">15.2 Partial differential equations</h3>
+<p><code>sp.pdsolve</code> exists but solves only a narrow class (mainly first-order and some separable equations). For the heat, wave and Laplace equations, the standard route is <strong>separation of variables by hand</strong> using SymPy for the pieces: Fourier series (<a href="#18-fourier-transform-and-fourier-series">Section 18</a>), special functions, and integrals for coefficients.</p>
+<hr />
+<h2 id="16-linear-algebra">16. Linear algebra</h2>
+<p>Symbolic matrices give exact eigenvalues. Ideal for 2×2 and 3×3 problems such as two-level systems, normal modes and coupled oscillators.</p>
+<pre><code class="language-python">M = sp.Matrix([[2, 1], [1, 3]])
+
+print(M.eigenvals())               # {eigenvalue: multiplicity}
+print(M.det(), M.inv(), M.T)
+print(M.charpoly(sp.Symbol('x')).as_expr())
+</code></pre>
+<pre><code>{5/2 - sqrt(5)/2: 1, sqrt(5)/2 + 5/2: 1}
+5 Matrix([[3/5, -1/5], [-1/5, 2/5]]) Matrix([[2, 1], [1, 3]])
+x**2 - 5*x + 5
+</code></pre>
+<p>Eigenvectors and diagonalisation:</p>
+<pre><code class="language-python">P, D = M.diagonalize()           # M = P D P^-1
+print(D)
+print(M.eigenvects()[0])     # (eigenvalue, multiplicity, [eigenvectors])
+</code></pre>
+<pre><code>Matrix([[5/2 - sqrt(5)/2, 0], [0, sqrt(5)/2 + 5/2]])
+(5/2 - sqrt(5)/2, 1, [Matrix([[-sqrt(5)/2 - 1/2], [1]])])
+</code></pre>
+<p>Matrix exponential, rank and null space:</p>
+<pre><code class="language-python">print(sp.Matrix([[0, 1], [-1, 0]]).exp())
+print(sp.Matrix([[1, 2], [3, 4]]).rank())
+print(sp.Matrix([[1, 2], [2, 4]]).nullspace())
+</code></pre>
+<pre><code>Matrix([[cos(1), sin(1)], [-sin(1), cos(1)]])
+2
+[Matrix([[-2], [1]])]
+</code></pre>
+<p>Jacobian and Hessian:</p>
+<pre><code class="language-python">x, y = sp.symbols('x y')
+print(sp.Matrix([x**2*y, 5*x + sp.sin(y)]).jacobian([x, y]))
+print(sp.hessian(x**2*y + y**3, [x, y]))
+</code></pre>
+<pre><code>Matrix([[2*x*y, x**2], [5, cos(y)]])
+Matrix([[2*y, 2*x], [2*x, 6*y]])
+</code></pre>
+<blockquote>
+<p><strong>Cost warning:</strong> Fully symbolic matrices blow up quickly: the determinant of a 6×6 matrix with all-symbolic entries has 720 terms. Substitute numbers early, or switch to NumPy once you only need values.</p>
+</blockquote>
+<hr />
+<h2 id="17-laplace-transform">17. Laplace transform</h2>
+<p>Converts ODEs into algebra, which is why it's a staple of circuits, control and damped systems.</p>
+<pre><code class="language-python">t = sp.symbols('t', positive=True)
+s = sp.symbols('s')
+a = sp.symbols('a', positive=True)
+
+F = sp.laplace_transform(sp.exp(-a*t)*sp.sin(3*t), t, s, noconds=True)
+print(F)
+print(sp.inverse_laplace_transform(1/(s**2 + 1), s, t))
+</code></pre>
+<pre><code>3/((a + s)**2 + 9)
+sin(t)
+</code></pre>
+<ul>
+<li><code>noconds=True</code> drops the convergence conditions and returns only the transform.</li>
+<li>If <code>t</code> is <strong>not</strong> declared positive, inverse transforms carry a <code>Heaviside(t)</code> factor (the function is zero for $t&lt;0$), e.g. <code>sin(t)*Heaviside(t)</code>. Declaring <code>t</code> positive, as above, removes it.</li>
+<li>Partial fractions (<code>sp.apart</code>) before inverting often rescues a case where the inverse transform fails.</li>
+</ul>
+<p><strong>Solving an ODE with Laplace:</strong> transform the equation, replace $\mathcal{L}{y'}= sY - y(0)$ and $\mathcal{L}{y''} = s^2Y - s\,y(0) - y'(0)$, solve the resulting algebraic equation for $Y(s)$ with <code>sp.solve</code>, then call <code>inverse_laplace_transform</code>.</p>
+<hr />
+<h2 id="18-fourier-transform-and-fourier-series">18. Fourier transform and Fourier series</h2>
+<h3 id="181-fourier-transform">18.1 Fourier transform</h3>
+<p>SymPy's default convention is $F(k)=\int f(x)\,e^{-2\pi i x k}\,dx$ (frequency $k$, <strong>not</strong> angular frequency). A Gaussian is its own transform in this convention.</p>
+<pre><code class="language-python">x, k = sp.symbols('x k', real=True)
+a = sp.symbols('a', positive=True)
+
+print(sp.fourier_transform(sp.exp(-sp.pi*x**2), x, k))
+print(sp.fourier_transform(sp.exp(-a*x**2), x, k))
+</code></pre>
+<pre><code>exp(-pi*k**2)
+sqrt(pi)*exp(-pi**2*k**2/a)/sqrt(a)
+</code></pre>
+<p>If you want the physicist's convention with angular frequency $\omega$ (and different factors of $2\pi$), rescale the result by hand or compute the integral directly with <code>sp.integrate</code>. Always check the convention when you compare with a textbook. Also available: <code>inverse_fourier_transform</code>, <code>sine_transform</code>, <code>cosine_transform</code>.</p>
+<h3 id="182-fourier-series">18.2 Fourier series</h3>
+<pre><code class="language-python">x = sp.symbols('x')
+fs = sp.fourier_series(x, (x, -sp.pi, sp.pi))      # sawtooth on (-π, π)
+print(fs.truncate(3))                             # first 3 non-zero terms
+</code></pre>
+<pre><code>2*sin(x) - sin(2*x) + 2*sin(3*x)/3
+</code></pre>
+<p>You can also work out the coefficients yourself:</p>
+<p>$$a_n = \frac{1}{\pi}\int_{-\pi}^{\pi} f(x)\cos(nx)\,dx, \qquad b_n = \frac{1}{\pi}\int_{-\pi}^{\pi} f(x)\sin(nx)\,dx$$</p>
+<pre><code class="language-python">n = sp.symbols('n', integer=True, positive=True)
+bn = sp.integrate(x*sp.sin(n*x), (x, -sp.pi, sp.pi))/sp.pi
+print(sp.simplify(bn))
+</code></pre>
+<pre><code>-2*(-1)**n/n
+</code></pre>
+<p>Numerical counterpart for sampled data: <code>scipy.fft</code> (<a href="#9-fourier-transforms-and-signal-basics">Section 9</a>).</p>
+<hr />
+<h2 id="19-vector-calculus">19. Vector calculus</h2>
+<p><code>sympy.vector</code> defines coordinate systems with unit vectors (<code>N.i</code>, <code>N.j</code>, <code>N.k</code>) and implements <code>gradient</code>, <code>divergence</code>, <code>curl</code>.</p>
+<pre><code class="language-python">from sympy.vector import CoordSys3D, gradient, divergence, curl
+
+N = CoordSys3D('N')
+phi = N.x**2 * N.y * N.z
+
+print(gradient(phi))
+print(divergence(N.x*N.i + N.y*N.j + N.z*N.k))     # ∇·r = 3
+print(curl(N.y*N.i - N.x*N.j))                     # rotation field: ∇×F = -2 k̂
+</code></pre>
+<pre><code>2*N.x*N.y*N.z*N.i + N.x**2*N.z*N.j + N.x**2*N.y*N.k
+3
+(-2)*N.k
+</code></pre>
+<p>Spherical or cylindrical systems: <code>CoordSys3D('S', transformation='spherical')</code>. The Laplacian is <code>divergence(gradient(f))</code>. Using separate scalar symbols and <code>sp.diff</code> for ∇ operations is perfectly fine and often easier to debug.</p>
+<hr />
+<h2 id="20-physics-helpers-units-quantum-lagrangian-mechanics">20. Physics helpers: units, quantum, Lagrangian mechanics</h2>
+<h3 id="201-units">20.1 Units</h3>
+<pre><code class="language-python">from sympy.physics import units as u
+
+print(u.convert_to(u.speed_of_light, u.km/u.s))
+print(u.convert_to(5*u.joule, u.eV).evalf(5))
+</code></pre>
+<pre><code>149896229*kilometer/(500*second)
+3.1208e+19*electronvolt
+</code></pre>
+<p><code>sympy.physics.units</code> checks dimensional consistency, which is a strong sanity test for derived formulas (<code>u.convert_to</code> raises or returns unchanged expressions when dimensions disagree).</p>
+<h3 id="202-quantum-mechanics">20.2 Quantum mechanics</h3>
+<p>Clebsch-Gordan coefficients, Wigner symbols and spherical harmonics:</p>
+<pre><code class="language-python">from sympy.physics.quantum.cg import CG
+from sympy.physics.wigner import wigner_3j
+from sympy import Ynm, Rational, symbols
+
+th, ph = symbols('theta phi')
+# &lt;1/2 1/2; 1/2 -1/2 | 1 0&gt;
+print(CG(Rational(1, 2), Rational(1, 2), Rational(1, 2), -Rational(1, 2), 1, 0).doit())
+print(wigner_3j(1, 1, 0, 0, 0, 0))
+print(Ynm(1, 0, th, ph).expand(func=True))       # Y_1^0
+</code></pre>
+<pre><code>sqrt(2)/2
+-sqrt(3)/3
+sqrt(3)*cos(theta)/(2*sqrt(pi))
+</code></pre>
+<p><code>sympy.physics.quantum</code> also provides kets, bras, operators, commutators and tensor products for symbolic Dirac notation, and <code>sympy.physics.matrices</code> has Pauli and Dirac matrices (<code>mdft</code>, <code>msigma</code>, <code>mgamma</code>).</p>
+<h3 id="203-lagrangian-mechanics-euler-lagrange-equations">20.3 Lagrangian mechanics: Euler-Lagrange equations</h3>
+<p>Derive the equation of motion from a Lagrangian, then solve it numerically. Here: a simple pendulum with $L = \tfrac12 l^2\dot\theta^2 + g l\cos\theta$.</p>
+<pre><code class="language-python">from sympy.calculus.euler import euler_equations
+
+t = sp.symbols('t')
+g, l = sp.symbols('g l', positive=True)
+th = sp.Function('th')
+
+L = sp.Rational(1, 2)*l**2*th(t).diff(t)**2 + g*l*sp.cos(th(t))
+eq = euler_equations(L, th(t), t)[0]
+print(eq)
+acc = sp.solve(eq.lhs, th(t).diff(t, 2))[0]
+print(acc)
+</code></pre>
+<pre><code>Eq(-g*l*sin(th(t)) - l**2*Derivative(th(t), (t, 2)), 0)
+-g*sin(th(t))/l
+</code></pre>
+<p>The same technique works for a spring ($L=\tfrac12 m\dot q^2-\tfrac12kq^2$ gives $-kq-m\ddot q=0$), double pendulum, charged particle in fields, and so on. For many-body mechanical systems, look at <code>sympy.physics.mechanics</code> (<code>LagrangesMethod</code>, <code>KanesMethod</code>), which automates this bookkeeping.</p>
+<hr />
+<h2 id="21-bridging-sympy-to-numpyscipy-with-lambdify">21. Bridging SymPy to NumPy/SciPy with <code>lambdify</code></h2>
+<p>This is the most useful trick in this entire guide. <code>lambdify</code> converts a SymPy expression into a <strong>fast numerical function</strong> (NumPy-vectorised by default when you ask for it).</p>
+<pre><code class="language-python">x = sp.symbols('x')
+f = sp.lambdify(x, sp.sin(x)/x, 'numpy')
+print(f(np.array([1.0, 2.0])))
+</code></pre>
+<pre><code>[0.84147098 0.45464871]
+</code></pre>
+<h3 id="211-example-symbolic-derivation-numerical-integration">21.1 Example: symbolic derivation → numerical integration</h3>
+<p>Check a SymPy integral against <code>quad</code>:</p>
+<pre><code class="language-python">from scipy.integrate import quad
+
+expr = sp.exp(-x**2)*sp.cos(3*x)
+fnum = sp.lambdify(x, expr, 'numpy')
+
+print(quad(fnum, -np.inf, np.inf)[0])
+print(sp.integrate(expr, (x, -sp.oo, sp.oo)), &quot;=&quot;, float(sp.sqrt(sp.pi)*sp.exp(-sp.Rational(9, 4))))
+</code></pre>
+<pre><code>0.18681526145713176
+sqrt(pi)*exp(-9/4) = 0.18681526145713176
+</code></pre>
+<h3 id="212-example-derive-the-pendulum-then-simulate-it">21.2 Example: derive the pendulum, then simulate it</h3>
+<p>Continuing from <a href="#203-lagrangian-mechanics-euler-lagrange-equations">20.3</a>:</p>
+<pre><code class="language-python">from scipy.integrate import solve_ivp
+
+a_func = sp.lambdify((th(t), g, l), acc, 'numpy')      # θ'' = a(θ, g, l)
+
+sol = solve_ivp(lambda tt, Y: [Y[1], a_func(Y[0], 9.81, 1.0)],
+                [0, 2], [1.0, 0.0], rtol=1e-8)
+print(sol.y[0, -1])      # angle (rad) at t = 2 s, released from rest at 1 rad
+</code></pre>
+<pre><code>0.9207929496010724
+</code></pre>
+<h3 id="213-other-bridges">21.3 Other bridges</h3>
+<ul>
+<li><strong>Gradients and Jacobians for optimisers:</strong> differentiate with SymPy, lambdify, pass as <code>jac=</code>.</li>
+<li><code>sp.lambdify(..., 'scipy')</code> makes special functions (<code>erf</code>, <code>besselj</code>, ...) map to SciPy.</li>
+<li><code>sp.printing.latex(expr)</code> generates LaTeX for papers and web pages:</li>
+</ul>
+<pre><code class="language-python">print(sp.latex(sp.Integral(sp.exp(-x**2), (x, -sp.oo, sp.oo))))
+</code></pre>
+<pre><code>\int\limits_{-\infty}^{\infty} e^{- x^{2}}\, dx
+</code></pre>
+<ul>
+<li>For code generation (C, Fortran, Julia), see <code>sp.codegen</code>, <code>sp.ccode</code>, and <code>sp.cse</code> (common subexpression elimination) for speeding up large expressions.</li>
+</ul>
+<hr />
+<h2 id="22-limitations-of-sympy">22. Limitations of SymPy</h2>
+<p>SymPy is powerful, but knowing where it breaks saves hours of frustration.</p>
+<p><strong>1. Speed.</strong> It is pure Python doing symbolic manipulation. Anything with thousands of terms (big symbolic matrices, high-order perturbation series, large sums) becomes very slow or runs out of memory. Substitute numbers early, use <code>lambdify</code>, or use a dedicated tool (Mathematica, Maple, FORM, Cadabra) for heavy algebra.</p>
+<p><strong>2. No closed form ≠ SymPy's fault, but SymPy won't tell you which.</strong> Many integrals have no elementary antiderivative. SymPy either returns the integral unevaluated, or a special function, or occasionally a Meijer G-function that is correct but unhelpful.</p>
+<pre><code class="language-python">q = sp.symbols('q')
+print(sp.integrate(sp.exp(-q**2)*sp.sin(q), q))      # gives back the integral unevaluated
+print(sp.integrate(sp.sin(q**2), q))                 # Fresnel function: fine, closed form exists
+print(sp.integrate(sp.exp(-q**2)*sp.cos(q**2), q))   # correct but opaque Meijer G output
+</code></pre>
+<pre><code>Integral(exp(-q**2)*sin(q), q)
+3*sqrt(2)*sqrt(pi)*fresnels(sqrt(2)*q/sqrt(pi))*gamma(3/4)/(8*gamma(7/4))
+-sqrt(2)*q*meijerg(((0, 1/4, 1/2, 3/4, 1, 9/8), (1/2,)), ((), (0, 1/8, 1/2)), 64/q**8)/(16*sqrt(pi))
+</code></pre>
+<p>When this happens: check with <code>scipy.integrate.quad</code> for definite integrals, try changing variables or integrating by parts manually, or add assumptions (<code>positive=True</code>).</p>
+<p><strong>3. <code>solve</code> cannot do transcendental equations that mix functions.</strong> Solving $\sin x = x/2$ raises <code>NotImplementedError</code> (multiple generators). Use <code>nsolve</code> (numerical, needs an initial guess) or <code>scipy.optimize.brentq</code>/<code>root</code>.</p>
+<p><strong>4. Assumptions are easy to forget.</strong> Without <code>positive=True</code>, <code>sqrt(x**2)</code> stays <code>sqrt(x**2)</code> and <code>Abs</code> or <code>re</code>/<code>im</code> pieces creep into results (<a href="#122-assumptions-matter">12.2</a>). Many "SymPy can't simplify this" cases are really "SymPy doesn't know this is real".</p>
+<p><strong>5. <code>simplify</code> is a heuristic.</strong> It does not guarantee the shortest or "nicest" form, may be slow, and the result can differ between versions. When it matters, apply targeted functions (<code>trigsimp</code>, <code>factor</code>, <code>cancel</code>, <code>collect</code>) and verify by checking <code>sp.simplify(a - b) == 0</code>, or numerically substituting random values.</p>
+<p><strong>6. Equality is structural.</strong> <code>a == b</code> checks whether the expressions have the <em>same form</em>, not whether they are mathematically equal. Test with <code>sp.simplify(a - b) == 0</code> or <code>a.equals(b)</code>.</p>
+<p><strong>7. Differential equation solvers are limited.</strong> <code>dsolve</code> covers many standard classes, but nonlinear, variable-coefficient or system cases frequently fail or return implicit solutions. <code>pdsolve</code> handles very few PDEs.</p>
+<p><strong>8. Floating point creeping in.</strong> Writing <code>0.5</code> instead of <code>sp.Rational(1, 2)</code> converts exact expressions to approximate ones and breaks simplification. Use <code>Rational</code> or <code>sp.S(1)/2</code>.</p>
+<p><strong>9. Matrices: size and symbolic eigenvalues.</strong> Exact eigenvalues of symbolic matrices beyond 4×4 (no general closed form for the characteristic polynomial roots) come back as unwieldy <code>CRootOf</code> objects or take forever. For numbers, use NumPy/SciPy.</p>
+<p><strong>10. Python gotchas.</strong> <code>^</code> is XOR in Python (use <code>**</code>), <code>1/2</code> is a float (use <code>sp.Rational</code>), and <code>sp.sin</code> is not interchangeable with <code>np.sin</code>: <code>np.sin(x)</code> on a symbol will fail. See SymPy's "Gotchas" page.</p>
+<p><strong>11. Not a proof assistant, and limited tensor support.</strong> Symbolic results can be subtly wrong in edge cases (branch cuts, singular points, conditional convergence). Treat output as a strong hint to verify, particularly for results you intend to publish. For heavy tensor algebra and general relativity, look at dedicated tools (Cadabra, <code>einsteinpy</code>, or the <code>sympy.tensor</code> module with patience).</p>
+<p><strong>Rule of thumb:</strong> <em>derive with SymPy, verify numerically with SciPy, and don't trust either blindly.</em></p>
+<hr />
+<h1 id="part-iii-wrap-up">Part III – Wrap-up</h1>
+<h2 id="23-choosing-the-right-tool-cheat-sheet">23. Choosing the right tool: cheat sheet</h2>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Numerical (SciPy)</th>
+<th>Symbolic (SymPy)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Constants / units</td>
+<td><code>scipy.constants</code></td>
+<td><code>sympy.physics.units</code></td>
+</tr>
+<tr>
+<td>Fit data to a model</td>
+<td><code>curve_fit</code>, <code>least_squares</code>, <code>linregress</code></td>
+<td>derive the model, then <code>lambdify</code></td>
+</tr>
+<tr>
+<td>Interpolate</td>
+<td><code>CubicSpline</code>, <code>RegularGridInterpolator</code>, <code>griddata</code></td>
+<td><code>sympy.polys.polyfuncs.interpolate</code> (exact polynomials)</td>
+</tr>
+<tr>
+<td>Derivatives</td>
+<td><code>np.gradient</code>, <code>scipy.differentiate</code>, <code>findiff</code></td>
+<td><code>diff</code></td>
+</tr>
+<tr>
+<td>Integrals</td>
+<td><code>quad</code>, <code>dblquad</code>, <code>nquad</code>, <code>trapezoid</code>, <code>simpson</code></td>
+<td><code>integrate</code></td>
+</tr>
+<tr>
+<td>ODEs</td>
+<td><code>solve_ivp</code>, <code>solve_bvp</code></td>
+<td><code>dsolve</code> (closed forms only)</td>
+</tr>
+<tr>
+<td>Eigenproblems</td>
+<td><code>eigh</code>, <code>eig</code>, <code>eigsh</code></td>
+<td><code>Matrix.eigenvals()</code>, <code>eigenvects()</code></td>
+</tr>
+<tr>
+<td>Roots</td>
+<td><code>brentq</code>, <code>root</code></td>
+<td><code>solve</code>, <code>solveset</code>, <code>nsolve</code></td>
+</tr>
+<tr>
+<td>Optimisation</td>
+<td><code>minimize</code>, <code>differential_evolution</code></td>
+<td><code>diff</code> + <code>solve</code> for critical points</td>
+</tr>
+<tr>
+<td>Fourier</td>
+<td><code>scipy.fft</code></td>
+<td><code>fourier_transform</code>, <code>fourier_series</code></td>
+</tr>
+<tr>
+<td>Laplace transform</td>
+<td>(<code>scipy.signal</code> for LTI systems)</td>
+<td><code>laplace_transform</code></td>
+</tr>
+<tr>
+<td>Special functions</td>
+<td><code>scipy.special</code></td>
+<td><code>besselj</code>, <code>legendre</code>, <code>Ynm</code>, ...</td>
+</tr>
+<tr>
+<td>Series / limits / sums</td>
+<td>—</td>
+<td><code>series</code>, <code>limit</code>, <code>summation</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Good habits that apply to everything above:</strong>
+1. <strong>Test on a case with a known answer</strong> before trusting a result (we did this throughout this guide).
+2. <strong>Check convergence:</strong> halve the step or tolerance and see if the answer changes.
+3. <strong>Look at residuals and plots</strong>, not only at numbers.
+4. <strong>Mind units and scaling:</strong> work in dimensionless variables when possible.
+5. <strong>Read result objects:</strong> <code>.success</code>, <code>.message</code>, <code>.status</code>, error estimates.</p>
+<hr />
+<h2 id="24-conclusion">24. Conclusion</h2>
+<p>SciPy and SymPy are complementary halves of a physicist's or mathematician's computational toolkit. SciPy gives you fast, battle-tested numerical routines (fitting, interpolation, differentiation, integration, ODEs, eigenproblems, optimisation, FFTs and special functions) that scale to real data and real simulations. SymPy gives you exact algebra, calculus, transforms and series for derivations, sanity checks and generating formulas you can read.</p>
+<p>The recurring pattern in this guide is: <strong>think symbolically, compute numerically</strong>. Derive the equation of motion with SymPy, <code>lambdify</code> it, integrate it with <code>solve_ivp</code>, fit its parameters with <code>curve_fit</code>, and compare against the exact limit you got from <code>series</code>. Whenever one tool hits its limits (SymPy with no closed form, SciPy with a poorly conditioned problem), the other usually provides the cross-check.</p>
+<p>From here, natural next steps are: plotting with Matplotlib, automatic differentiation and GPU numerics with JAX, PDE frameworks (<code>findiff</code>, FEniCS, <code>py-pde</code>), uncertainty-aware fitting (<code>lmfit</code>, <code>iminuit</code>, <code>uncertainties</code>), and Monte-Carlo and Bayesian tools (<code>emcee</code>, <code>PyMC</code>).</p>
+<hr />
+<h2 id="25-further-reading-and-references">25. Further reading and references</h2>
+<h3 id="official-documentation">Official documentation</h3>
+<ul>
+<li><strong>SciPy documentation and tutorials</strong>: <a href="https://docs.scipy.org/doc/scipy/">https://docs.scipy.org/doc/scipy/</a></li>
+<li><strong>SciPy reference for <code>scipy.constants</code></strong>: <a href="https://docs.scipy.org/doc/scipy/reference/constants.html">https://docs.scipy.org/doc/scipy/reference/constants.html</a></li>
+<li><strong>SymPy documentation</strong>: <a href="https://docs.sympy.org/latest/">https://docs.sympy.org/latest/</a></li>
+<li><strong>SymPy tutorial (start here)</strong>: <a href="https://docs.sympy.org/latest/tutorials/intro-tutorial/index.html">https://docs.sympy.org/latest/tutorials/intro-tutorial/index.html</a></li>
+<li><strong>SymPy Gotchas</strong>: <a href="https://docs.sympy.org/latest/explanation/gotchas.html">https://docs.sympy.org/latest/explanation/gotchas.html</a></li>
+<li><strong>SymPy ODE solving guide</strong>: <a href="https://docs.sympy.org/latest/modules/solvers/ode.html">https://docs.sympy.org/latest/modules/solvers/ode.html</a></li>
+<li><strong>SymPy physics modules</strong>: <a href="https://docs.sympy.org/latest/modules/physics/index.html">https://docs.sympy.org/latest/modules/physics/index.html</a></li>
+</ul>
+<h3 id="tools-mentioned-in-this-guide">Tools mentioned in this guide</h3>
+<ul>
+<li><strong>findiff</strong> (finite differences and PDEs in any dimension): <a href="https://github.com/maroba/findiff">https://github.com/maroba/findiff</a> · docs: <a href="https://findiff.readthedocs.io">https://findiff.readthedocs.io</a></li>
+<li><strong>scikit-fdiff</strong> (PDE solving via symbolic finite-difference discretisation): <a href="https://scikit-fdiff.readthedocs.io">https://scikit-fdiff.readthedocs.io</a> · paper: Cellier &amp; Ruyer-Quil, <em>JOSS</em> 4(38), 1356 (2019), <a href="https://doi.org/10.21105/joss.01356">https://doi.org/10.21105/joss.01356</a></li>
+<li><strong>numdifftools</strong>: <a href="https://numdifftools.readthedocs.io">https://numdifftools.readthedocs.io</a></li>
+<li><strong>lmfit</strong> (fitting with parameters objects): <a href="https://lmfit.github.io/lmfit-py/">https://lmfit.github.io/lmfit-py/</a></li>
+<li><strong>iminuit</strong> (physics-grade minimiser): <a href="https://scikit-hep.org/iminuit/">https://scikit-hep.org/iminuit/</a></li>
+</ul>
+<h3 id="tutorials-and-lecture-notes">Tutorials and lecture notes</h3>
+<ul>
+<li><strong>Scipy Lecture Notes</strong>: <a href="https://scipy-lectures.org">https://scipy-lectures.org</a></li>
+<li><strong>Scientific Python Lectures</strong> (J. R. Johansson, Jupyter notebooks covering NumPy, SciPy, SymPy and more): <a href="https://github.com/jrjohansson/scientific-python-lectures">https://github.com/jrjohansson/scientific-python-lectures</a></li>
+<li><strong>Python for Data Analysis / Computational Physics</strong> resources: Mark Newman, <em>Computational Physics</em> (book, with Python code), <a href="https://websites.umich.edu/~mejn/cp/">https://websites.umich.edu/~mejn/cp/</a></li>
+<li><strong>Real Python</strong>: search "SciPy" for readable tutorials on integration and optimisation: <a href="https://realpython.com">https://realpython.com</a></li>
+</ul>
+<h3 id="papers-to-cite">Papers to cite</h3>
+<ul>
+<li>Virtanen, P. et al. (2020). <em>SciPy 1.0: fundamental algorithms for scientific computing in Python.</em> Nature Methods 17, 261–272. <a href="https://doi.org/10.1038/s41592-019-0686-2">https://doi.org/10.1038/s41592-019-0686-2</a></li>
+<li>Meurer, A. et al. (2017). <em>SymPy: symbolic computing in Python.</em> PeerJ Computer Science 3, e103. <a href="https://doi.org/10.7717/peerj-cs.103">https://doi.org/10.7717/peerj-cs.103</a></li>
+<li>Harris, C. R. et al. (2020). <em>Array programming with NumPy.</em> Nature 585, 357–362. <a href="https://doi.org/10.1038/s41586-020-2649-2">https://doi.org/10.1038/s41586-020-2649-2</a></li>
+</ul>
+<h3 id="books">Books</h3>
+<ul>
+<li>Press, Teukolsky, Vetterling, Flannery, <em>Numerical Recipes</em> (theory behind many of the algorithms above)</li>
+<li>Newman, M., <em>Computational Physics</em> (Python-based)</li>
+<li>Burden &amp; Faires, <em>Numerical Analysis</em> (undergraduate-level numerical methods)</li>
+<li>Trefethen &amp; Bau, <em>Numerical Linear Algebra</em> (for the eigenvalue and SVD material)</li>
+</ul>
+<blockquote>
+<p>Links were current when this guide was written; if one has moved, searching the title will usually find it.</p>
+</blockquote>
+<hr />
+<p><em>Last updated: November 2026. Tested with SciPy 1.18, SymPy 1.14, NumPy 2.5.</em></p>
 
 
 

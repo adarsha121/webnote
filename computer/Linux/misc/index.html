@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://adarsha121.github.io/webnote/computer/Linux/misc/">
       
       
-        <link rel="prev" href="../partition/">
+        <link rel="prev" href="../user123/">
       
       
         <link rel="next" href="../../Python/numpy_pandas/">
@@ -993,6 +993,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../user123/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manage many users
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -1793,21 +1821,20 @@
 </ul>
 <h2 id="change-the-hostname">Change the Hostname</h2>
 <ol>
-<li>
-<p>Open a terminal and run the following command, replacing <code>your-new-computer-name</code> with your desired hostname:</p>
-<p><code>bash
-sudo hostnamectl set-hostname your-new-computer-name</code></p>
-<blockquote>
-<p><strong>Note:</strong> Hostnames should generally be lowercase, contain no spaces, and use only alphanumeric characters or hyphens, such as <code>my-ubuntu-pc</code>.</p>
-</blockquote>
-</li>
+<li>Open a terminal and run the following command, replacing <code>your-new-computer-name</code> with your desired hostname:</li>
+</ol>
+<pre><code class="language-bash">sudo hostnamectl set-hostname your-new-computer-name
+</code></pre>
+<pre><code>&gt; **Note:** Hostnames should generally be lowercase, contain no spaces, and use only alphanumeric characters or hyphens, such as `my-ubuntu-pc`.
+</code></pre>
+<ol>
 <li>
 <p>To prevent network lag or <code>unable to resolve host</code> warnings when you run <code>sudo</code> commands, update the local hosts file.</p>
 <ul>
 <li>Open <code>/etc/hosts</code> in a text editor:</li>
 </ul>
 <p><code>bash
-  sudo nano /etc/hosts</code></p>
+sudo nano /etc/hosts</code></p>
 <ul>
 <li>Look for the lines at the top of the file. You should see something similar to:</li>
 </ul>
@@ -1864,7 +1891,7 @@ sudo deluser --remove-home tempadmin</code></p>
 </ol>
 <p>Your account is now renamed, and the temporary helper account has been removed.</p>
 <h2 id="extend-windows-storage-in-linux">Extend Windows Storage in Linux</h2>
-<p>This section is reserved for instructions on making Windows storage available from Linux. Add the disk layout, filesystem type, and desired mount location before running any partitioning or mounting commands.</p>
+<p>See <a href="../partition/">Disk Partition</a> for this section.</p>
 
 
 
